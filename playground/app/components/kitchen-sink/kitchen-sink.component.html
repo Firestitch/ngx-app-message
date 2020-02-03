@@ -1,1 +1,30 @@
-<fs-component></fs-component>
+<fs-admin-message-queues
+  [loadMessageQueues]="loadMessageQueues"
+  [loadMessageQueue]="loadMessageQueue"
+  [loadMessage]="loadMessage"
+  [testMessage]="testMessage"
+  [saveMessage]="saveMessage"
+  [loadLogs]="loadLogs"
+  [loadAttachments]="loadAttachments"
+  [resendMessageQueue]="resendMessageQueue"
+  [forwardMessageQueue]="forwardMessageQueue"
+  [loadMessages]="loadMessages"
+  [testEmail]="testEmail"
+  [loadTemplates]="loadTemplates">
+</fs-admin-message-queues>
+
+
+<fs-admin-messages
+  [loadMessages]="loadMessages"
+  [loadMessage]="loadMessage"
+  [saveMessage]="saveMessage"
+  [testMessage]="testMessage"
+  [testEmail]="testEmail"
+  [loadTemplates]="loadTemplateSelect">
+</fs-admin-messages>
+
+<fs-admin-message-templates
+  [loadMessageTemplates]="loadMessageTemplates"
+  [saveMessageTemplate]="saveMessageTemplate"
+  [loadMessageTemplate]="loadMessageTemplate">
+</fs-admin-message-templates>
