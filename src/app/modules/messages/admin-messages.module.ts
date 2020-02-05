@@ -1,9 +1,5 @@
 import { NgModule } from '@angular/core';
 
-import {
-  MessagesComponent,
-  MessageComponent,
-} from '.';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -17,6 +13,8 @@ import { FsSkeletonModule } from '@firestitch/skeleton';
 import { FormsModule } from '@angular/forms';
 import { FsFormModule } from '@firestitch/form';
 import { FsEditorRichTextModule } from '@firestitch/editor';
+import { MessagesComponent } from './components/messages/messages.component';
+import { MessageComponent } from './components/message/message.component';
 
 
 @NgModule({

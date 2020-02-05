@@ -1,9 +1,5 @@
 import { NgModule } from '@angular/core';
 
-import {
-  TemplatesComponent,
-  TemplateComponent
-} from '.';
 import { FsListModule } from '@firestitch/list';
 import { MatDialogModule, MatButtonModule, MatTabsModule, MatTooltipModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { FsDialogModule } from '@firestitch/dialog';
@@ -14,6 +10,9 @@ import { CommonModule } from '@angular/common';
 import { FsSkeletonModule } from '@firestitch/skeleton';
 import { FormsModule } from '@angular/forms';
 import { FsFormModule } from '@firestitch/form';
+import { TemplatesComponent } from './components/templates/templates.component';
+import { TemplateComponent } from './components/template/template.component';
+
 
 
 @NgModule({

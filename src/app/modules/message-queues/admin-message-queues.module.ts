@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import {
-  QueuesComponent,
-  QueueComponent,
-} from '.';
+
 import { FsListModule } from '@firestitch/list';
 import { MatDialogModule, MatButtonModule, MatIconModule, MatTabsModule, MatTooltipModule } from '@angular/material';
 import { FsDialogModule } from '@firestitch/dialog';
@@ -17,6 +14,8 @@ import { FsSkeletonModule } from '@firestitch/skeleton';
 import { FormsModule } from '@angular/forms';
 import { FsPromptInputModule } from '@firestitch/prompt';
 import { FsAdminMessagesModule } from '../messages/admin-messages.module';
+import { QueuesComponent } from './components/queues/queues.component';
+import { QueueComponent } from './components/queue/queue.component';
 
 
 @NgModule({

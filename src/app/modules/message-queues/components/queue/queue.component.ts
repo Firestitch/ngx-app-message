@@ -8,7 +8,8 @@ import { FsListConfig, PaginationStrategy } from '@firestitch/list';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { indexNameValue } from '../../../../helpers';
-import { MessageComponent } from '../../../../modules/messages';
+import { MessageComponent } from '../../../../modules/messages/components';
+
 
 
 @Component({
