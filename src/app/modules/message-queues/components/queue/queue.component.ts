@@ -143,6 +143,7 @@ export class QueueComponent implements OnInit {
       paging: {
         strategy: PaginationStrategy.LoadMore
       },
+      queryParam: false,
       fetch: query => {
         return this.loadLogs(message_queue, query);
       }
@@ -151,6 +152,7 @@ export class QueueComponent implements OnInit {
 
   private _setAttachmentsConfig(message_queue) {
     this.attachmentConfig = {
+      queryParam: false,
       fetch: query => {
         return  this.loadAttachments(message_queue, query)
           .pipe(
