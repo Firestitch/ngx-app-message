@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 
 
 import { FsListModule } from '@firestitch/list';
+import { NgxLinkifyjsModule } from 'ngx-linkifyjs';
 import { MatDialogModule, MatButtonModule, MatIconModule, MatTabsModule, MatTooltipModule } from '@angular/material';
 import { FsDialogModule } from '@firestitch/dialog';
 import { FsLabelModule } from '@firestitch/label';
@@ -36,7 +37,8 @@ import { QueueComponent } from './components/queue/queue.component';
     FsAdminMessagesModule,
     FormsModule,
     FsFormModule,
-    FsPromptInputModule
+    FsPromptInputModule,
+    NgxLinkifyjsModule.forRoot()
   ],
   declarations: [
     QueuesComponent,

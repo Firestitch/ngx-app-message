@@ -54,8 +54,10 @@
                 <fs-label>
                   Body
                 </fs-label>
-                <div *ngIf="message_queue.email_message_queue.format===emailMessageQueueFormat.Text" class="format-text">
-                  {{message_queue.email_message_queue.body}}
+                <div
+                    *ngIf="message_queue.email_message_queue.format===emailMessageQueueFormat.Text"
+                    class="format-text"
+                    [innerHTML]="message_queue.email_message_queue.body | linkify">
                 </div>
                 <iframe
                   #bodyFrame
