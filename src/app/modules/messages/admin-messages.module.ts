@@ -4,9 +4,14 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FsLabelModule } from '@firestitch/label';
-import { MatTabsModule, MatButtonModule, MatDialogModule,
-         MatTooltipModule, MatFormFieldModule, MatOptionModule,
-         MatSelectModule, MatInputModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatOptionModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { FsDialogModule } from '@firestitch/dialog';
 import { FsListModule } from '@firestitch/list';
 import { FsSkeletonModule } from '@firestitch/skeleton';

@@ -1,7 +1,12 @@
 import { NgModule } from '@angular/core';
 
 import { FsListModule } from '@firestitch/list';
-import { MatDialogModule, MatButtonModule, MatTabsModule, MatTooltipModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { FsDialogModule } from '@firestitch/dialog';
 import { FsLabelModule } from '@firestitch/label';
 import { FlexLayoutModule } from '@angular/flex-layout';
