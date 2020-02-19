@@ -3,7 +3,11 @@ import { NgModule } from '@angular/core';
 
 import { FsListModule } from '@firestitch/list';
 import { NgxLinkifyjsModule } from 'ngx-linkifyjs';
-import { MatDialogModule, MatButtonModule, MatIconModule, MatTabsModule, MatTooltipModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { FsDialogModule } from '@firestitch/dialog';
 import { FsLabelModule } from '@firestitch/label';
 import { FsDateModule } from '@firestitch/date';
