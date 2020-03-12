@@ -1,3 +1,4 @@
+import { FsAdminModule } from './../admin/admin.module';
 import { NgModule } from '@angular/core';
 
 
@@ -41,7 +42,8 @@ import { LinkifyPipe } from './pipes/linkify.pipe';
     FsAdminMessagesModule,
     FormsModule,
     FsFormModule,
-    FsPromptInputModule
+    FsPromptInputModule,
+    FsAdminModule
   ],
   declarations: [
     QueuesComponent,

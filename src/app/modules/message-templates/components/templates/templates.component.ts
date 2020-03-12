@@ -48,10 +48,10 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     }
   }
 
-  public open(message_template) {
+  public open(messageTemplate) {
     const dialogRef = this._dialog.open(TemplateComponent, {
       data: {
-        message_template: message_template,
+        messageTemplate: messageTemplate,
         loadMessageTemplate: this.loadMessageTemplate,
         saveMessageTemplate: this.saveMessageTemplate,
       },

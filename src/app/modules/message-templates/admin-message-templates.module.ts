@@ -1,3 +1,4 @@
+import { FsAdminModule } from './../admin/admin.module';
 import { NgModule } from '@angular/core';
 
 import { FsListModule } from '@firestitch/list';
@@ -37,7 +38,8 @@ import { TemplateComponent } from './components/template/template.component';
     FormsModule,
     FsFormModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    FsAdminModule
   ],
   declarations: [
     TemplatesComponent,

@@ -2,7 +2,7 @@
   "name": "@firestitch/admin",
   "title": "Admin",
   "description": "@firestitch/admin",
-  "version": "8.1.1",
+  "version": "8.2.4",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/ngx-admin"
@@ -85,12 +85,16 @@
     "tsmodels": "^0.4.7",
     "typescript": "^3.5.3",
     "zone.js": "^0.10.2",
-    "anchorme": "^1.1.2"
+    "anchorme": "^1.1.2",
+    "camelcase-keys": "^6.2.1",
+    "snakecase-keys": "^3.1.2"
   },
   "engines": {
     "node": ">=6.0.0"
   },
   "peerDependencies": {
-    "anchorme": ">=1.1.2"
+    "anchorme": ">=1.1.2",
+    "camelcase-keys": ">=6.2.1",
+    "snakecase-keys": ">=3.1.2"
   }
 }

@@ -1,3 +1,4 @@
+import { AdminService } from './../../../admin/services/admin.service';
 import { Component, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
 
 import { takeUntil, map } from 'rxjs/operators';
@@ -33,7 +34,8 @@ export class MessagesComponent implements OnInit, OnDestroy {
   private _destroy$ = new Subject();
 
   constructor(
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _adminService: AdminService
   ) { }
 
   public ngOnInit() {
@@ -50,7 +52,12 @@ export class MessagesComponent implements OnInit, OnDestroy {
       ],
 
       fetch: query => {
-        return this.loadMessages(query);
+        return this.loadMessages(query)
+        .pipe(
+          map(response => {
+            return ({ data: this._adminService.input(response.data), paging: response.paging })
+          })
+        );
       }
     }
   }

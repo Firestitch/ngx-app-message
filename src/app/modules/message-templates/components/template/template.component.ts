@@ -14,7 +14,7 @@ export class TemplateComponent implements OnInit {
   @Input() loadMessageTemplate: (message: any) => Observable<any>;
   @Input() saveMessageTemplate: (message: any) => Observable<any>;
 
-  public message_template;
+  public messageTemplate;
 
   constructor(private _dialogRef: MatDialogRef<TemplateComponent>,
               private _message: FsMessage,
@@ -25,22 +25,22 @@ export class TemplateComponent implements OnInit {
 
   public ngOnInit() {
 
-    if (this._data.message_template.id) {
-      this.loadMessageTemplate(this._data.message_template)
-      .subscribe(message_template => {
-        this.message_template = message_template;
+    if (this._data.messageTemplate.id) {
+      this.loadMessageTemplate(this._data.messageTemplate)
+      .subscribe(messageTemplate => {
+        this.messageTemplate = messageTemplate;
       });
     } else {
-      this.message_template = {};
+      this.messageTemplate = {};
     }
   }
 
   public save = () => {
-    return this.saveMessageTemplate(this.message_template)
+    return this.saveMessageTemplate(this.messageTemplate)
     .pipe(
-      tap(message_template => {
+      tap(messageTemplate => {
         this._message.success('Saved Changes');
-        this._dialogRef.close(message_template);
+        this._dialogRef.close(messageTemplate);
       })
     );
   }

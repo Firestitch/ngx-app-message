@@ -1,5 +1,5 @@
-<form fsForm [submit]="save" #form="ngForm" *fsSkeleton="message_template">
-  <fs-dialog *ngIf="message_template">
+<form fsForm [submit]="save" #form="ngForm" *fsSkeleton="messageTemplate">
+  <fs-dialog *ngIf="messageTemplate">
     <div mat-dialog-title>Message Template</div>
     <mat-dialog-content>
       <div fxLayout="column">
@@ -7,7 +7,7 @@
           <input
             matInput
             placeholder="Name"
-            [(ngModel)]="message_template.name"
+            [(ngModel)]="messageTemplate.name"
             name="Name"
             required>
         </mat-form-field>
@@ -16,7 +16,7 @@
             matInput
             cdkTextareaAutosize
             placeholder="Body"
-            [(ngModel)]="message_template.content"
+            [(ngModel)]="messageTemplate.content"
             name="body"
             class="textarea-html"
             required>

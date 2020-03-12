@@ -1,3 +1,4 @@
+import { FsAdminModule } from './../admin/admin.module';
 import { NgModule } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
@@ -41,7 +42,8 @@ import { MessageComponent } from './components/message/message.component';
     MatTooltipModule,
     FormsModule,
     FsFormModule,
-    FsEditorRichTextModule
+    FsEditorRichTextModule,
+    FsAdminModule
   ],
   declarations: [
     MessagesComponent,

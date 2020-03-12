@@ -1,3 +1,4 @@
+import { AdminService } from './../../../admin/services/admin.service';
 import { Component, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
 
 import { takeUntil, map } from 'rxjs/operators';
@@ -40,7 +41,8 @@ export class QueuesComponent implements OnInit, OnDestroy {
   private _destroy$ = new Subject();
 
   constructor(
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _adminService: AdminService
   ) { }
 
   public ngOnInit() {
@@ -83,8 +85,11 @@ export class QueuesComponent implements OnInit, OnDestroy {
       ],
       sort: { value: 'created_date', direction: 'desc' },
       fetch: query => {
-        query.message_queue_attachment_counts = true;
-        return this.loadMessageQueues(query);
+        query.messageQueueAttachmentCounts = true;
+        return this.loadMessageQueues(query)
+        .pipe(
+          map(response => ({ data: this._adminService.input(response.data), paging: response.paging }))
+        )
       }
     }
   }

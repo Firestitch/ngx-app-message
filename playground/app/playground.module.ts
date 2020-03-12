@@ -1,3 +1,4 @@
+import { FsAdminModule } from './../../src/app/modules/admin/admin.module';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
@@ -32,6 +33,7 @@ const routes: Routes = [
     FsAdminMessageQueuesModule,
     FsAdminMessageTemplatesModule,
     FsAdminMessagesModule,
+    FsAdminModule.forRoot({ case: 'snake' }),
     BrowserAnimationsModule,
     AppMaterialModule,
     FormsModule,

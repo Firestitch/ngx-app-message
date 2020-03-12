@@ -1,4 +1,5 @@
-import { Component, OnInit, Inject, ViewChild, ElementRef, Input } from '@angular/core';
+import { AdminService } from './../../../admin/services/admin.service';
+import { Component, OnInit, Inject, QueryList, ElementRef, AfterContentInit, ViewChildren, AfterViewInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { FsMessage } from '@firestitch/message';
 import { EmailMessageQueueFormat } from '../../enums';
@@ -16,9 +17,9 @@ import { MessageComponent } from '../../../../modules/messages/components';
   templateUrl: './queue.component.html',
   styleUrls: ['./queue.component.scss']
 })
-export class QueueComponent implements OnInit {
+export class QueueComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('bodyFrame', { static: false }) bodyFrame: ElementRef;
+  @ViewChildren('bodyFrame') bodyFrame: QueryList<ElementRef>;
 
   public loadMessageQueue: (messageQueueId: number) => Observable<any>;
   public loadLogs: (messageQueue: any, query: any) => Observable<any>;
@@ -31,9 +32,8 @@ export class QueueComponent implements OnInit {
   public loadTemplates: () => Observable<any>;
   public testEmail: () => string;
 
-  public message_queue;
+  public messageQueue;
   public emailMessageQueueFormat = EmailMessageQueueFormat;
-  public bodyFrameHeight;
   public messageQueueStates;
   public logConfig: FsListConfig;
   public attachmentConfig: FsListConfig;
@@ -41,6 +41,7 @@ export class QueueComponent implements OnInit {
   constructor(private _message: FsMessage,
               private _prompt: FsPrompt,
               private _dialog: MatDialog,
+              private _adminService: AdminService,
               @Inject(MAT_DIALOG_DATA) private _data) {
     this.loadMessageQueue = _data.loadMessageQueue;
     this.saveMessage = _data.saveMessage;
@@ -57,16 +58,19 @@ export class QueueComponent implements OnInit {
 
     this.messageQueueStates = indexNameValue(MessageQueueStates);
     this.loadMessageQueue(this._data.messageQueue.id)
-    .subscribe(message_queue => {
-      this.message_queue = message_queue;
-      this._setBodyContent(message_queue);
-      this._setLogsConfig(message_queue);
-      this._setAttachmentsConfig(message_queue);
+    .subscribe(messageQueue => {
+      this.messageQueue = this._adminService.input(messageQueue);
+      this._setLogsConfig(messageQueue);
+      this._setAttachmentsConfig(messageQueue);
     });
   }
 
+  ngAfterViewInit() {
+    this._updateBodyIframe();
+  }
+
   public openMessage(message) {
-    const dialogRef = this._dialog.open(MessageComponent, {
+    this._dialog.open(MessageComponent, {
       data: {
         message: message,
         saveMessage: this.saveMessage,
@@ -84,9 +88,9 @@ export class QueueComponent implements OnInit {
       title: 'Confirm',
       template: 'Are you sure you would like to resend this message?'
     }).subscribe(() => {
-      this.resendMessageQueue(this.message_queue)
+      this.resendMessageQueue(this._adminService.output(this.messageQueue))
       .subscribe(messageQueue => {
-        Object.assign(this.message_queue, messageQueue);
+        Object.assign(this.messageQueue, messageQueue);
         this._message.success('Successfully resent');
       });
     });
@@ -99,24 +103,27 @@ export class QueueComponent implements OnInit {
       commitLabel: 'Forward',
       required: true
     }).subscribe((value: string) => {
-      this.forwardMessageQueue(this.message_queue, value)
-      .subscribe(messageQueue => {
-        Object.assign(this.message_queue, messageQueue);
-        this._message.success('Successfully forwarded');
-      });
+      if (value) {
+        this.forwardMessageQueue(this._adminService.output(this.messageQueue), value)
+        .subscribe(messageQueue => {
+          Object.assign(this.messageQueue, messageQueue);
+          this._message.success('Successfully forwarded');
+        });
+      }
     });
   }
 
   public selectedTabChange(event) {
     if (event.index === 0) {
-      this._setBodyContent(this.message_queue);
+      this._updateBodyIframe();
     }
   }
 
-  private _setBodyContent(message_queue) {
-    if (this.bodyFrame) {
-      setTimeout(() => {
-        const win: Window = this.bodyFrame.nativeElement.contentWindow;
+  private _updateBodyIframe() {
+
+    this.bodyFrame.forEach(bodyFrame => {
+
+        const win: Window = bodyFrame.nativeElement.contentWindow;
         const doc: Document = win.document;
         const data = `<style>
                         body {
@@ -128,33 +135,32 @@ export class QueueComponent implements OnInit {
                         a {
                           color: #1155CC;
                         }
-                        </style>` + message_queue.email_message_queue.body;
+                        </style>` + this.messageQueue.emailMessageQueue.body;
         doc.open();
         doc.write(data);
         doc.close();
 
-        this.bodyFrameHeight = doc.body.offsetHeight;
-      });
-    }
+        bodyFrame.nativeElement.setAttribute('height', doc.body.offsetHeight);
+    });
   }
 
-  private _setLogsConfig(message_queue) {
+  private _setLogsConfig(messageQueue) {
     this.logConfig = {
       paging: {
         strategy: PaginationStrategy.LoadMore
       },
       queryParam: false,
       fetch: query => {
-        return this.loadLogs(message_queue, query);
+        return this.loadLogs(messageQueue, query);
       }
     }
   }
 
-  private _setAttachmentsConfig(message_queue) {
+  private _setAttachmentsConfig(messageQueue) {
     this.attachmentConfig = {
       queryParam: false,
       fetch: query => {
-        return  this.loadAttachments(message_queue, query)
+        return  this.loadAttachments(messageQueue, query)
           .pipe(
             map(response => ({ data: response.data.map(value => {
               value.prettyFilesize = this._prettyFilesize(value.filesize);
