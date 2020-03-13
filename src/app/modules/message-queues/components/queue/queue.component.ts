@@ -1,5 +1,5 @@
 import { AdminService } from './../../../admin/services/admin.service';
-import { Component, OnInit, Inject, QueryList, ElementRef, AfterContentInit, ViewChildren, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Inject, QueryList, ElementRef, ViewChildren } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { FsMessage } from '@firestitch/message';
 import { EmailMessageQueueFormat } from '../../enums';
@@ -17,7 +17,7 @@ import { MessageComponent } from '../../../../modules/messages/components';
   templateUrl: './queue.component.html',
   styleUrls: ['./queue.component.scss']
 })
-export class QueueComponent implements OnInit, AfterViewInit {
+export class QueueComponent implements OnInit {
 
   @ViewChildren('bodyFrame') bodyFrame: QueryList<ElementRef>;
 
@@ -62,11 +62,8 @@ export class QueueComponent implements OnInit, AfterViewInit {
       this.messageQueue = this._adminService.input(messageQueue);
       this._setLogsConfig(messageQueue);
       this._setAttachmentsConfig(messageQueue);
+      this._updateBodyIframe();
     });
-  }
-
-  ngAfterViewInit() {
-    this._updateBodyIframe();
   }
 
   public openMessage(message) {
@@ -121,26 +118,30 @@ export class QueueComponent implements OnInit, AfterViewInit {
 
   private _updateBodyIframe() {
 
-    this.bodyFrame.forEach(bodyFrame => {
+    setTimeout(() => {
 
-        const win: Window = bodyFrame.nativeElement.contentWindow;
-        const doc: Document = win.document;
-        const data = `<style>
-                        body {
-                          font-family: Roboto;
-                          font-size: 15px;
-                          margin: 0;
-                        }
+      this.bodyFrame.forEach(bodyFrame => {
 
-                        a {
-                          color: #1155CC;
-                        }
-                        </style>` + this.messageQueue.emailMessageQueue.body;
-        doc.open();
-        doc.write(data);
-        doc.close();
+          const win: Window = bodyFrame.nativeElement.contentWindow;
+          const doc: Document = win.document;
+          const data = `<style>
+                          body {
+                            font-family: Roboto;
+                            font-size: 15px;
+                            margin: 0;
+                            width: auto !important;
+                          }
 
-        bodyFrame.nativeElement.setAttribute('height', doc.body.offsetHeight);
+                          a {
+                            color: #1155CC;
+                          }
+                          </style>` + this.messageQueue.emailMessageQueue.body;
+          doc.open();
+          doc.write(data);
+          doc.close();
+
+          bodyFrame.nativeElement.setAttribute('height', doc.body.scrollHeight);
+      });
     });
   }
 
