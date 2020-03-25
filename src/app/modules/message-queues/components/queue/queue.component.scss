@@ -11,6 +11,10 @@
   .body-frame {
     border: 0;
   }
+
+  ::ng-deep .field-label {
+    margin-bottom: 10px;
+  }
 }
 
 [hidden] {

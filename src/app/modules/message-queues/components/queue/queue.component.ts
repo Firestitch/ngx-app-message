@@ -128,7 +128,9 @@ export class QueueComponent implements OnInit {
                           body {
                             font-family: Roboto;
                             font-size: 15px;
-                            margin: 0;
+                            margin: 0 !important;
+                            overflow-y: hidden !important;
+                            box-sizing: border-box !important;
                             width: auto !important;
                           }
 
