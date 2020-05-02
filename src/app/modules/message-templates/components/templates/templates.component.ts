@@ -19,6 +19,7 @@ export class TemplatesComponent implements OnInit, OnDestroy {
   @Input() loadMessageTemplates: (query: any) => Observable<{ data: any[], paging: any }>;
   @Input() loadMessageTemplate: (messageTemplate) => Observable<any[]>;
   @Input() saveMessageTemplate: (messageTemplate) => Observable<any[]>;
+  @Input() deleteMessageTemplate: (messageTemplate) => Observable<any[]>;
 
   @ViewChild('list', { static: true }) public list: FsListComponent = null;
   public config: FsListConfig = null;
@@ -43,8 +44,24 @@ export class TemplatesComponent implements OnInit, OnDestroy {
       ],
       status: false,
       fetch: query => {
-      return this.loadMessageTemplates(query);
+        return this.loadMessageTemplates(query);
       }
+    }
+
+    if (this.deleteMessageTemplate) {
+      this.config.rowActions = [
+        {
+          click: data => {
+            return this.deleteMessageTemplate(data);
+          },
+          remove: {
+            title: 'Confirm',
+            template: 'Are you sure you would like to delete this template?',
+          },
+          menu: true,
+          label: 'Delete'
+        }
+      ];
     }
   }
 
@@ -64,11 +81,15 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     )
     .subscribe((response) => {
       if (response) {
-        this.list.updateData(
+        const update = this.list.updateData(
           response,
           (row: any) => {
             return row.id === response.id;
           });
+
+        if (!update) {
+          this.list.reload();
+        }
       }
     })
   }

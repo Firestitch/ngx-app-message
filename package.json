@@ -2,7 +2,7 @@
   "name": "@firestitch/admin",
   "title": "Admin",
   "description": "@firestitch/admin",
-  "version": "8.2.9",
+  "version": "8.2.11",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/ngx-admin"
@@ -29,7 +29,7 @@
     "@angular-devkit/build-ng-packagr": "^0.803.9",
     "@angular/animations": "^8.2.10",
     "@angular/cdk": "^8.2.3",
-    "@angular/cli": "^8.3.9",
+    "@angular/cli": "^8.3.23",
     "@angular/common": "^8.2.10",
     "@angular/compiler": "^8.2.10",
     "@angular/compiler-cli": "^8.2.10",

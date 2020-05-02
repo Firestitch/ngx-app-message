@@ -21,12 +21,17 @@
             class="textarea-html"
             required>
           </textarea>
+          <mat-hint>
+            <span ngNonBindable>
+              &#123;$content&#125; will be replaced with the message content.
+            </span>
+          </mat-hint>
         </mat-form-field>
       </div>
     </mat-dialog-content>
     <mat-dialog-actions>
       <button mat-button color="primary">Save</button>
-      <button mat-button [mat-dialog-close]="null">Cancel</button>
+      <button mat-button [mat-dialog-close]="null" type="button">Cancel</button>
     </mat-dialog-actions>
   </fs-dialog>
 </form>

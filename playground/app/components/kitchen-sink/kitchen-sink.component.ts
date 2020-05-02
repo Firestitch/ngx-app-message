@@ -78,6 +78,10 @@ export class KitchenSinkComponent {
     return of(messageTemplate);
   }
 
+  public deleteMessageTemplate = (messageTemplate) => {
+    return of(messageTemplate);
+  }
+
   public testEmail = () => {
     return 'email@email.com';
   }
