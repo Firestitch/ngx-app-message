@@ -21,6 +21,7 @@ import { KitchenSinkConfigureComponent } from './components/kitchen-sink-configu
 import { FsListModule } from '@firestitch/list';
 import { FsScrollModule } from '@firestitch/scroll';
 import { FsSelectionModule } from '@firestitch/selection';
+import { FsEditorRichTextModule } from '@firestitch/editor';
 
 const routes: Routes = [
   { path: '', component: ExamplesComponent },
@@ -40,6 +41,7 @@ const routes: Routes = [
     FsLabelModule,
     FsListModule.forRoot(),
     FsExampleModule.forRoot(),
+    FsEditorRichTextModule.forRoot(),
     FsMessageModule.forRoot(),
     FsSelectionModule.forRoot(),
     FsScrollModule.forRoot(),

@@ -11,14 +11,13 @@
             name="Name"
             required>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field class="body">
           <textarea
             matInput
             cdkTextareaAutosize
-            placeholder="Body"
             [(ngModel)]="messageTemplate.content"
             name="body"
-            class="textarea-html"
+            placeholder="Body"
             required>
           </textarea>
           <mat-hint>
@@ -27,7 +26,17 @@
             </span>
           </mat-hint>
         </mat-form-field>
+        <mat-form-field class="styles">
+          <textarea
+            matInput
+            cdkTextareaAutosize
+            placeholder="Styles"
+            [(ngModel)]="messageTemplate.styles"
+            name="styles">
+          </textarea>
+        </mat-form-field>
       </div>
+
     </mat-dialog-content>
     <mat-dialog-actions>
       <button mat-button color="primary">Save</button>
