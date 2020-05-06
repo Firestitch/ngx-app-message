@@ -1,5 +1,5 @@
 import { AdminService } from './../../../admin/services/admin.service';
-import { Component, OnInit, Inject, QueryList, ElementRef, ViewChildren } from '@angular/core';
+import { Component, OnInit, Inject, QueryList, ElementRef, ViewChildren, AfterViewInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { FsMessage } from '@firestitch/message';
 import { EmailMessageQueueFormat } from '../../enums';
@@ -17,7 +17,7 @@ import { MessageComponent } from '../../../../modules/messages/components';
   templateUrl: './queue.component.html',
   styleUrls: ['./queue.component.scss']
 })
-export class QueueComponent implements OnInit {
+export class QueueComponent implements OnInit, AfterViewInit {
 
   @ViewChildren('bodyFrame') bodyFrame: QueryList<ElementRef>;
 
@@ -62,7 +62,42 @@ export class QueueComponent implements OnInit {
       this.messageQueue = this._adminService.input(messageQueue);
       this._setLogsConfig(messageQueue);
       this._setAttachmentsConfig(messageQueue);
-      this._updateBodyIframe();
+    });
+  }
+
+  public ngAfterViewInit() {
+    this.bodyFrame.changes
+    .subscribe(() => {
+      this._updateBodyFrames();
+    });
+
+    this._updateBodyFrames();
+  }
+
+  private _updateBodyFrames() {
+
+    this.bodyFrame.forEach(bodyFrame => {
+      const win: Window = bodyFrame.nativeElement.contentWindow;
+      const doc: Document = win.document;
+      const data = `<style>
+                      body {
+                        font-family: Roboto;
+                        font-size: 15px;
+                        margin: 0 !important;
+                        overflow-y: hidden !important;
+                        box-sizing: border-box !important;
+                        width: auto !important;
+                      }
+
+                      a {
+                        color: #1155CC;
+                      }
+                      </style>` + this.messageQueue.emailMessageQueue.body;
+      doc.open();
+      doc.write(data);
+      doc.close();
+
+      bodyFrame.nativeElement.setAttribute('height', doc.body.scrollHeight);
     });
   }
 
@@ -107,43 +142,6 @@ export class QueueComponent implements OnInit {
           this._message.success('Successfully forwarded');
         });
       }
-    });
-  }
-
-  public selectedTabChange(event) {
-    if (event.index === 0) {
-      this._updateBodyIframe();
-    }
-  }
-
-  private _updateBodyIframe() {
-
-    setTimeout(() => {
-
-      this.bodyFrame.forEach(bodyFrame => {
-
-          const win: Window = bodyFrame.nativeElement.contentWindow;
-          const doc: Document = win.document;
-          const data = `<style>
-                          body {
-                            font-family: Roboto;
-                            font-size: 15px;
-                            margin: 0 !important;
-                            overflow-y: hidden !important;
-                            box-sizing: border-box !important;
-                            width: auto !important;
-                          }
-
-                          a {
-                            color: #1155CC;
-                          }
-                          </style>` + this.messageQueue.emailMessageQueue.body;
-          doc.open();
-          doc.write(data);
-          doc.close();
-
-          bodyFrame.nativeElement.setAttribute('height', doc.body.scrollHeight);
-      });
     });
   }
 
