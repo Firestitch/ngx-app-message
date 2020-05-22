@@ -1,13 +1,13 @@
 import { AdminService } from './../../../admin/services/admin.service';
-import { Component, OnInit, Inject, QueryList, ElementRef, ViewChildren, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Inject, QueryList, ElementRef, ViewChildren, AfterViewInit, HostListener, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { FsMessage } from '@firestitch/message';
 import { EmailMessageQueueFormat } from '../../enums';
 import { MessageQueueStates } from '../../consts';
 import { FsPrompt } from '@firestitch/prompt';
 import { FsListConfig, PaginationStrategy } from '@firestitch/list';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { map, debounceTime, takeUntil } from 'rxjs/operators';
+import { Observable, Subject, fromEvent } from 'rxjs';
 import { indexNameValue } from '../../../../helpers';
 import { MessageComponent } from '../../../../modules/messages/components';
 
@@ -17,7 +17,7 @@ import { MessageComponent } from '../../../../modules/messages/components';
   templateUrl: './queue.component.html',
   styleUrls: ['./queue.component.scss']
 })
-export class QueueComponent implements OnInit, AfterViewInit {
+export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChildren('bodyFrame') bodyFrame: QueryList<ElementRef>;
 
@@ -37,6 +37,8 @@ export class QueueComponent implements OnInit, AfterViewInit {
   public messageQueueStates;
   public logConfig: FsListConfig;
   public attachmentConfig: FsListConfig;
+
+  private _destroy$ = new Subject();
 
   constructor(private _message: FsMessage,
               private _prompt: FsPrompt,
@@ -63,6 +65,17 @@ export class QueueComponent implements OnInit, AfterViewInit {
       this._setLogsConfig(messageQueue);
       this._setAttachmentsConfig(messageQueue);
     });
+
+    fromEvent(window, 'resize')
+      .pipe(
+        debounceTime(50),
+        takeUntil(this._destroy$)
+      )
+      .subscribe((event) => {
+        this.bodyFrame.forEach(bodyFrame => {
+          this._updateBodyFrameHeight(bodyFrame);
+        });
+      });
   }
 
   public ngAfterViewInit() {
@@ -85,19 +98,43 @@ export class QueueComponent implements OnInit, AfterViewInit {
                         font-size: 15px;
                         margin: 0 !important;
                         overflow-y: hidden !important;
-                        box-sizing: border-box !important;
                         width: auto !important;
                       }
 
                       a {
                         color: #1155CC;
                       }
+
+                      * {
+                        box-sizing: border-box !important;
+                      }
+
                       </style>` + this.messageQueue.emailMessageQueue.body;
+
+      bodyFrame.nativeElement.onload = () => {
+        this._updateBodyFrameHeight(bodyFrame);
+      }
+
       doc.open();
       doc.write(data);
       doc.close();
 
-      bodyFrame.nativeElement.setAttribute('height', doc.body.scrollHeight);
+      const styles = doc.createElement('style');
+      const css = `
+                  body {
+                    font-family: Roboto;
+                    font-size: 15px;
+                    margin: 0 !important;
+                    overflow-y: hidden !important;
+                    width: auto !important;
+                  }
+
+                  a {
+                    color: #1155CC;
+                  }`;
+
+      styles.appendChild(document.createTextNode(css));
+      doc.body.appendChild(styles);
     });
   }
 
@@ -143,6 +180,16 @@ export class QueueComponent implements OnInit, AfterViewInit {
         });
       }
     });
+  }
+
+  public ngOnDestroy() {
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
+
+  private _updateBodyFrameHeight(bodyFrame) {
+    bodyFrame.nativeElement.removeAttribute('height');
+    bodyFrame.nativeElement.setAttribute('height', bodyFrame.nativeElement.contentDocument.body.scrollHeight);
   }
 
   private _setLogsConfig(messageQueue) {

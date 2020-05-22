@@ -19,18 +19,33 @@
               {{messageQueue.scheduledDate | fsDateFormat: 'full-date-time'}}
             </fs-label-field>
 
+            <ng-container *ngIf="messageQueue.emailMessageQueue">
+              <fs-label-field>
+                <fs-label>
+                    Recipients
+                </fs-label>
+                {{messageQueue.emailMessageQueue.toRecipients.join(', ')}}
+              </fs-label-field>
+
+              <fs-label-field *ngIf="messageQueue.emailMessageQueue.fromName || messageQueue.emailMessageQueue.fromEmail">
+                <fs-label>
+                  From
+                </fs-label>
+                <ng-container *ngIf="messageQueue.emailMessageQueue.fromName === messageQueue.emailMessageQueue.fromEmail; else fromEmailName">
+                  {{messageQueue.emailMessageQueue.fromName}}
+                </ng-container>
+
+                <ng-template #fromEmailName>
+                  {{messageQueue.emailMessageQueue.fromName}} ({{messageQueue.emailMessageQueue.fromEmail}})
+                </ng-template>
+              </fs-label-field>
+            </ng-container>
+
             <fs-label-field>
               <fs-label>
                 Send Attempts
               </fs-label>
               {{messageQueue.attempts}}
-            </fs-label-field>
-
-            <fs-label-field *ngIf="messageQueue.emailMessageQueue">
-              <fs-label>
-                  Recipients
-              </fs-label>
-              {{messageQueue.emailMessageQueue.toRecipients.join(', ')}}
             </fs-label-field>
 
             <fs-label-field *ngIf="messageQueue.message">
