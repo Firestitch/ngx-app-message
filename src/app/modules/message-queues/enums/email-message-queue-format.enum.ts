@@ -1,4 +1,5 @@
 export enum EmailMessageQueueFormat {
   Text = 'T',
-  HTML = 'H'
+  HTML = 'H',
+  RichText = 'R'
 }

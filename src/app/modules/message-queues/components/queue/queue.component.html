@@ -75,7 +75,7 @@
               </div>
               <iframe
                 #bodyFrame
-                *ngIf="messageQueue.emailMessageQueue.format===emailMessageQueueFormat.HTML"
+                *ngIf="messageQueue.emailMessageQueue.format===emailMessageQueueFormat.HTML || messageQueue.emailMessageQueue.format===emailMessageQueueFormat.RichText"
                 width="100%"
                 class="body-frame">
               </iframe>
