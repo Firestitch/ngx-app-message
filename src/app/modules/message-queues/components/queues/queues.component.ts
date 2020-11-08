@@ -69,28 +69,31 @@ export class QueuesComponent implements OnInit, OnDestroy {
           type: ItemType.DateRange,
           label: ['From Date', 'To Date'],
         },
-        {
-          name: 'message_id',
-          type: ItemType.Select,
-          label: 'Message Type',
-          values: () => {
-            return this.loadMessages()
-            .pipe(
-              map(items => {
-                return _map( items, (item) => ( { name: item.name, value: item.id }) )
-              })
-            )
-          }
-        }
       ],
       sort: { value: 'created_date', direction: 'desc' },
       fetch: query => {
         query.messageQueueAttachmentCounts = true;
         return this.loadMessageQueues(query)
-        .pipe(
-          map(response => ({ data: this._adminService.input(response.data), paging: response.paging }))
-        )
+          .pipe(
+            map(response => ({ data: this._adminService.input(response.data), paging: response.paging }))
+          )
       }
+    };
+
+    if (this.loadMessages) {
+      this.config.filters.push({
+        name: 'message_id',
+        type: ItemType.Select,
+        label: 'Message Type',
+        values: () => {
+          return this.loadMessages()
+            .pipe(
+              map(items => {
+                return _map(items, (item) => ({ name: item.name, value: item.id }))
+              })
+            )
+        }
+      });
     }
   }
 

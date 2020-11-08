@@ -52,7 +52,14 @@
               <fs-label>
                 Message Type
               </fs-label>
-              <a (click)="openMessage(messageQueue.message)">{{messageQueue.message.name}}</a>
+              <a
+                (click)="openMessage(messageQueue.message)"
+                *ngIf="loadMessage; else elseMessage">
+                {{messageQueue.message.name}}
+              </a>
+              <ng-template #elseMessage>
+                {{messageQueue.message.name}}
+              </ng-template>
             </fs-label-field>
           </div>
 
@@ -118,8 +125,27 @@
     </mat-tab-group>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-button [mat-dialog-close]="null" color="primary">Done</button>
-    <button mat-button type="button" (click)="resend()" type="button">Resend</button>
-    <button mat-button type="button" (click)="forward()" type="button">Forward</button>
+    <button
+        mat-button
+        [mat-dialog-close]="null"
+        color="primary">
+      Done
+    </button>
+    <button
+        mat-button
+        *ngIf="resendMessageQueue"
+        type="button"
+        (click)="resend()"
+        type="button">
+      Resend
+    </button>
+    <button
+        mat-button
+        *ngIf="forwardMessageQueue"
+        type="button"
+        (click)="forward()"
+        type="button">
+      Forward
+    </button>
   </mat-dialog-actions>
 </fs-dialog>
