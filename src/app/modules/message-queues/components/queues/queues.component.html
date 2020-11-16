@@ -1,8 +1,10 @@
 <fs-list [config]="config" #list>
-  <fs-list-column title="Recipients">
+  <fs-list-column title="Recipients" class="col-recipients">
     <ng-template fs-list-cell let-row="row">
       <ng-container *ngIf="row.emailMessageQueue">
-        <a (click)="open(row)">{{row.emailMessageQueue.toRecipients.join(', ')}}</a>
+        <div><a (click)="open(row)">{{row.emailMessageQueue.toRecipients.join(', ')}}</a></div>
+        <small *ngIf="row.emailMessageQueue.ccRecipients.length">{{row.emailMessageQueue.ccRecipients.join(', ')}}</small>
+        <small *ngIf="row.emailMessageQueue.bccRecipients.length">{{row.emailMessageQueue.bccRecipients.join(', ')}}</small>
       </ng-container>
     </ng-template>
   </fs-list-column>

@@ -5,26 +5,27 @@
       <mat-tab label="Overview">
         <ng-template matTabContent>
           <div fxLayout="row wrap" fxLayoutGap="25px">
-            <fs-label-field>
-              <fs-label>
-                Status
-              </fs-label>
-              {{messageQueueStates[messageQueue.state]}}
-            </fs-label-field>
-
-            <fs-label-field>
-              <fs-label>
-                Date
-              </fs-label>
-              {{messageQueue.scheduledDate | fsDateFormat: 'full-date-time'}}
-            </fs-label-field>
 
             <ng-container *ngIf="messageQueue.emailMessageQueue">
               <fs-label-field>
                 <fs-label>
-                    Recipients
+                  To Recipients
                 </fs-label>
                 {{messageQueue.emailMessageQueue.toRecipients.join(', ')}}
+              </fs-label-field>
+
+              <fs-label-field *ngIf="messageQueue.emailMessageQueue.ccRecipients.length">
+                <fs-label>
+                  CC
+                </fs-label>
+                {{messageQueue.emailMessageQueue.ccRecipients.join(', ')}}
+              </fs-label-field>
+
+              <fs-label-field *ngIf="messageQueue.emailMessageQueue.bccRecipients.length">
+                <fs-label>
+                  BCC
+                </fs-label>
+                {{messageQueue.emailMessageQueue.bccRecipients.join(', ')}}
               </fs-label-field>
 
               <fs-label-field *ngIf="messageQueue.emailMessageQueue.fromName || messageQueue.emailMessageQueue.fromEmail">
@@ -40,6 +41,22 @@
                 </ng-template>
               </fs-label-field>
             </ng-container>
+          </div>
+
+          <div fxLayout="row wrap" fxLayoutGap="25px">
+            <fs-label-field>
+              <fs-label>
+                Date
+              </fs-label>
+              {{messageQueue.scheduledDate | fsDateFormat: 'full-date-time'}}
+            </fs-label-field>
+
+            <fs-label-field>
+              <fs-label>
+                Status
+              </fs-label>
+              {{messageQueueStates[messageQueue.state]}}
+            </fs-label-field>
 
             <fs-label-field>
               <fs-label>

@@ -1,0 +1,9 @@
+:host ::ng-deep {
+  .col-recipients {
+    small + small {
+      &:before {
+        content: ', ';
+      }
+    }
+  }
+}

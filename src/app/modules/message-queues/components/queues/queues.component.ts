@@ -16,6 +16,7 @@ import { indexNameValue } from '../../../../helpers';
 
 @Component({
   selector: 'fs-admin-message-queues',
+  styleUrls: ['./queues.component.scss'],
   templateUrl: './queues.component.html'
 })
 export class QueuesComponent implements OnInit, OnDestroy {
