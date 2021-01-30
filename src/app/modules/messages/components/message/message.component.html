@@ -3,9 +3,8 @@
     <div mat-dialog-title>Edit Message</div>
     <mat-dialog-content>
 
-      <mat-tab-group>
+      <mat-tab-group (selectedTabChange)="tabChange($event)">
         <mat-tab label="General">
-
           <div fxLayout="column">
             <mat-form-field>
               <input
@@ -136,24 +135,7 @@
             </ng-container>
 
             <ng-container *ngIf="message.emailMessage.format===emailMessageFormat.HTML">
-              <mat-form-field
-                fxFlex>
-                  <textarea
-                    matInput
-                    cdkTextareaAutosize
-                    placeholder="Body"
-                    [(ngModel)]="message.emailMessage.body"
-                    name="body"
-                    class="textarea-html"
-                    required>
-                  </textarea>
-              </mat-form-field>
-            </ng-container>
-
-
-            <mat-form-field
-              fxFlex
-              *ngIf="message.emailMessage.format===emailMessageFormat.Text">
+              <mat-form-field class="email-body-html">
                 <textarea
                   matInput
                   cdkTextareaAutosize
@@ -162,29 +144,79 @@
                   name="body"
                   required>
                 </textarea>
+              </mat-form-field>
+            </ng-container>
+
+
+            <mat-form-field
+                *ngIf="message.emailMessage.format===emailMessageFormat.Text"
+                class="email-body-text">
+              <textarea
+                matInput
+                cdkTextareaAutosize
+                placeholder="Body"
+                [(ngModel)]="message.emailMessage.body"
+                name="body"
+                required>
+              </textarea>
             </mat-form-field>
           </div>
         </mat-tab>
 
+        <mat-tab label="SMS Message" *ngIf="message.smsMessage">
+          <mat-form-field class="sms-message">
+            <textarea
+              matInput
+              cdkTextareaAutosize
+              placeholder="Message"
+              [(ngModel)]="message.smsMessage.message"
+              name="message"
+              required>
+            </textarea>
+          </mat-form-field>
+        </mat-tab>
+
         <mat-tab label="Defaults">
-          <fs-label-field>
-            <fs-label>Subject</fs-label>
-            <div class="content">{{message.defaultEmailSubject}}</div>
-          </fs-label-field>
-
-          <br>
-
-          <fs-label-field>
-            <fs-label>Body</fs-label>
-            <div class="content">{{message.defaultEmailBody}}</div>
-          </fs-label-field>
+          <ng-container *ngIf="message.emailMessage">
+            <h2 *ngIf="message.emailMessage && message.smsMessage">Email</h2>
+            <fs-label-field>
+              <fs-label>Subject</fs-label>
+              <div class="content">{{message.defaultEmailSubject}}</div>
+            </fs-label-field>
+            <fs-label-field>
+              <fs-label>Body</fs-label>
+              <div class="content">{{message.defaultEmailBody}}</div>
+            </fs-label-field>
+          </ng-container>
+          <ng-container *ngIf="message.smsMessage">
+            <h2 *ngIf="message.emailMessage && message.smsMessage">SMS</h2>
+            <fs-label-field>
+              <fs-label>Message</fs-label>
+              <div class="content">{{message.defaultSmsMessage}}</div>
+            </fs-label-field>
+          </ng-container>
         </mat-tab>
       </mat-tab-group>
 
     </mat-dialog-content>
     <mat-dialog-actions>
       <button mat-button color="primary">Save</button>
-      <button mat-button type="button" (click)="sendTest()" type="button">Send Test</button>
+      <button
+          *ngIf="tab==='email'"
+          mat-button
+          type="button"
+          (click)="sendTest('email')"
+          type="button">
+        Send Test Email
+      </button>
+      <button
+          *ngIf="tab==='sms'"
+          mat-button
+          type="button"
+          (click)="sendTest('sms')"
+          type="button">
+        Send Test SMS
+      </button>
       <button mat-button [mat-dialog-close]="null" type="button">Cancel</button>
     </mat-dialog-actions>
   </fs-dialog>

@@ -4,7 +4,19 @@ fs-label-field {
   }
 }
 
-.textarea-html {
-  font-family: monospace;
-  min-height: 300px;
+:host ::ng-deep {
+  .sms-message {
+    width: 100%;
+    textarea {
+      font-family: monospace;
+    }
+  }
+
+  .email-body-html {
+    width: 100%;
+    textarea {
+      font-family: monospace;
+      min-height: 300px;
+    }
+  }
 }

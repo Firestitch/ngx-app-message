@@ -22,6 +22,7 @@ import { FsAdminMessagesModule } from '../messages/admin-messages.module';
 import { QueuesComponent } from './components/queues/queues.component';
 import { QueueComponent } from './components/queue/queue.component';
 import { LinkifyPipe } from './pipes/linkify.pipe';
+import { TruncatePipe } from './pipes/truncate.pipe';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { LinkifyPipe } from './pipes/linkify.pipe';
   declarations: [
     QueuesComponent,
     QueueComponent,
-    LinkifyPipe
+    LinkifyPipe,
+    TruncatePipe,
   ],
   entryComponents: [
     QueueComponent

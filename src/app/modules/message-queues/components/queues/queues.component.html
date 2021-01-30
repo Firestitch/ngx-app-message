@@ -6,15 +6,21 @@
         <small *ngIf="row.emailMessageQueue.ccRecipients.length">{{row.emailMessageQueue.ccRecipients.join(', ')}}</small>
         <small *ngIf="row.emailMessageQueue.bccRecipients.length">{{row.emailMessageQueue.bccRecipients.join(', ')}}</small>
       </ng-container>
+      <ng-container *ngIf="row.smsMessageQueue">
+        <div><a (click)="open(row)">{{row.smsMessageQueue.toNumber}}</a></div>
+      </ng-container>
     </ng-template>
   </fs-list-column>
   <fs-list-column title="Subject" name="subject" sortable="true">
     <ng-template fs-list-cell let-row="row">
       <ng-container *ngIf="row.emailMessageQueue">
         <div fxLayout="row" fxLayoutAlign="start center">
-          <a (click)="open(row)">{{row.emailMessageQueue.subject}}</a>
+          <a (click)="open(row)">{{row.emailMessageQueue.subject|truncate:100}}</a>
           <mat-icon *ngIf="row.messageQueueAttachmentCount" [matTooltip]="row.messageQueueAttachmentCount + ' Attachment(s)'">attach_file</mat-icon>
         </div>
+      </ng-container>
+      <ng-container *ngIf="row.smsMessageQueue">
+        {{row.smsMessageQueue.body|truncate:100}}
       </ng-container>
     </ng-template>
   </fs-list-column>

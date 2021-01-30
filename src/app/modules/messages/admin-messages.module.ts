@@ -47,7 +47,7 @@ import { MessageComponent } from './components/message/message.component';
   ],
   declarations: [
     MessagesComponent,
-    MessageComponent
+    MessageComponent,
   ],
   entryComponents: [
     MessageComponent

@@ -41,6 +41,22 @@
                 </ng-template>
               </fs-label-field>
             </ng-container>
+
+            <ng-container *ngIf="messageQueue.smsMessageQueue">
+              <fs-label-field>
+                <fs-label>
+                  To Number
+                </fs-label>
+                {{messageQueue.smsMessageQueue.toNumber}}
+              </fs-label-field>
+
+              <fs-label-field *ngIf="messageQueue.smsMessageQueue.fromNumber">
+                <fs-label>
+                  From Number
+                </fs-label>
+                {{messageQueue.smsMessageQueue.fromNumber}}
+              </fs-label-field>
+            </ng-container>
           </div>
 
           <div fxLayout="row wrap" fxLayoutGap="25px">
@@ -105,6 +121,19 @@
               </iframe>
             </fs-label-field>
           </ng-container>
+
+          <ng-container *ngIf="messageQueue.smsMessageQueue">
+            <fs-label-field>
+              <fs-label>
+                Message
+              </fs-label>
+              <div
+                class="format-text"
+                [innerHTML]="messageQueue.smsMessageQueue.body | linkify">
+              </div>
+            </fs-label-field>
+          </ng-container>
+
         </ng-template>
       </mat-tab>
       <mat-tab label="Logs">
