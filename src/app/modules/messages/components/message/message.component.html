@@ -5,137 +5,149 @@
 
       <mat-tab-group (selectedTabChange)="tabChange($event)">
         <mat-tab label="General">
-          <div fxLayout="column">
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Name"
-                [(ngModel)]="message.name"
-                name="Name"
-                required>
-            </mat-form-field>
-            <mat-form-field>
-              <input
-                matInput
-                placeholder="Description"
-                [(ngModel)]="message.description"
-                name="description">
-            </mat-form-field>
-
-            <div
-              fxLayout="row"
-              fxLayoutGap="10px"
-              fxLayout.xs="column"
-              fxLayout.sm="column">
-              <mat-form-field fxFlex>
+          <ng-template matTabContent>
+            <div fxLayout="column">
+              <mat-form-field>
                 <input
                   matInput
-                  placeholder="From Email"
-                  [(ngModel)]="message.emailMessage.fromEmail"
-                  name="from_email">
-              </mat-form-field>
-              <mat-form-field fxFlex>
-                <input
-                  matInput
-                  placeholder="From Name"
-                  [(ngModel)]="message.emailMessage.fromName"
-                  name="from_name">
-              </mat-form-field>
-              <mat-form-field fxFlex>
-                <input
-                  matInput
-                  placeholder="Reply To"
-                  [(ngModel)]="message.emailMessage.replyTo"
-                  name="reply_to">
-              </mat-form-field>
-            </div>
-
-            <div
-              fxLayout="row"
-              fxLayoutGap="10px"
-              fxLayout.xs="column"
-              fxLayout.sm="column">
-              <mat-form-field fxFlex>
-                <input
-                  matInput
-                  placeholder="To"
-                  [(ngModel)]="message.emailMessage.toRecipients"
-                  name="to">
-              </mat-form-field>
-              <mat-form-field fxFlex>
-                <input
-                  matInput
-                  placeholder="CC"
-                  [(ngModel)]="message.emailMessage.ccRecipients"
-                  name="cc">
-              </mat-form-field>
-              <mat-form-field fxFlex>
-                <input
-                  matInput
-                  placeholder="BCC"
-                  [(ngModel)]="message.emailMessage.bccRecipients"
-                  name="bcc">
-              </mat-form-field>
-            </div>
-
-            <div
-              fxLayout="row"
-              fxLayoutGap="10px"
-              fxLayout.sm="column"
-              fxLayout.xs="column">
-              <mat-form-field fxFlex>
-                <input
-                  matInput
-                  placeholder="Subject"
-                  [(ngModel)]="message.emailMessage.subject"
-                  name="name"
+                  placeholder="Name"
+                  [(ngModel)]="message.name"
+                  name="Name"
                   required>
               </mat-form-field>
-            </div>
-          </div>
+              <mat-form-field>
+                <input
+                  matInput
+                  placeholder="Description"
+                  [(ngModel)]="message.description"
+                  name="description">
+              </mat-form-field>
 
+              <div
+                fxLayout="row"
+                fxLayoutGap="10px"
+                fxLayout.xs="column"
+                fxLayout.sm="column">
+                <mat-form-field fxFlex>
+                  <input
+                    matInput
+                    placeholder="From Email"
+                    [(ngModel)]="message.emailMessage.fromEmail"
+                    name="from_email">
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                  <input
+                    matInput
+                    placeholder="From Name"
+                    [(ngModel)]="message.emailMessage.fromName"
+                    name="from_name">
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                  <input
+                    matInput
+                    placeholder="Reply To"
+                    [(ngModel)]="message.emailMessage.replyTo"
+                    name="reply_to">
+                </mat-form-field>
+              </div>
+
+              <div
+                fxLayout="row"
+                fxLayoutGap="10px"
+                fxLayout.xs="column"
+                fxLayout.sm="column">
+                <mat-form-field fxFlex>
+                  <input
+                    matInput
+                    placeholder="To"
+                    [(ngModel)]="message.emailMessage.toRecipients"
+                    name="to">
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                  <input
+                    matInput
+                    placeholder="CC"
+                    [(ngModel)]="message.emailMessage.ccRecipients"
+                    name="cc">
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                  <input
+                    matInput
+                    placeholder="BCC"
+                    [(ngModel)]="message.emailMessage.bccRecipients"
+                    name="bcc">
+                </mat-form-field>
+              </div>
+            </div>
+          </ng-template>
         </mat-tab>
         <mat-tab label="Email Message" *ngIf="message.emailMessage">
-          <div fxLayout="column">
+          <ng-template matTabContent>
+            <div fxLayout="column">
+              <div fxLayout="row" fxLayoutGap="10px">
 
-            <div fxLayout="row" fxLayoutGap="10px">
+                <mat-form-field>
+                  <mat-select
+                    required
+                    placeholder="Format"
+                    [(ngModel)]="message.emailMessage.format"
+                    name="format">
+                      <mat-option *ngFor="let item of emailMessageFormats" [value]="item.value">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-              <mat-form-field>
-                <mat-select
-                  required
-                  placeholder="Format"
-                  [(ngModel)]="message.emailMessage.format"
-                  name="format">
-                    <mat-option *ngFor="let item of emailMessageFormats" [value]="item.value">
-                      {{item.name}}
-                    </mat-option>
-                  </mat-select>
-              </mat-form-field>
+                <mat-form-field>
+                  <mat-select
+                    placeholder="Template"
+                    [(ngModel)]="message.emailMessage.messageTemplateId"
+                    name="template">
+                      <mat-option [value]="null">None</mat-option>
+                      <mat-option *ngFor="let item of messageTemplates" [value]="item.id">
+                        {{item.name}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+              </div>
 
-              <mat-form-field>
-                <mat-select
-                  placeholder="Template"
-                  [(ngModel)]="message.emailMessage.messageTemplateId"
-                  name="template">
-                    <mat-option [value]="null">None</mat-option>
-                    <mat-option *ngFor="let item of messageTemplates" [value]="item.id">
-                      {{item.name}}
-                    </mat-option>
-                  </mat-select>
-              </mat-form-field>
-            </div>
+              <div
+                fxLayout="row">
+                <mat-form-field fxFlex>
+                  <input
+                    matInput
+                    placeholder="Subject"
+                    [(ngModel)]="message.emailMessage.subject"
+                    name="name"
+                    required>
+                </mat-form-field>
+              </div>
+
+              <ng-container *ngIf="message.emailMessage.format===emailMessageFormat.RichText">
+                <fs-label>Body</fs-label>
+                <fs-editor-rich-text
+                  [(ngModel)]="message.emailMessage.body"
+                  name="body">
+                </fs-editor-rich-text>
+              </ng-container>
+
+              <ng-container *ngIf="message.emailMessage.format===emailMessageFormat.HTML">
+                <mat-form-field class="email-body-html">
+                  <textarea
+                    matInput
+                    cdkTextareaAutosize
+                    placeholder="Body"
+                    [(ngModel)]="message.emailMessage.body"
+                    name="body"
+                    required>
+                  </textarea>
+                </mat-form-field>
+              </ng-container>
 
 
-            <ng-container *ngIf="message.emailMessage.format===emailMessageFormat.RichText">
-              <fs-label>Body</fs-label>
-              <fs-editor-rich-text
-                [(ngModel)]="message.emailMessage.body"
-                name="body">
-              </fs-editor-rich-text>
-            </ng-container>
-
-            <ng-container *ngIf="message.emailMessage.format===emailMessageFormat.HTML">
-              <mat-form-field class="email-body-html">
+              <mat-form-field
+                  *ngIf="message.emailMessage.format===emailMessageFormat.Text"
+                  class="email-body-text">
                 <textarea
                   matInput
                   cdkTextareaAutosize
@@ -145,56 +157,46 @@
                   required>
                 </textarea>
               </mat-form-field>
-            </ng-container>
-
-
-            <mat-form-field
-                *ngIf="message.emailMessage.format===emailMessageFormat.Text"
-                class="email-body-text">
-              <textarea
-                matInput
-                cdkTextareaAutosize
-                placeholder="Body"
-                [(ngModel)]="message.emailMessage.body"
-                name="body"
-                required>
-              </textarea>
-            </mat-form-field>
-          </div>
+            </div>
+          </ng-template>
         </mat-tab>
 
         <mat-tab label="SMS Message" *ngIf="message.smsMessage">
-          <mat-form-field class="sms-message">
-            <textarea
-              matInput
-              cdkTextareaAutosize
-              placeholder="Message"
-              [(ngModel)]="message.smsMessage.message"
-              name="message"
-              required>
-            </textarea>
-          </mat-form-field>
+          <ng-template matTabContent>
+            <mat-form-field class="sms-message">
+              <textarea
+                matInput
+                cdkTextareaAutosize
+                placeholder="Message"
+                [(ngModel)]="message.smsMessage.message"
+                name="message"
+                required>
+              </textarea>
+            </mat-form-field>
+          </ng-template>
         </mat-tab>
 
         <mat-tab label="Defaults">
-          <ng-container *ngIf="message.emailMessage">
-            <h2 *ngIf="message.emailMessage && message.smsMessage">Email</h2>
-            <fs-label-field>
-              <fs-label>Subject</fs-label>
-              <div class="content">{{message.defaultEmailSubject}}</div>
-            </fs-label-field>
-            <fs-label-field>
-              <fs-label>Body</fs-label>
-              <div class="content">{{message.defaultEmailBody}}</div>
-            </fs-label-field>
-          </ng-container>
-          <ng-container *ngIf="message.smsMessage">
-            <h2 *ngIf="message.emailMessage && message.smsMessage">SMS</h2>
-            <fs-label-field>
-              <fs-label>Message</fs-label>
-              <div class="content">{{message.defaultSmsMessage}}</div>
-            </fs-label-field>
-          </ng-container>
+          <ng-template matTabContent>
+            <ng-container *ngIf="message.emailMessage">
+              <h2 *ngIf="message.emailMessage && message.smsMessage">Email</h2>
+              <fs-label-field>
+                <fs-label>Subject</fs-label>
+                <div class="content">{{message.defaultEmailSubject}}</div>
+              </fs-label-field>
+              <fs-label-field>
+                <fs-label>Body</fs-label>
+                <div class="content">{{message.defaultEmailBody}}</div>
+              </fs-label-field>
+            </ng-container>
+            <ng-container *ngIf="message.smsMessage">
+              <h2 *ngIf="message.emailMessage && message.smsMessage">SMS</h2>
+              <fs-label-field>
+                <fs-label>Message</fs-label>
+                <div class="content">{{message.defaultSmsMessage}}</div>
+              </fs-label-field>
+            </ng-container>
+          </ng-template>
         </mat-tab>
       </mat-tab-group>
 
