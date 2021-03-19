@@ -37,8 +37,18 @@
                 </ng-container>
 
                 <ng-template #fromEmailName>
-                  {{messageQueue.emailMessageQueue.fromName}} ({{messageQueue.emailMessageQueue.fromEmail}})
+                  {{messageQueue.emailMessageQueue.fromName}}
+                  <ng-container *ngIf="messageQueue.emailMessageQueue.fromEmail">
+                    ({{messageQueue.emailMessageQueue.fromEmail}})
+                  </ng-container>
                 </ng-template>
+              </fs-label-field>
+
+              <fs-label-field *ngIf="messageQueue.emailMessageQueue.replyEmail && messageQueue.emailMessageQueue.replyEmail.length">
+                <fs-label>
+                  Reply To
+                </fs-label>
+                {{messageQueue.emailMessageQueue.replyEmail.join(', ')}}
               </fs-label-field>
             </ng-container>
 
