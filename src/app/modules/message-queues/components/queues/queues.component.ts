@@ -4,7 +4,7 @@ import { Component, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
 import { takeUntil, map } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 
-import { FsListComponent, FsListConfig } from '@firestitch/list';
+import { FsListActionSelected, FsListComponent, FsListConfig } from '@firestitch/list';
 import { ItemType } from '@firestitch/filter';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -12,6 +12,7 @@ import { map as _map } from 'lodash-es';
 import { QueueComponent } from '../queue';
 import { MessageQueueStates } from '../../consts';
 import { indexNameValue } from '../../../../helpers';
+import { SelectionActionType } from '@firestitch/selection';
 
 
 @Component({
@@ -35,6 +36,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
   @Input() testMessage: (message: any, email: string) => Observable<any>;
   @Input() loadTemplates: () => Observable<any[]>;
   @Input() testEmail: () => Observable<string>;
+  @Input() cancelMessageQueues: (event: FsListActionSelected) => Observable<any>;
 
   public config: FsListConfig = null;
   public messageQueueStates = {};
@@ -80,6 +82,31 @@ export class QueuesComponent implements OnInit, OnDestroy {
           )
       }
     };
+
+    //if any bulk actions add the selection object to config.
+    if (this.cancelMessageQueues) {
+      this.config.selection = {
+        selectAll: false,
+        actions: [
+        ],
+        actionSelected: (action: FsListActionSelected) => {
+          if (action.value === 'cancel') {
+            return this.cancelMessageQueues(action);
+          }
+        }
+      };
+
+      //add each individual bulk action to select actions
+      if (this.cancelMessageQueues) {
+        this.config.selection.actions.push({
+          type: SelectionActionType.Action,
+          value: 'cancel',
+          label: 'Cancel',
+        });
+      }
+
+    }
+
 
     if (this.loadMessages) {
       this.config.filters.push({
