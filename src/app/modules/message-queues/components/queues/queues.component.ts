@@ -1,8 +1,8 @@
 import { AdminService } from './../../../admin/services/admin.service';
 import { Component, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
 
-import { takeUntil, map } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { takeUntil, map, switchMap, tap } from 'rxjs/operators';
+import { Subject, Observable, of } from 'rxjs';
 
 import { FsListActionSelected, FsListComponent, FsListConfig } from '@firestitch/list';
 import { ItemType } from '@firestitch/filter';
@@ -83,29 +83,48 @@ export class QueuesComponent implements OnInit, OnDestroy {
       }
     };
 
-    //if any bulk actions add the selection object to config.
+    // if any bulk actions add the selection object to config.
     if (this.cancelMessageQueues) {
       this.config.selection = {
         selectAll: false,
         actions: [
         ],
         actionSelected: (action: FsListActionSelected) => {
-          if (action.value === 'cancel') {
-            return this.cancelMessageQueues(action);
-          }
+          return of(true)
+            .pipe(
+              switchMap(() => {
+                if (action.value === 'cancel') {
+                  return this.cancelMessageQueues(action);
+                // } else if (action.value === 'otherthing') {
+                //   return this.otherMessageQueues(action);
+                }
+                return of(true);
+              }),
+              tap(() => {
+                this.list.reload();
+              }),
+            );
         }
       };
-
-      //add each individual bulk action to select actions
-      if (this.cancelMessageQueues) {
-        this.config.selection.actions.push({
-          type: SelectionActionType.Action,
-          value: 'cancel',
-          label: 'Cancel',
-        });
-      }
-
     }
+
+    // add each individual bulk action to select actions
+    if (this.cancelMessageQueues) {
+      this.config.selection.actions.push({
+        type: SelectionActionType.Action,
+        value: 'cancel',
+        label: 'Cancel',
+      });
+    }
+
+    // if (this.otherMessageQueues) {
+    //   this.config.selection.actions.push({
+    //     type: SelectionActionType.Action,
+    //     value: 'other',
+    //     label: 'Other',
+    //   });
+    // }
+
 
 
     if (this.loadMessages) {
