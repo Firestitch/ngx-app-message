@@ -167,7 +167,7 @@ export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public forward() {
     this._prompt.input({
-      label: 'Please an email to forward to',
+      label: 'Please enter an email to forward to',
       title: 'Forward Message',
       commitLabel: 'Forward',
       required: true
