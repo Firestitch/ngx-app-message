@@ -1,7 +1,7 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { FsMessage } from '@firestitch/message';
 import { FsPrompt } from '@firestitch/prompt';
@@ -12,11 +12,13 @@ import { Observable } from 'rxjs';
 import { EmailMessageFormats } from '../../consts';
 import { EmailMessageFormat } from '../../enums';
 import { AdminService } from './../../../admin/services/admin.service';
+import { PreviewComponent } from '../../../../modules/message-preview/components';
 
 
 @Component({
   templateUrl: './message.component.html',
-  styleUrls: ['./message.component.scss']
+  styleUrls: ['./message.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageComponent implements OnInit {
 
@@ -36,6 +38,8 @@ export class MessageComponent implements OnInit {
     private _prompt: FsPrompt,
     private _message: FsMessage,
     private _adminService: AdminService,
+    private _dialog: MatDialog,
+    private _cdRef: ChangeDetectorRef,
     @Inject(MAT_DIALOG_DATA) private _data,
   ) {
     this.loadTemplates = _data.loadTemplates;
@@ -47,13 +51,15 @@ export class MessageComponent implements OnInit {
 
   public ngOnInit() {
     this.loadMessage(this._data.message)
-    .subscribe(response => {
+    .subscribe((response) => {
       this.message = this._adminService.input(response);
+      this._cdRef.markForCheck();
     });
 
     this.loadTemplates()
-    .subscribe(response => {
+    .subscribe((response) => {
       this.messageTemplates = response;
+      this._cdRef.markForCheck();
     });
   }
 
@@ -79,6 +85,30 @@ export class MessageComponent implements OnInit {
     );
   }
 
+  public openPreview(): void {
+    let html = this.message.emailMessage.body;
+    let styles = this.message.emailMessage.styles;
+
+    if (this.message.emailMessage.messageTemplateId) {
+      const messageTemplate = this.messageTemplates
+        .find((item) => {
+          return this.message.emailMessage.messageTemplateId === item.id;
+        });
+
+      if (messageTemplate) {
+        html = messageTemplate.content.replace('{$content}', html);
+        styles = messageTemplate.styles.concat(styles);
+      }
+    }
+
+    this._dialog.open(PreviewComponent, {
+      data: {
+        styles,
+        html,
+      },
+      width: '95%'
+    });
+  }
 
   public sendTest(type) {
     this._prompt.input({

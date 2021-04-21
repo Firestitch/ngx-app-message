@@ -5,6 +5,11 @@ fs-label-field {
 }
 
 :host ::ng-deep {
+  .mat-tab-body-content,
+  .mat-tab-body {
+    overflow: visible;
+  }
+
   .sms-message {
     width: 100%;
     textarea {

@@ -5,10 +5,9 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 
 
 @NgModule({
-
 })
 export class FsAdminModule {
-  static forRoot(config: FsAdminConfig): ModuleWithProviders {
+  static forRoot(config: FsAdminConfig): ModuleWithProviders<FsAdminModule> {
     return {
       ngModule: FsAdminModule,
       providers: [

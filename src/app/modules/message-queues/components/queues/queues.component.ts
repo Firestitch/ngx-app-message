@@ -93,7 +93,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
           return of(true)
             .pipe(
               switchMap(() => {
-                if (action.value === 'cancel') {
+                if (action.name === 'cancel') {
                   return this.cancelMessageQueues(action);
                 // } else if (action.value === 'otherthing') {
                 //   return this.otherMessageQueues(action);
@@ -112,15 +112,15 @@ export class QueuesComponent implements OnInit, OnDestroy {
     if (this.cancelMessageQueues) {
       this.config.selection.actions.push({
         type: SelectionActionType.Action,
-        value: 'cancel',
-        label: 'Cancel',
+        name: 'cancel',
+        label: 'Cancel Queued',
       });
     }
 
     // if (this.otherMessageQueues) {
     //   this.config.selection.actions.push({
     //     type: SelectionActionType.Action,
-    //     value: 'other',
+    //     name: 'other',
     //     label: 'Other',
     //   });
     // }

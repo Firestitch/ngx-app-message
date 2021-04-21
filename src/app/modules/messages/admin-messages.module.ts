@@ -1,10 +1,8 @@
-import { FsAdminModule } from './../admin/admin.module';
 import { NgModule } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FsLabelModule } from '@firestitch/label';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -13,48 +11,55 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
+
+import { FsLabelModule } from '@firestitch/label';
 import { FsDialogModule } from '@firestitch/dialog';
 import { FsListModule } from '@firestitch/list';
 import { FsSkeletonModule } from '@firestitch/skeleton';
 import { FormsModule } from '@angular/forms';
 import { FsFormModule } from '@firestitch/form';
+import { FsTextEditorModule } from '@firestitch/text-editor';
 import { FsEditorRichTextModule } from '@firestitch/editor';
+
 import { MessagesComponent } from './components/messages/messages.component';
 import { MessageComponent } from './components/message/message.component';
-
+import { FsAdminModule } from './../admin/admin.module';
+import { FsAdminMessagePreviewModule } from '../message-preview/admin-message-preview.module';
 
 @NgModule({
   imports: [
-    FsListModule,
+    RouterModule,
+    CommonModule,
+
     MatDialogModule,
-    FsDialogModule,
     MatButtonModule,
     MatTabsModule,
     MatFormFieldModule,
     MatInputModule,
-    FsLabelModule,
-    FlexLayoutModule,
     MatOptionModule,
     MatSelectModule,
-    RouterModule,
-    CommonModule,
-    FsSkeletonModule,
     MatTooltipModule,
+
+    FsDialogModule,
+    FsListModule,
+    FsLabelModule,
+    FlexLayoutModule,
+    FsSkeletonModule,
     FormsModule,
     FsFormModule,
+    FsTextEditorModule,
     FsEditorRichTextModule,
-    FsAdminModule
+    FsAdminModule,
+
+    FsAdminMessagePreviewModule,
   ],
   declarations: [
     MessagesComponent,
     MessageComponent,
   ],
-  entryComponents: [
-    MessageComponent
-  ],
   exports: [
     MessagesComponent,
-    MessageComponent
-  ]
+    MessageComponent,
+  ],
 })
 export class FsAdminMessagesModule {}

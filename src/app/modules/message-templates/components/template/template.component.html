@@ -1,45 +1,53 @@
-<form fsForm [submit]="save" #form="ngForm" *fsSkeleton="messageTemplate">
+<form
+    fsForm
+    [submit]="save"
+    #form="ngForm"
+    *fsSkeleton="messageTemplate"
+    [dirtyConfirmTabs]="false">
   <fs-dialog *ngIf="messageTemplate">
     <div mat-dialog-title>Message Template</div>
     <mat-dialog-content>
-      <div fxLayout="column">
-        <mat-form-field>
-          <input
-            matInput
-            placeholder="Name"
-            [(ngModel)]="messageTemplate.name"
-            name="Name"
-            required>
-        </mat-form-field>
-        <mat-form-field class="body">
-          <textarea
-            matInput
-            cdkTextareaAutosize
-            [(ngModel)]="messageTemplate.content"
-            name="body"
-            placeholder="Body"
-            required>
-          </textarea>
-          <mat-hint>
-            <span ngNonBindable>
-              &#123;$content&#125; will be replaced with the message content.
-            </span>
-          </mat-hint>
-        </mat-form-field>
-        <mat-form-field class="styles">
-          <textarea
-            matInput
-            cdkTextareaAutosize
-            placeholder="Styles"
-            [(ngModel)]="messageTemplate.styles"
-            name="styles">
-          </textarea>
-        </mat-form-field>
+      <mat-form-field class="name">
+        <input
+          matInput
+          placeholder="Name"
+          [(ngModel)]="messageTemplate.name"
+          name="Name"
+          required>
+      </mat-form-field>
+      <div [@.disabled]="true">
+        <mat-tab-group
+            mat-align-tabs="start"
+            [dynamicHeight]="false">
+          <mat-tab label="Content">
+            <ng-template matTabContent>
+              <p>&#123;$content&#125; will be replaced with the message content.</p>
+              <div class="content">
+                <fs-text-editor
+                  [(ngModel)]="messageTemplate.content"
+                  name="body"
+                  [config]="htmlEditorconfig">
+                </fs-text-editor>
+              </div>
+            </ng-template>
+          </mat-tab>
+          <mat-tab label="Styes">
+            <ng-template matTabContent>
+              <div class="styles">
+                <fs-text-editor
+                  [(ngModel)]="messageTemplate.styles"
+                  name="styles"
+                  [config]="cssEditorconfig">
+                </fs-text-editor>
+              </div>
+            </ng-template>
+          </mat-tab>
+        </mat-tab-group>
       </div>
-
     </mat-dialog-content>
     <mat-dialog-actions>
       <button mat-button color="primary">Save</button>
+      <button mat-button (click)="openPreview()" type="button">Preview</button>
       <button mat-button [mat-dialog-close]="null" type="button">Cancel</button>
     </mat-dialog-actions>
   </fs-dialog>

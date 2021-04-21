@@ -1,8 +1,10 @@
-import { Component, OnInit, Inject, Input, ViewChild, ElementRef, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, Inject, Input } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FsMessage } from '@firestitch/message';
+import { FsTextEditorConfig } from '@firestitch/text-editor';
+import { PreviewComponent } from '../../../../modules/message-preview/components';
 
 
 @Component({
@@ -15,10 +17,20 @@ export class TemplateComponent implements OnInit {
   @Input() saveMessageTemplate: (message: any) => Observable<any>;
 
   public messageTemplate;
+  public htmlEditorconfig: FsTextEditorConfig = {
+    language: 'html',
+  };
 
-  constructor(private _dialogRef: MatDialogRef<TemplateComponent>,
-              private _message: FsMessage,
-              @Inject(MAT_DIALOG_DATA) private _data) {
+  public cssEditorconfig: FsTextEditorConfig = {
+    language: 'scss',
+  };
+
+  constructor(
+    private _dialogRef: MatDialogRef<TemplateComponent>,
+    private _message: FsMessage,
+    private _dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) private _data,
+  ) {
     this.loadMessageTemplate = _data.loadMessageTemplate;
     this.saveMessageTemplate = _data.saveMessageTemplate;
   }
@@ -33,6 +45,16 @@ export class TemplateComponent implements OnInit {
     } else {
       this.messageTemplate = {};
     }
+  }
+
+  public openPreview() {
+    this._dialog.open(PreviewComponent, {
+      data: {
+        styles: this.messageTemplate.styles,
+        html: this.messageTemplate.content,
+      },
+      width: '95%'
+    });
   }
 
   public save = () => {

@@ -12,6 +12,7 @@ import { of } from 'rxjs';
 export class KitchenSinkComponent {
 
   public config = {};
+  public templateMessage = {"id":1,"content":' <div class = "body"><div class="content"> {$content} </div></div> ',"styles": ".body { padding: 20px } .content { background: #efefef; padding: 25px; border-radius: 10px; }", "name":"Default Template"};
 
   constructor(private exampleComponent: FsExampleComponent,
               private message: FsMessage) {
@@ -77,15 +78,15 @@ export class KitchenSinkComponent {
   }
 
   public loadTemplateSelect = () => {
-    return of([{"id":1,"content":"asdasdasdasdfsdsadfasdfasda","name":"testrrs"}]);
+    return of([this.templateMessage]);
   }
 
   public loadTemplates = () => {
-    return of({"paging":{"limit":0,"records":1,"page":1,"pages":0},"data":[{"id":1,"content":"asdasdasdasdfsdsadfasdfasda","name":"testrrs"}]});
+    return of({"paging":{"limit":0,"records":1,"page":1,"pages":0},"data":[{"id":1,"content":'<div class="body">{$content}</div>',"styles": ".body { padding: 40px }", "name":"Default Template"}]});
   }
 
   public loadMessageTemplates = (query) => {
-    return of({"paging":{"limit":25,"records":1,"offset":0},"data":[{"id":1,"content":"asdasdasdasdfsdsadfasdfasda","name":"testrrs"}]});
+    return of({"paging":{"limit":25,"records":1,"offset":0},"data":[this.templateMessage]});
   }
 
   public loadMessageTemplate = (messageTemplate) => {

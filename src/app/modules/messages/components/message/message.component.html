@@ -1,4 +1,9 @@
-<form fsForm [submit]="save" #form="ngForm" *fsSkeleton="message">
+<form
+    fsForm
+    [submit]="save"
+    #form="ngForm"
+    *fsSkeleton="message"
+    [dirtyConfirmTabs]="false">
   <fs-dialog *ngIf="message">
     <div mat-dialog-title>Edit Message</div>
     <mat-dialog-content>
@@ -85,7 +90,14 @@
           <ng-template matTabContent>
             <div fxLayout="column">
               <div fxLayout="row" fxLayoutGap="10px">
-
+                <mat-form-field fxFlex>
+                  <input
+                    matInput
+                    placeholder="Subject"
+                    [(ngModel)]="message.emailMessage.subject"
+                    name="name"
+                    required>
+                </mat-form-field>
                 <mat-form-field>
                   <mat-select
                     required
@@ -111,18 +123,6 @@
                 </mat-form-field>
               </div>
 
-              <div
-                fxLayout="row">
-                <mat-form-field fxFlex>
-                  <input
-                    matInput
-                    placeholder="Subject"
-                    [(ngModel)]="message.emailMessage.subject"
-                    name="name"
-                    required>
-                </mat-form-field>
-              </div>
-
               <ng-container *ngIf="message.emailMessage.format===emailMessageFormat.RichText">
                 <fs-label>Body</fs-label>
                 <fs-editor-rich-text
@@ -132,18 +132,32 @@
               </ng-container>
 
               <ng-container *ngIf="message.emailMessage.format===emailMessageFormat.HTML">
-                <mat-form-field class="email-body-html">
-                  <textarea
-                    matInput
-                    cdkTextareaAutosize
-                    placeholder="Body"
-                    [(ngModel)]="message.emailMessage.body"
-                    name="body"
-                    required>
-                  </textarea>
-                </mat-form-field>
-              </ng-container>
+                <!-- <div [@.disabled]="true">
+                  <mat-tab-group
+                      [dynamicHeight]="false">
+                    <mat-tab label="Body">
+                      <ng-template matTabContent> -->
+                        <fs-text-editor
+                          [(ngModel)]="message.emailMessage.body"
+                          name="body"
+                          [config]="{ language: 'html '}">
+                        </fs-text-editor>
+                      <!-- </ng-template>
+                    </mat-tab>
+                    <mat-tab label="Styles">
+                      <ng-template matTabContent>
+                        <fs-text-editor
+                          [(ngModel)]="message.emailMessage.styles"
+                          name="styles"
+                          [config]="{ language: 'scss' }">
+                        </fs-text-editor>
+                      </ng-template>
+                    </mat-tab>
+                  </mat-tab-group>
+                </div>
+-->
 
+              </ng-container>
 
               <mat-form-field
                   *ngIf="message.emailMessage.format===emailMessageFormat.Text"
@@ -203,6 +217,14 @@
     </mat-dialog-content>
     <mat-dialog-actions>
       <button mat-button color="primary">Save</button>
+      <button
+          *ngIf="tab==='email' && message.emailMessage.format===emailMessageFormat.HTML"
+          mat-button
+          type="button"
+          (click)="openPreview()"
+          type="button">
+        Preview
+      </button>
       <button
           *ngIf="tab==='email'"
           mat-button

@@ -1,11 +1,10 @@
-.body, .styles {
+.name {
   width: 100%;
-
-  textarea {
-    font-family: monospace;
-  }
 }
 
-.body {
-  margin-bottom: 1.25em;
+:host ::ng-deep {
+  .mat-tab-body-content,
+  .mat-tab-body {
+    overflow: visible;
+  }
 }

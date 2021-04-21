@@ -52,12 +52,9 @@ import { TruncatePipe } from './pipes/truncate.pipe';
     LinkifyPipe,
     TruncatePipe,
   ],
-  entryComponents: [
-    QueueComponent
-  ],
   exports: [
     QueuesComponent,
-    QueueComponent
+    QueueComponent,
   ]
 })
 export class FsAdminMessageQueuesModule {}

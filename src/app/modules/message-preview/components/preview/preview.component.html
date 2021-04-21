@@ -1,0 +1,12 @@
+<fs-dialog>
+  <div mat-dialog-title>Preview</div>
+  <mat-dialog-content>
+    <app-iframe
+      [html]="html"
+      [styles]="styles">
+    </app-iframe>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button [mat-dialog-close]="null" color="primary" type="button">Done</button>
+  </mat-dialog-actions>
+</fs-dialog>

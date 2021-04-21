@@ -194,9 +194,7 @@ export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private _setLogsConfig(messageQueue) {
     this.logConfig = {
-      paging: {
-        strategy: PaginationStrategy.LoadMore
-      },
+      loadMore: true,
       queryParam: false,
       fetch: query => {
         return this.loadLogs(messageQueue, query);

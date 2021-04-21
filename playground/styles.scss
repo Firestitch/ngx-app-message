@@ -2,6 +2,8 @@
 @import '~@firestitch/message/styles';
 @import "~@firestitch/drawer/styles";
 @import "~@firestitch/editor/styles";
+@import "~@firestitch/selection/styles";
 @import '../src/app/styles.scss';
 
 @include fs-drawer($mat-blue);
+@include fs-selection($mat-blue);
