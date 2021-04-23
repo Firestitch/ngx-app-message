@@ -12,16 +12,9 @@ fs-label-field {
 
   .sms-message {
     width: 100%;
-    textarea {
-      font-family: monospace;
-    }
   }
 
-  .email-body-html {
-    width: 100%;
-    textarea {
-      font-family: monospace;
-      min-height: 300px;
-    }
+  .email-body-text-default {
+    white-space: pre-line;
   }
 }

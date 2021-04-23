@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { FsLabelModule } from '@firestitch/label';
@@ -30,6 +31,7 @@ import { FsAdminMessagePreviewModule } from '../message-preview/admin-message-pr
   imports: [
     RouterModule,
     CommonModule,
+    FormsModule,
 
     MatDialogModule,
     MatButtonModule,
@@ -39,13 +41,13 @@ import { FsAdminMessagePreviewModule } from '../message-preview/admin-message-pr
     MatOptionModule,
     MatSelectModule,
     MatTooltipModule,
+    MatCheckboxModule,
 
     FsDialogModule,
     FsListModule,
     FsLabelModule,
     FlexLayoutModule,
     FsSkeletonModule,
-    FormsModule,
     FsFormModule,
     FsTextEditorModule,
     FsEditorRichTextModule,
