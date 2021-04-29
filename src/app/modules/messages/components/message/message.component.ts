@@ -54,10 +54,10 @@ export class MessageComponent implements OnInit {
     .subscribe((response) => {
       this.message = this._adminService.input(response);
 
-      if (this.message.emailMessage.customize === undefined) {
+      if (this.message.emailMessage && this.message.emailMessage.customize === undefined) {
         this.message.emailMessage.customize = true;
       }
-      if (this.message.smsMessage.customize === undefined) {
+      if (this.message.smsMessage && this.message.smsMessage.customize === undefined) {
         this.message.smsMessage.customize = true;
       }
 

@@ -189,8 +189,9 @@
                   <fs-label-field>
                     <fs-label>Body</fs-label>
                     <div
-                      *ngIf="message.emailMessage.format===emailMessageFormat.HTML"
-                      [innerHTML]="message.defaultEmailBody" >
+                      class="email-body-html-default"
+                      *ngIf="message.emailMessage.format===emailMessageFormat.HTML">
+                      {{message.defaultEmailBody}}
                     </div>
                     <div
                       *ngIf="message.emailMessage.format===emailMessageFormat.RichText"
