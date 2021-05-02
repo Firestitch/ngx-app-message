@@ -1,29 +1,36 @@
-import { AdminService } from './../../../admin/services/admin.service';
-import { Component, OnInit, Inject, QueryList, ElementRef, ViewChildren, AfterViewInit, HostListener, OnDestroy } from '@angular/core';
+import {
+  Component, OnInit, Inject, QueryList, ElementRef,
+  ViewChildren, AfterViewInit, OnDestroy,
+} from '@angular/core';
+
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+
 import { FsMessage } from '@firestitch/message';
-import { EmailMessageQueueFormat } from '../../enums';
-import { MessageQueueStates } from '../../consts';
 import { FsPrompt } from '@firestitch/prompt';
-import { FsListConfig, PaginationStrategy } from '@firestitch/list';
+import { FsListConfig } from '@firestitch/list';
+
 import { map, debounceTime, takeUntil } from 'rxjs/operators';
 import { Observable, Subject, fromEvent } from 'rxjs';
+
+import { EmailMessageQueueFormat } from '../../enums';
+import { MessageQueueStates } from '../../consts';
+import { AdminService } from './../../../admin/services/admin.service';
 import { indexNameValue } from '../../../../helpers';
 import { MessageComponent } from '../../../../modules/messages/components';
 
 
-
 @Component({
   templateUrl: './queue.component.html',
-  styleUrls: ['./queue.component.scss']
+  styleUrls: ['./queue.component.scss'],
 })
 export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChildren('bodyFrame') bodyFrame: QueryList<ElementRef>;
+  @ViewChildren('bodyFrame') public bodyFrame: QueryList<ElementRef>;
 
   public loadMessageQueue: (messageQueueId: number) => Observable<any>;
   public loadLogs: (messageQueue: any, query: any) => Observable<any>;
   public loadAttachments: (messageQueue: any, query: any) => Observable<any>;
+  public downloadAttachment: (messageQueueAttachment: any, messageQueue: any) => Observable<any>;
   public resendMessageQueue: (messageQueue: any) => Observable<any>;
   public forwardMessageQueue: (messageQueue: any, email: string) => Observable<any>;
   public loadMessage: (messageId: number) => Observable<any>;
@@ -40,24 +47,26 @@ export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private _destroy$ = new Subject();
 
-  constructor(private _message: FsMessage,
-              private _prompt: FsPrompt,
-              private _dialog: MatDialog,
-              private _adminService: AdminService,
-              @Inject(MAT_DIALOG_DATA) private _data) {
+  constructor(
+    private _message: FsMessage,
+    private _prompt: FsPrompt,
+    private _dialog: MatDialog,
+    private _adminService: AdminService,
+    @Inject(MAT_DIALOG_DATA) private _data,
+  ) {
     this.loadMessageQueue = _data.loadMessageQueue;
     this.saveMessage = _data.saveMessage;
     this.loadMessage = _data.loadMessage;
     this.loadLogs = _data.loadLogs;
     this.resendMessageQueue = _data.resendMessageQueue;
     this.loadAttachments = _data.loadAttachments;
+    this.downloadAttachment = _data.downloadAttachment;
     this.forwardMessageQueue = _data.forwardMessageQueue;
     this.loadTemplates = _data.loadTemplates;
     this.testEmail = _data.testEmail;
   }
 
   public ngOnInit() {
-
     this.messageQueueStates = indexNameValue(MessageQueueStates);
     this.loadMessageQueue(this._data.messageQueue.id)
     .subscribe(messageQueue => {
@@ -206,14 +215,27 @@ export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
     this.attachmentConfig = {
       queryParam: false,
       fetch: query => {
-        return  this.loadAttachments(messageQueue, query)
+        return this.loadAttachments(messageQueue, query)
           .pipe(
-            map(response => ({ data: response.data.map(value => {
-              value.prettyFilesize = this._prettyFilesize(value.filesize);
-              return value;
-            }), paging: response.paging }))
+            map(response => ({
+              data: response.data.map(value => {
+                value.prettyFilesize = this._prettyFilesize(value.filesize);
+                return value;
+              }), paging: response.paging
+            }))
           );
       }
+    };
+
+    if (this.downloadAttachment) {
+      this.attachmentConfig.rowActions = [
+        {
+          click: (messageAttachment) => {
+            this.downloadAttachment(messageAttachment, this.messageQueue);
+          },
+          label: 'Download',
+        }
+      ];
     }
   }
 

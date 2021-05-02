@@ -24,19 +24,20 @@ export class QueuesComponent implements OnInit, OnDestroy {
 
   @ViewChild('list', { static: true }) public list: FsListComponent = null;
 
-  @Input() loadMessages: () => Observable<any[]>;
-  @Input() loadMessageQueues: (query: any) => Observable<{ data: any[], paging: any }>;
-  @Input() loadMessageQueue: (messageQueue: any) => Observable<any>;
-  @Input() loadLogs: (messageQueue: any, query: any) => Observable<any>;
-  @Input() loadAttachments: (messageQueue: any) => Observable<any>;
-  @Input() resendMessageQueue: (messageQueue: any) => Observable<any>;
-  @Input() forwardMessageQueue: (messageQueue: number, email: string) => Observable<any>;
-  @Input() loadMessage: (messageId: number) => Observable<any>;
-  @Input() saveMessage: (message: any) => Observable<any>;
-  @Input() testMessage: (message: any, email: string) => Observable<any>;
-  @Input() loadTemplates: () => Observable<any[]>;
-  @Input() testEmail: () => Observable<string>;
-  @Input() cancelMessageQueues: (event: FsListActionSelected) => Observable<any>;
+  @Input() public loadMessages: () => Observable<any[]>;
+  @Input() public loadMessageQueues: (query: any) => Observable<{ data: any[], paging: any }>;
+  @Input() public loadMessageQueue: (messageQueue: any) => Observable<any>;
+  @Input() public loadLogs: (messageQueue: any, query: any) => Observable<any>;
+  @Input() public loadAttachments: (messageQueue: any) => Observable<any>;
+  @Input() public downloadAttachment: (messageQueueAttachment: any, messageQueue: any) => Observable<any>;
+  @Input() public resendMessageQueue: (messageQueue: any) => Observable<any>;
+  @Input() public forwardMessageQueue: (messageQueue: number, email: string) => Observable<any>;
+  @Input() public loadMessage: (messageId: number) => Observable<any>;
+  @Input() public saveMessage: (message: any) => Observable<any>;
+  @Input() public testMessage: (message: any, email: string) => Observable<any>;
+  @Input() public loadTemplates: () => Observable<any[]>;
+  @Input() public testEmail: () => Observable<string>;
+  @Input() public cancelMessageQueues: (event: FsListActionSelected) => Observable<any>;
 
   public config: FsListConfig = null;
   public messageQueueStates = {};
@@ -151,6 +152,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
         loadMessageQueue: this.loadMessageQueue,
         loadLogs: this.loadLogs,
         loadAttachments: this.loadAttachments,
+        downloadAttachment: this.downloadAttachment,
         resendMessageQueue: this.resendMessageQueue,
         forwardMessageQueue: this.forwardMessageQueue,
         loadMessage: this.loadMessage,

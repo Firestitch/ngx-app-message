@@ -104,4 +104,8 @@ export class KitchenSinkComponent {
   public testEmail = () => {
     return 'email@email.com';
   }
+
+  public downloadAttachment(messageQueueAttachment, messageQueue) {
+    debugger;
+  }
 }
