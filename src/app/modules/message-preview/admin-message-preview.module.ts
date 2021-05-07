@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 
+import { FsIFrameModule } from '@firestitch/iframe';
 import { FsDialogModule } from '@firestitch/dialog';
-import { PreviewComponent } from './components/preview';
 
-import { IFrameComponent } from './components/iframe';
+import { PreviewComponent } from './components/preview';
 
 
 @NgModule({
@@ -15,14 +15,13 @@ import { IFrameComponent } from './components/iframe';
     MatButtonModule,
 
     FsDialogModule,
+    FsIFrameModule,
   ],
   declarations: [
     PreviewComponent,
-    IFrameComponent,
   ],
   exports: [
     PreviewComponent,
-    IFrameComponent,
   ]
 })
 export class FsAdminMessagePreviewModule {

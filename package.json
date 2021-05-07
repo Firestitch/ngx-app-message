@@ -56,7 +56,7 @@
     "@firestitch/example": "^9.1.0",
     "@firestitch/filter": "^9.4.23",
     "@firestitch/form": "^9.5.1",
-    "@firestitch/iframe": "^8.0.0",
+    "@firestitch/iframe": "^10.0.2",
     "@firestitch/label": "^8.0.0",
     "@firestitch/file": "^8.5.10",
     "@firestitch/mask": "^8.3.0",
