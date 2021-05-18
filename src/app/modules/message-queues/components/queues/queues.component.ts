@@ -8,11 +8,17 @@ import { FsListActionSelected, FsListComponent, FsListConfig } from '@firestitch
 import { ItemType } from '@firestitch/filter';
 
 import { MatDialog } from '@angular/material/dialog';
-import { map as _map } from 'lodash-es';
 import { QueueComponent } from '../queue';
 import { MessageQueueStates } from '../../consts';
 import { indexNameValue } from '../../../../helpers';
 import { SelectionActionType } from '@firestitch/selection';
+import {
+  DownloadAttachment, ForwardMessageQueue, LoadAttachments, LoadLogs,
+  LoadMessage,
+  LoadMessageQueue, LoadMessageQueues, LoadMessages, LoadTemplates, ResendMessageQueue,
+  SaveMessage,
+  TestMessage,
+} from '../../../messages/types';
 
 
 @Component({
@@ -24,18 +30,18 @@ export class QueuesComponent implements OnInit, OnDestroy {
 
   @ViewChild('list', { static: true }) public list: FsListComponent = null;
 
-  @Input() public loadMessages: () => Observable<any[]>;
-  @Input() public loadMessageQueues: (query: any) => Observable<{ data: any[], paging: any }>;
-  @Input() public loadMessageQueue: (messageQueue: any) => Observable<any>;
-  @Input() public loadLogs: (messageQueue: any, query: any) => Observable<any>;
-  @Input() public loadAttachments: (messageQueue: any) => Observable<any>;
-  @Input() public downloadAttachment: (messageQueueAttachment: any, messageQueue: any) => Observable<any>;
-  @Input() public resendMessageQueue: (messageQueue: any) => Observable<any>;
-  @Input() public forwardMessageQueue: (messageQueue: number, email: string) => Observable<any>;
-  @Input() public loadMessage: (messageId: number) => Observable<any>;
-  @Input() public saveMessage: (message: any) => Observable<any>;
-  @Input() public testMessage: (message: any, email: string) => Observable<any>;
-  @Input() public loadTemplates: () => Observable<any[]>;
+  @Input() public loadMessages: LoadMessages;
+  @Input() public loadMessageQueues: LoadMessageQueues;
+  @Input() public loadMessageQueue: LoadMessageQueue;
+  @Input() public loadLogs: LoadLogs;
+  @Input() public loadAttachments: LoadAttachments;
+  @Input() public downloadAttachment: DownloadAttachment;
+  @Input() public resendMessageQueue: ResendMessageQueue;
+  @Input() public forwardMessageQueue: ForwardMessageQueue;
+  @Input() public loadMessage: LoadMessage;
+  @Input() public saveMessage: SaveMessage;
+  @Input() public testMessage: TestMessage;
+  @Input() public loadTemplates: LoadTemplates;
   @Input() public testEmail: () => Observable<string>;
   @Input() public cancelMessageQueues: (event: FsListActionSelected) => Observable<any>;
 
@@ -118,26 +124,16 @@ export class QueuesComponent implements OnInit, OnDestroy {
       });
     }
 
-    // if (this.otherMessageQueues) {
-    //   this.config.selection.actions.push({
-    //     type: SelectionActionType.Action,
-    //     name: 'other',
-    //     label: 'Other',
-    //   });
-    // }
-
-
-
     if (this.loadMessages) {
       this.config.filters.push({
         name: 'message_id',
         type: ItemType.Select,
         label: 'Message Type',
-        values: () => {
-          return this.loadMessages()
+        values: (query) => {
+          return this.loadMessages(query)
             .pipe(
-              map(items => {
-                return _map(items, (item) => ({ name: item.name, value: item.id }))
+              map((items: any) => {
+                return items.map((item) => ({ name: item.name, value: item.id }));
               })
             )
         }

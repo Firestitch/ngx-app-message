@@ -69,7 +69,7 @@ export class KitchenSinkComponent {
     return of({"email_message":{"subject":"Access to {$scope}","from_email":null,"from_name":null,"reply_email":null,"id":3,"message_template_id":1,"format":"T","body":"Hi {$invite_name},\n\n{$inviter_name} has created a new user account for you, with access to {$scope}.\n\nActivate your account by clicking the link below:\n\n{$invite_url}\n\nIf you don't want to accept this invitation or you think you were mistaken for someone else, please disregard this email.","to_recipients":null,"cc_recipients":null,"bcc_recipients":null},"sms_message":{"message":"","id":3,"message_template_id":null,"from_number":null},"default_email_subject":"Access to {$scope}","default_email_body":"Hi {$invite_name},\n\n{$inviter_name} has created a new user account for you, with access to {$scope}.\n\nActivate your account by clicking the link below:\n\n{$invite_url}\n\nIf you don't want to accept this invitation or you think you were mistaken for someone else, please disregard this email.","default_email_format":"T","id":3,"state":"A","guid":"35b43a98d75338a5755c08f8505e8843","name":"Account Activation Request","description":"","tag":"ACTIVATION_REQUEST"});
   }
 
-  public testMessage = (message, email) => {
+  public testMessage = (message, email, type) => {
     return of({})
   }
 

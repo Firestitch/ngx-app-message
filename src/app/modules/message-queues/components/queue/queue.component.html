@@ -123,12 +123,10 @@
                   class="format-text"
                   [innerHTML]="messageQueue.emailMessageQueue.body | linkify">
               </div>
-              <iframe
-                #bodyFrame
+              <fs-iframe
                 *ngIf="messageQueue.emailMessageQueue.format===emailMessageQueueFormat.HTML || messageQueue.emailMessageQueue.format===emailMessageQueueFormat.RichText"
-                width="100%"
-                class="body-frame">
-              </iframe>
+                [html]="messageQueue.emailMessageQueue.body">
+              </fs-iframe>
             </fs-label-field>
           </ng-container>
 

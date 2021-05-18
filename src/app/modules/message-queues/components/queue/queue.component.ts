@@ -1,6 +1,5 @@
 import {
-  Component, OnInit, Inject, QueryList, ElementRef,
-  ViewChildren, AfterViewInit, OnDestroy,
+  Component, OnInit, Inject, OnDestroy,
 } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
@@ -9,35 +8,38 @@ import { FsMessage } from '@firestitch/message';
 import { FsPrompt } from '@firestitch/prompt';
 import { FsListConfig } from '@firestitch/list';
 
-import { map, debounceTime, takeUntil } from 'rxjs/operators';
-import { Observable, Subject, fromEvent } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { EmailMessageQueueFormat } from '../../enums';
 import { MessageQueueStates } from '../../consts';
 import { AdminService } from './../../../admin/services/admin.service';
 import { indexNameValue } from '../../../../helpers';
 import { MessageComponent } from '../../../../modules/messages/components';
+import {
+  DownloadAttachment, ForwardMessageQueue, LoadAttachments,
+  LoadLogs, LoadMessage, LoadMessageQueue, LoadTemplates,
+  ResendMessageQueue, SaveMessage, TestEmail, TestMessage,
+} from '../../../messages/types';
 
 
 @Component({
   templateUrl: './queue.component.html',
   styleUrls: ['./queue.component.scss'],
 })
-export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
+export class QueueComponent implements OnInit, OnDestroy {
 
-  @ViewChildren('bodyFrame') public bodyFrame: QueryList<ElementRef>;
-
-  public loadMessageQueue: (messageQueueId: number) => Observable<any>;
-  public loadLogs: (messageQueue: any, query: any) => Observable<any>;
-  public loadAttachments: (messageQueue: any, query: any) => Observable<any>;
-  public downloadAttachment: (messageQueueAttachment: any, messageQueue: any) => Observable<any>;
-  public resendMessageQueue: (messageQueue: any) => Observable<any>;
-  public forwardMessageQueue: (messageQueue: any, email: string) => Observable<any>;
-  public loadMessage: (messageId: number) => Observable<any>;
-  public saveMessage: (message: any) => Observable<any>;
-  public testMessage: (message: any, email: string) => Observable<any>;
-  public loadTemplates: () => Observable<any>;
-  public testEmail: () => string;
+  public loadMessageQueue: LoadMessageQueue;
+  public loadLogs: LoadLogs;
+  public loadAttachments: LoadAttachments;
+  public downloadAttachment: DownloadAttachment;
+  public resendMessageQueue: ResendMessageQueue;
+  public forwardMessageQueue: ForwardMessageQueue;
+  public loadMessage: LoadMessage;
+  public saveMessage: SaveMessage;
+  public testMessage: TestMessage;
+  public loadTemplates: LoadTemplates;
+  public testEmail: TestEmail;
 
   public messageQueue;
   public emailMessageQueueFormat = EmailMessageQueueFormat;
@@ -73,77 +75,6 @@ export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
       this.messageQueue = this._adminService.input(messageQueue);
       this._setLogsConfig(messageQueue);
       this._setAttachmentsConfig(messageQueue);
-    });
-
-    fromEvent(window, 'resize')
-      .pipe(
-        debounceTime(50),
-        takeUntil(this._destroy$)
-      )
-      .subscribe((event) => {
-        this.bodyFrame.forEach(bodyFrame => {
-          this._updateBodyFrameHeight(bodyFrame);
-        });
-      });
-  }
-
-  public ngAfterViewInit() {
-    this.bodyFrame.changes
-    .subscribe(() => {
-      this._updateBodyFrames();
-    });
-
-    this._updateBodyFrames();
-  }
-
-  private _updateBodyFrames() {
-
-    this.bodyFrame.forEach(bodyFrame => {
-      const win: Window = bodyFrame.nativeElement.contentWindow;
-      const doc: Document = win.document;
-      const data = `<style>
-                      body {
-                        font-family: Roboto;
-                        font-size: 15px;
-                        margin: 0 !important;
-                        overflow-y: hidden !important;
-                        width: auto !important;
-                      }
-
-                      a {
-                        color: #1155CC;
-                      }
-
-                      * {
-                        box-sizing: border-box !important;
-                      }
-
-                      </style>` + this.messageQueue.emailMessageQueue.body;
-
-      bodyFrame.nativeElement.onload = () => {
-        this._updateBodyFrameHeight(bodyFrame);
-      }
-
-      doc.open();
-      doc.write(data);
-      doc.close();
-
-      const styles = doc.createElement('style');
-      const css = `
-                  body {
-                    font-family: Roboto;
-                    font-size: 15px;
-                    margin: 0 !important;
-                    overflow-y: hidden !important;
-                    width: auto !important;
-                  }
-
-                  a {
-                    color: #1155CC;
-                  }`;
-
-      styles.appendChild(document.createTextNode(css));
-      doc.body.appendChild(styles);
     });
   }
 
@@ -194,11 +125,6 @@ export class QueueComponent implements OnInit, AfterViewInit, OnDestroy {
   public ngOnDestroy() {
     this._destroy$.next();
     this._destroy$.complete();
-  }
-
-  private _updateBodyFrameHeight(bodyFrame) {
-    bodyFrame.nativeElement.removeAttribute('height');
-    bodyFrame.nativeElement.setAttribute('height', bodyFrame.nativeElement.contentDocument.body.scrollHeight);
   }
 
   private _setLogsConfig(messageQueue) {

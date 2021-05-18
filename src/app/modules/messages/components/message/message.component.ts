@@ -13,6 +13,7 @@ import { EmailMessageFormats } from '../../consts';
 import { EmailMessageFormat } from '../../enums';
 import { AdminService } from './../../../admin/services/admin.service';
 import { PreviewComponent } from '../../../../modules/message-preview/components';
+import { LoadMessage, LoadTemplates, SaveMessage, TestEmail, TestMessage } from '../../types/types.type';
 
 
 @Component({
@@ -22,11 +23,11 @@ import { PreviewComponent } from '../../../../modules/message-preview/components
 })
 export class MessageComponent implements OnInit {
 
-  @Input() loadTemplates: () => Observable<any[]>;
-  @Input() loadMessage: (message: any) => Observable<any>;
-  @Input() saveMessage: (message: any) => Observable<any>;
-  @Input() testMessage: (message: any, recipient: string, type: 'sms' | 'email') => Observable<any>;
-  @Input() testEmail: () => string;
+  @Input() loadTemplates: LoadTemplates;
+  @Input() loadMessage: LoadMessage;
+  @Input() saveMessage: SaveMessage;
+  @Input() testMessage: TestMessage;
+  @Input() testEmail: TestEmail;
 
   public message;
   public tab;
@@ -65,8 +66,8 @@ export class MessageComponent implements OnInit {
     });
 
     this.loadTemplates()
-    .subscribe((response) => {
-      this.messageTemplates = response;
+    .subscribe((data) => {
+      this.messageTemplates = data.data;
       this._cdRef.markForCheck();
     });
   }

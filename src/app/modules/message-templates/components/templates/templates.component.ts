@@ -8,6 +8,10 @@ import { FsListComponent, FsListConfig } from '@firestitch/list';
 import { MatDialog } from '@angular/material/dialog';
 import { map as _map } from 'lodash-es';
 import { TemplateComponent } from '../template';
+import {
+  DeleteMessageTemplate, LoadMessageTemplate,
+  LoadMessageTemplates, SaveMessageTemplate,
+} from '../../../messages/types';
 
 
 @Component({
@@ -16,10 +20,10 @@ import { TemplateComponent } from '../template';
 })
 export class TemplatesComponent implements OnInit, OnDestroy {
 
-  @Input() loadMessageTemplates: (query: any) => Observable<{ data: any[], paging: any }>;
-  @Input() loadMessageTemplate: (messageTemplate) => Observable<any[]>;
-  @Input() saveMessageTemplate: (messageTemplate) => Observable<any[]>;
-  @Input() deleteMessageTemplate: (messageTemplate) => Observable<any[]>;
+  @Input() loadMessageTemplates: LoadMessageTemplates;
+  @Input() loadMessageTemplate: LoadMessageTemplate;
+  @Input() saveMessageTemplate: SaveMessageTemplate;
+  @Input() deleteMessageTemplate: DeleteMessageTemplate;
 
   @ViewChild('list', { static: true }) public list: FsListComponent = null;
   public config: FsListConfig = null;

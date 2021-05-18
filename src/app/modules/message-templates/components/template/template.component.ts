@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { FsMessage } from '@firestitch/message';
 import { FsTextEditorConfig } from '@firestitch/text-editor';
 import { PreviewComponent } from '../../../../modules/message-preview/components';
+import { LoadMessageTemplate, SaveMessageTemplate } from '../../../messages/types';
 
 
 @Component({
@@ -13,8 +14,8 @@ import { PreviewComponent } from '../../../../modules/message-preview/components
 })
 export class TemplateComponent implements OnInit {
 
-  @Input() loadMessageTemplate: (message: any) => Observable<any>;
-  @Input() saveMessageTemplate: (message: any) => Observable<any>;
+  @Input() loadMessageTemplate: LoadMessageTemplate;
+  @Input() saveMessageTemplate: SaveMessageTemplate;
 
   public messageTemplate;
   public htmlEditorconfig: FsTextEditorConfig = {

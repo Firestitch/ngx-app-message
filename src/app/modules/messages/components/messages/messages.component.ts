@@ -2,7 +2,7 @@ import { AdminService } from './../../../admin/services/admin.service';
 import { Component, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
 
 import { takeUntil, map } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { FsListComponent, FsListConfig } from '@firestitch/list';
 import { ItemType } from '@firestitch/filter';
@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MessageComponent } from '../message';
 import { EmailMessageFormats } from '../../consts';
 import { indexNameValue } from '../../../../helpers';
+import { LoadMessage, LoadMessages, LoadTemplates, SaveMessage, TestEmail, TestMessage } from '../../types';
 
 
 @Component({
@@ -19,15 +20,16 @@ import { indexNameValue } from '../../../../helpers';
 })
 export class MessagesComponent implements OnInit, OnDestroy {
 
-  @Input() loadMessages: (query: any) => Observable<{ data: any[], paging: any }>;
-  @Input() loadTemplates: () => Observable<any[]>;
-  @Input() loadMessage: (message: any) => Observable<any>;
-  @Input() saveMessage: (message: any) => Observable<any>;
-  @Input() testMessage: (message: any, email: string) => Observable<any>;
-  @Input() testEmail: () => string;
+  @Input() loadMessages: LoadMessages;
+  @Input() loadTemplates: LoadTemplates;
+  @Input() loadMessage: LoadMessage;
+  @Input() saveMessage: SaveMessage;
+  @Input() testMessage: TestMessage;
+  @Input() testEmail: TestEmail;
 
+  @ViewChild('list', { static: true })
+  public list: FsListComponent = null;
 
-  @ViewChild('list', { static: true }) public list: FsListComponent = null;
   public config: FsListConfig = null;
   public emailMessageFormats = {};
 
