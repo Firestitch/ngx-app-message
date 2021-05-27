@@ -6,6 +6,7 @@ import { FsMessage } from '@firestitch/message';
 import { FsTextEditorConfig } from '@firestitch/text-editor';
 import { PreviewComponent } from '../../../../modules/message-preview/components';
 import { LoadMessageTemplate, SaveMessageTemplate } from '../../../messages/types';
+import { SubmitEvent } from '@firestitch/form';
 
 
 @Component({
@@ -20,10 +21,14 @@ export class TemplateComponent implements OnInit {
   public messageTemplate;
   public htmlEditorconfig: FsTextEditorConfig = {
     language: 'html',
+    insertSpaces: true,
+    tabSize: 2,
   };
 
   public cssEditorconfig: FsTextEditorConfig = {
     language: 'scss',
+    insertSpaces: true,
+    tabSize: 2,
   };
 
   constructor(
@@ -58,12 +63,14 @@ export class TemplateComponent implements OnInit {
     });
   }
 
-  public save = () => {
+  public save = (event: SubmitEvent) => {
     return this.saveMessageTemplate(this.messageTemplate)
     .pipe(
       tap(messageTemplate => {
         this._message.success('Saved Changes');
-        this._dialogRef.close(messageTemplate);
+        if (event.submitter === 'save-close') {
+          this._dialogRef.close(messageTemplate);
+        }
       })
     );
   }

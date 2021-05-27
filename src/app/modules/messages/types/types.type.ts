@@ -4,7 +4,7 @@ export type TestMessage = (message: any, recipient: string, type: 'sms' | 'email
 export type LoadMessage = (message: any) => Observable<any>;
 export type LoadMessages = (query: any) => Observable<{ data: any[], paging: any }>;
 export type SaveMessage = (message: any) => Observable<any>;
-export type LoadTemplates = () => Observable<{ data: any[], paging: any }>;
+export type LoadTemplates = () => Observable<any[]>;
 export type TestEmail = () => string;
 export type LoadMessageQueues = (query: any) => Observable<{ data: any[], paging: any }>;
 export type LoadMessageQueue = (messageQueue: any) => Observable<any>;

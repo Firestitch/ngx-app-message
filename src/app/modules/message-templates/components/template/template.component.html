@@ -21,17 +21,21 @@
             [dynamicHeight]="false">
           <mat-tab label="Content">
             <ng-template matTabContent>
-              <p>&#123;$content&#125; will be replaced with the message content.</p>
               <div class="content">
-                <fs-text-editor
-                  [(ngModel)]="messageTemplate.content"
-                  name="body"
-                  [config]="htmlEditorconfig">
-                </fs-text-editor>
+                <fs-label-field>
+                  <fs-text-editor
+                    [(ngModel)]="messageTemplate.content"
+                    name="body"
+                    [config]="htmlEditorconfig">
+                  </fs-text-editor>
+                  <fs-label-message>
+                    &#123;$content&#125; will be replaced with the message content.
+                  </fs-label-message>
+                </fs-label-field>
               </div>
             </ng-template>
           </mat-tab>
-          <mat-tab label="Styes">
+          <mat-tab label="Styles">
             <ng-template matTabContent>
               <div class="styles">
                 <fs-text-editor
@@ -46,7 +50,8 @@
       </div>
     </mat-dialog-content>
     <mat-dialog-actions>
-      <button mat-button color="primary">Save</button>
+      <button mat-button color="primary" name="close">Save</button>
+      <button mat-button name="save-close">Save & Close</button>
       <button mat-button (click)="openPreview()" type="button">Preview</button>
       <button mat-button [mat-dialog-close]="null" type="button">Cancel</button>
     </mat-dialog-actions>

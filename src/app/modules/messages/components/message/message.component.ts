@@ -7,7 +7,6 @@ import { FsMessage } from '@firestitch/message';
 import { FsPrompt } from '@firestitch/prompt';
 
 import { tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 
 import { EmailMessageFormats } from '../../consts';
 import { EmailMessageFormat } from '../../enums';
@@ -67,7 +66,7 @@ export class MessageComponent implements OnInit {
 
     this.loadTemplates()
     .subscribe((data) => {
-      this.messageTemplates = data.data;
+      this.messageTemplates = data;
       this._cdRef.markForCheck();
     });
   }
