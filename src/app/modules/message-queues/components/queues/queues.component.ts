@@ -100,7 +100,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
           return of(true)
             .pipe(
               switchMap(() => {
-                if (action.name === 'cancel') {
+                if (action.action.name === 'cancel') {
                   return this.cancelMessageQueues(action);
                 // } else if (action.value === 'otherthing') {
                 //   return this.otherMessageQueues(action);
