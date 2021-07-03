@@ -28,7 +28,8 @@ import {
 })
 export class QueuesComponent implements OnInit, OnDestroy {
 
-  @ViewChild('list', { static: true }) public list: FsListComponent = null;
+  @ViewChild(FsListComponent, { static: true })
+  public list: FsListComponent = null;
 
   @Input() public loadMessages: LoadMessages;
   @Input() public loadMessageQueues: LoadMessageQueues;
@@ -82,7 +83,16 @@ export class QueuesComponent implements OnInit, OnDestroy {
       ],
       sort: { value: 'created_date', direction: 'desc' },
       fetch: query => {
-        query.messageQueueAttachmentCounts = true;
+        query = {
+          ...query,
+          messageQueueAttachmentCounts: true,
+          emailMessageQueues: true,
+          emailMessageQueueBodies: true,
+          smsMessageQueues: true,
+          smsMessageQueueBodies: true,
+          messages: true,
+        };
+
         return this.loadMessageQueues(query)
           .pipe(
             map(response => ({ data: this._adminService.input(response.data), paging: response.paging }))
@@ -161,18 +171,12 @@ export class QueuesComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed()
-    .pipe(
-      takeUntil(this._destroy$)
-    )
-    .subscribe((response) => {
-      if (response) {
-        this.list.updateData(
-          response,
-          (row: any) => {
-            return row.id === response.id;
-          });
-      }
-    })
+      .pipe(
+        takeUntil(this._destroy$)
+      )
+      .subscribe(() => {
+        this.list.reload();
+      });
   }
 
   public ngOnDestroy() {

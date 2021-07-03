@@ -1,12 +1,12 @@
 import {
-  Component, OnInit, Inject, OnDestroy,
+  Component, OnInit, Inject, OnDestroy, ViewChild,
 } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
 import { FsMessage } from '@firestitch/message';
 import { FsPrompt } from '@firestitch/prompt';
-import { FsListConfig } from '@firestitch/list';
+import { FsListComponent, FsListConfig } from '@firestitch/list';
 
 import { map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -21,6 +21,7 @@ import {
   LoadLogs, LoadMessage, LoadMessageQueue, LoadTemplates,
   ResendMessageQueue, SaveMessage, TestEmail, TestMessage,
 } from '../../../messages/types';
+import { MessageQueueType } from '../../enums';
 
 
 @Component({
@@ -28,6 +29,9 @@ import {
   styleUrls: ['./queue.component.scss'],
 })
 export class QueueComponent implements OnInit, OnDestroy {
+
+  @ViewChild('logList')
+  public logList: FsListComponent;
 
   public loadMessageQueue: LoadMessageQueue;
   public loadLogs: LoadLogs;
@@ -101,13 +105,18 @@ export class QueueComponent implements OnInit, OnDestroy {
       .subscribe(messageQueue => {
         Object.assign(this.messageQueue, messageQueue);
         this._message.success('Successfully resent');
+        if (this.logList) {
+          this.logList.reload();
+        }
       });
     });
   }
 
   public forward() {
+    const typeName = this.messageQueue.type === MessageQueueType.Email ? 'an email' : 'a phone number';
+
     this._prompt.input({
-      label: 'Please enter an email to forward to',
+      label: `Please enter ${typeName} to forward to`,
       title: 'Forward Message',
       commitLabel: 'Forward',
       required: true
@@ -115,7 +124,10 @@ export class QueueComponent implements OnInit, OnDestroy {
       if (value) {
         this.forwardMessageQueue(this._adminService.output(this.messageQueue), value)
         .subscribe(messageQueue => {
-          Object.assign(this.messageQueue, messageQueue);
+          this.messageQueue = {
+            ...this.messageQueue,
+            messageQueue,
+          };
           this._message.success('Successfully forwarded');
         });
       }

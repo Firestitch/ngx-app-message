@@ -119,17 +119,21 @@ export class MessageComponent implements OnInit {
   }
 
   public sendTest(type) {
+
+    const defaults = type === 'email' ? this.testEmail() : '';
+    const typeName = type === 'email' ? 'an email' : 'phone number';
+
     this._prompt.input({
-      label: 'Please an email to send test to',
+      label: `Please enter ${typeName} to send test to`,
       title: 'Send Test',
       commitLabel: 'Send',
-      default: this.testEmail(),
+      default: defaults,
       required: true
     }).subscribe((value: string) => {
       this.testMessage(this._adminService.output(this.message), value, type)
-      .subscribe(() => {
-        this._message.success('Test Sent');
-      });
+        .subscribe(() => {
+          this._message.success('Test Sent');
+        });
     });
   }
 }

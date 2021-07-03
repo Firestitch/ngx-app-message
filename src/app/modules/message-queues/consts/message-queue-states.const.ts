@@ -7,6 +7,6 @@ export const MessageQueueStates = [
   { name: 'Sending', value: MessageQueueState.Sending },
   { name: 'Queued', value: MessageQueueState.Queued },
   { name: 'Canceled', value: MessageQueueState.Canceled },
-  { name: 'InvalidRecipients', value: MessageQueueState.InvalidRecipients },
+  { name: 'Invalid Recipients', value: MessageQueueState.InvalidRecipients },
   { name: 'Failed', value: MessageQueueState.Failed }
 ];
