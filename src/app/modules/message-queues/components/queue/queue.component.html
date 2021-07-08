@@ -121,7 +121,7 @@
               <div
                   *ngIf="messageQueue.emailMessageQueue.format===emailMessageQueueFormat.Text"
                   class="format-text"
-                  [innerHTML]="messageQueue.emailMessageQueue.body | linkify">
+                  [innerHTML]="messageQueue.emailMessageQueue.body">
               </div>
               <fs-iframe
                 *ngIf="messageQueue.emailMessageQueue.format===emailMessageQueueFormat.HTML || messageQueue.emailMessageQueue.format===emailMessageQueueFormat.RichText"
@@ -137,7 +137,7 @@
               </fs-label>
               <div
                 class="format-text"
-                [innerHTML]="messageQueue.smsMessageQueue.body | linkify">
+                [innerHTML]="messageQueue.smsMessageQueue.body">
               </div>
             </fs-label-field>
           </ng-container>

@@ -22,6 +22,7 @@ import {
   ResendMessageQueue, SaveMessage, TestEmail, TestMessage,
 } from '../../../messages/types';
 import { MessageQueueType } from '../../enums';
+import anchorme from 'anchorme';
 
 
 @Component({
@@ -75,10 +76,49 @@ export class QueueComponent implements OnInit, OnDestroy {
   public ngOnInit() {
     this.messageQueueStates = indexNameValue(MessageQueueStates);
     this.loadMessageQueue(this._data.messageQueue.id)
-    .subscribe(messageQueue => {
+    .subscribe((messageQueue) => {
       this.messageQueue = this._adminService.input(messageQueue);
+
+      if (this.messageQueue.emailMessageQueue) {
+        let body = this.messageQueue.emailMessageQueue.body;
+        if (this.messageQueue.emailMessageQueue.format === EmailMessageQueueFormat.HTML) {
+          try {
+            const doc = new DOMParser().parseFromString(body, 'text/html');
+
+            doc.querySelectorAll('a').forEach((el) => {
+              el.setAttribute('target', '_blank');
+            });
+
+            body = doc.documentElement.innerHTML;
+
+          } catch (e) {
+          }
+        } else {
+          body = this.anchorme(body);
+        }
+
+        this.messageQueue.emailMessageQueue.body = body;
+      }
+
+      if (this.messageQueue.smsMessageQueue) {
+        this.messageQueue.smsMessageQueue.body = this.anchorme(this.messageQueue.smsMessageQueue.body);
+      }
+
       this._setLogsConfig(messageQueue);
       this._setAttachmentsConfig(messageQueue);
+    });
+  }
+
+  public anchorme(html) {
+    return anchorme(html, {
+      options: {
+        attributes: [
+          {
+            name: 'target',
+            value: '_blank'
+          },
+        ],
+      },
     });
   }
 
@@ -105,6 +145,7 @@ export class QueueComponent implements OnInit, OnDestroy {
       .subscribe(messageQueue => {
         Object.assign(this.messageQueue, messageQueue);
         this._message.success('Successfully resent');
+
         if (this.logList) {
           this.logList.reload();
         }
@@ -129,6 +170,10 @@ export class QueueComponent implements OnInit, OnDestroy {
             messageQueue,
           };
           this._message.success('Successfully forwarded');
+
+          if (this.logList) {
+            this.logList.reload();
+          }
         });
       }
     });
