@@ -132,52 +132,46 @@
                     name="name"
                     required>
                 </mat-form-field>
-                <ng-container *ngIf="message.emailMessage.format===emailMessageFormat.RichText">
-                  <fs-label>Message</fs-label>
-                  <fs-editor-rich-text
-                    [(ngModel)]="message.emailMessage.body"
-                    name="body">
-                  </fs-editor-rich-text>
-                </ng-container>
 
-                <ng-container *ngIf="message.emailMessage.format===emailMessageFormat.HTML">
-                   <div [@.disabled]="true">
-                    <mat-tab-group
-                        [dynamicHeight]="false">
-                      <mat-tab label="Body">
-                        <ng-template matTabContent>
-                          <fs-text-editor
-                            [(ngModel)]="message.emailMessage.body"
-                            name="body"
-                            [config]="{ language: 'html '}">
-                          </fs-text-editor>
-                        </ng-template>
-                      </mat-tab>
-                      <mat-tab label="Styles">
-                        <ng-template matTabContent>
-                          <fs-text-editor
-                            [(ngModel)]="message.emailMessage.styles"
-                            name="styles"
-                            [config]="{ language: 'scss' }">
-                          </fs-text-editor>
-                        </ng-template>
-                      </mat-tab>
-                    </mat-tab-group>
-                  </div>
-                </ng-container>
+                <div [@.disabled]="true">
+                  <mat-tab-group [dynamicHeight]="false">
+                    <mat-tab label="Content">
+                      <ng-template matTabContent>
+                        <fs-text-editor
+                          *ngIf="message.emailMessage.format===emailMessageFormat.HTML"
+                          [(ngModel)]="message.emailMessage.body"
+                          name="body"
+                          [config]="{ language: 'html '}">
+                        </fs-text-editor>
 
-                <mat-form-field
-                    *ngIf="message.emailMessage.format===emailMessageFormat.Text"
-                    class="email-body-text">
-                  <textarea
-                    matInput
-                    cdkTextareaAutosize
-                    placeholder="Body"
-                    [(ngModel)]="message.emailMessage.body"
-                    name="body"
-                    required>
-                  </textarea>
-                </mat-form-field>
+                        <fs-editor-rich-text
+                          *ngIf="message.emailMessage.format===emailMessageFormat.RichText"
+                          [(ngModel)]="message.emailMessage.body"
+                          name="body">
+                        </fs-editor-rich-text>
+
+                        <fs-text-editor
+                            *ngIf="message.emailMessage.format===emailMessageFormat.Text"
+                          [(ngModel)]="message.emailMessage.body"
+                          name="emailMessageBody"
+                          [config]="{ language: 'text' }">
+                        </fs-text-editor>
+                      </ng-template>
+                    </mat-tab>
+                    <mat-tab
+                        *ngIf="message.emailMessage.format===emailMessageFormat.HTML"
+                        label="Styles">
+                      <ng-template matTabContent>
+                        <fs-text-editor
+                          [(ngModel)]="message.emailMessage.styles"
+                          name="styles"
+                          [config]="{ language: 'scss' }">
+                        </fs-text-editor>
+                      </ng-template>
+                    </mat-tab>
+                  </mat-tab-group>
+                </div>
+
               </ng-container>
 
               <ng-container *ngIf="!message.emailMessage.customize">
@@ -187,7 +181,7 @@
                 </fs-label-field>
                 <div>
                   <fs-label-field>
-                    <fs-label>Body</fs-label>
+                    <fs-label>Content</fs-label>
                     <div
                       class="email-body-html-default"
                       *ngIf="message.emailMessage.format===emailMessageFormat.HTML">
@@ -222,23 +216,33 @@
                   <mat-option [value]="false">No</mat-option>
                 </mat-select>
             </mat-form-field>
-
-            <mat-form-field
+            <div
                 *ngIf="message.smsMessage.customize"
-                class="sms-message">
-              <textarea
-                matInput
-                cdkTextareaAutosize
-                placeholder="Message"
-                [(ngModel)]="message.smsMessage.message"
-                name="message"
-                required>
-              </textarea>
-            </mat-form-field>
+                [@.disabled]="true">
+              <mat-tab-group [dynamicHeight]="false">
+                <mat-tab label="Content">
+                  <ng-template matTabContent>
+                    <fs-text-editor
+                      [(ngModel)]="message.smsMessage.message"
+                      name="smsMessageMessage"
+                      [config]="{ language: 'text '}">
+                    </fs-text-editor>
+                  </ng-template>
+                </mat-tab>
+              </mat-tab-group>
+            </div>
              <fs-label-field *ngIf="!message.smsMessage.customize">
                 <fs-label>Message</fs-label>
                 {{message.defaultSmsMessage}}
             </fs-label-field>
+          </ng-template>
+        </mat-tab>
+
+        <mat-tab label="Variables" *ngIf="message.variables">
+          <ng-template matTabContent>
+            <div *ngFor="let variable of message.variables" class="variable">
+              {{variable.name}}
+            </div>
           </ng-template>
         </mat-tab>
 
@@ -251,14 +255,14 @@
                 <div class="content">{{message.defaultEmailSubject}}</div>
               </fs-label-field>
               <fs-label-field>
-                <fs-label>Message</fs-label>
+                <fs-label>Content</fs-label>
                 <div class="content">{{message.defaultEmailBody}}</div>
               </fs-label-field>
             </ng-container>
             <ng-container *ngIf="message.smsMessage">
               <h2 *ngIf="message.emailMessage && message.smsMessage">SMS</h2>
               <fs-label-field>
-                <fs-label>Message</fs-label>
+                <fs-label>Content</fs-label>
                 <div class="content">{{message.defaultSmsMessage}}</div>
               </fs-label-field>
             </ng-container>
