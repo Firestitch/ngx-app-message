@@ -2,7 +2,7 @@
   "name": "@firestitch/admin",
   "title": "Admin",
   "description": "@firestitch/admin",
-  "version": "9.0.8",
+  "version": "9.0.12",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/ngx-admin"

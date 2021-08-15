@@ -2,12 +2,12 @@
   <fs-list-column title="Recipients" class="col-recipients">
     <ng-template fs-list-cell let-row="row">
       <ng-container *ngIf="row.emailMessageQueue">
-        <div><a (click)="open(row)">{{row.emailMessageQueue.toRecipients.join(', ')}}</a></div>
+        <div><a (click)="open(row)">{{row.emailMessageQueue.toRecipients.join(', ') || 'Unspecified'}}</a></div>
         <small *ngIf="row.emailMessageQueue.ccRecipients.length">{{row.emailMessageQueue.ccRecipients.join(', ')}}</small>
         <small *ngIf="row.emailMessageQueue.bccRecipients.length">{{row.emailMessageQueue.bccRecipients.join(', ')}}</small>
       </ng-container>
       <ng-container *ngIf="row.smsMessageQueue">
-        <div><a (click)="open(row)">{{row.smsMessageQueue.toNumber}}</a></div>
+        <div><a (click)="open(row)">{{row.smsMessageQueue.toNumber || 'Unspecified'}}</a></div>
       </ng-container>
     </ng-template>
   </fs-list-column>
@@ -20,7 +20,7 @@
         </div>
       </ng-container>
       <ng-container *ngIf="row.smsMessageQueue">
-        {{row.smsMessageQueue.body|truncate:100}}
+        <a (click)="open(row)">{{row.smsMessageQueue.body|truncate:100}}</a>
       </ng-container>
     </ng-template>
   </fs-list-column>

@@ -87,10 +87,8 @@ export class QueuesComponent implements OnInit, OnDestroy {
           ...query,
           messageQueueAttachmentCounts: true,
           emailMessageQueues: true,
-          emailMessageQueueBodies: true,
+          emailMessageQueueBodies: false,
           smsMessageQueues: true,
-          smsMessageQueueBodies: true,
-          messages: true,
         };
 
         return this.loadMessageQueues(query)
