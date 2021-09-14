@@ -5,7 +5,6 @@
       <mat-tab label="Overview">
         <ng-template matTabContent>
           <div fxLayout="row wrap" fxLayoutGap="25px">
-
             <ng-container *ngIf="messageQueue.emailMessageQueue">
               <fs-label-field>
                 <fs-label>
@@ -67,9 +66,7 @@
                 {{messageQueue.smsMessageQueue.fromNumber}}
               </fs-label-field>
             </ng-container>
-          </div>
-
-          <div fxLayout="row wrap" fxLayoutGap="25px">
+  
             <fs-label-field>
               <fs-label>
                 Date
@@ -82,13 +79,6 @@
                 Status
               </fs-label>
               {{messageQueueStates[messageQueue.state]}}
-            </fs-label-field>
-
-            <fs-label-field>
-              <fs-label>
-                Send Attempts
-              </fs-label>
-              {{messageQueue.attempts}}
             </fs-label-field>
 
             <fs-label-field *ngIf="messageQueue.message">
