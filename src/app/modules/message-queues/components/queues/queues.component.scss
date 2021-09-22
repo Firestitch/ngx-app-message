@@ -1,9 +1,18 @@
+@import '../../../../variables.scss';
+
 :host ::ng-deep {
   .col-recipients {
     small + small {
       &:before {
         content: ', ';
       }
+    }
+  }
+
+  .col-state {
+    .state-F,
+    .state-P {
+      color: $color-error;
     }
   }
 }

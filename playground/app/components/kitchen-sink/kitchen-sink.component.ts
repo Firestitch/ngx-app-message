@@ -23,19 +23,112 @@ export class KitchenSinkComponent {
   public loadMessageQueues = (query) => {
     return of({
       "paging": { "limit": 25, "records": 157, "offset": 0 },
-      "data": [
-        { "message": { "email_message": { "subject": "Access to {$scope}", "from_email": null, "from_name": null, "reply_email": null, "id": 3, "message_template_id": 1, "format": "H", "body": "Hi {$invite_name},\n\n{$inviter_name} has created a new user account for you, with access to {$scope}.\n\nActivate your account by clicking the link below:\n\n{$invite_url}\n\nIf you don't want to accept this invitation or you think you were mistaken for someone else, please disregard this email.", "to_recipients": null, "cc_recipients": null, "bcc_recipients": null }, "sms_message": { "message": "", "id": 3, "message_template_id": null, "from_number": null }, "default_email_subject": "Access to {$scope}", "default_email_body": "Hi {$invite_name},\n\n{$inviter_name} has created a new user account for you, with access to {$scope}.\n\nActivate your account by clicking the link below:\n\n{$invite_url}\n\nIf you don't want to accept this invitation or you think you were mistaken for someone else, please disregard this email.", "default_email_format": "T", "id": 3, "state": "A", "guid": "35b43a98d75338a5755c08f8505e8843", "name": "Account Activation Request", "description": "", "tag": "ACTIVATION_REQUEST" }, "email_message_queue": { "id": 157, "state": "S", "message_id": 3, "attempts": 0, "scheduled_date": "2020-02-01T12:08:28+00:00", "created_date": "2020-02-01T12:08:28+00:00", "sent_date": "", "type": "E", "data": {}, "body": "asdasdasdasdfsdsadfasdfasda", "format": "T", "subject": "Access to Workspace Access to Workspace Access to Workspace Access to Workspace Access to Workspace Access to Workspace Access to Workspace", "to_recipients": ["ray@firestitch.com"], "cc_recipients": ["cc@email.com", "cc1@email.com"], "bcc_recipients": ["bcc@email.com"], "from_email": "", "from_name": "", "reply_email": {} }, "sms_message_queue": null, "message_queue_attachment_count": 0, "id": 157, "state": "S", "message_id": 3, "attempts": 0, "scheduled_date": "2020-02-01T12:08:28+00:00", "created_date": "2020-02-01T12:08:28+00:00", "sent_date": "", "type": "E", "data": {} },
-
-        { "message": { "email_message": { "subject": "Invoice: {$invoice_identifier}", "from_email": null, "from_name": null, "reply_email": null, "id": 14, "message_template_id": null, "format": "T", "body": "Please find attached invoice {$invoice_identifier}", "to_recipients": null, "cc_recipients": null, "bcc_recipients": null }, "sms_message": { "message": "", "id": 14, "message_template_id": null, "from_number": null }, "default_email_subject": "Invoice: {$invoice_identifier}", "default_email_body": "Please find attached invoice {$invoice_identifier}", "default_email_format": "T", "id": 14, "state": "A", "guid": "6bb5dabae5211e99a2089e40d3738d29", "name": "Send Invoice", "description": "", "tag": "INVOICE_SEND" }, "email_message_queue": { "id": 156, "state": "S", "message_id": 14, "attempts": 2, "scheduled_date": "2020-01-31T15:26:45+00:00", "created_date": "2020-01-31T15:26:45+00:00", "sent_date": "", "type": "E", "data": {}, "body": "Please find attached invoice ON-N88.76", "format": "T", "subject": "Invoice: ON-N88.76", "to_recipients": ["ray+222223@email.com"], "cc_recipients": [], "bcc_recipients": [], "from_email": "", "from_name": "", "reply_email": {} }, "sms_message_queue": null, "message_queue_attachment_count": 1, "id": 156, "state": "S", "message_id": 14, "attempts": 2, "scheduled_date": "2020-01-31T15:26:45+00:00", "created_date": "2020-01-31T15:26:45+00:00", "sent_date": "", "type": "E", "data": {} },
-
-        { "message": { "email_message": { "subject": "Invoice: {$invoice_identifier}", "from_email": null, "from_name": null, "reply_email": null, "id": 14, "message_template_id": null, "format": "T", "body": "Please find attached invoice {$invoice_identifier}", "to_recipients": null, "cc_recipients": null, "bcc_recipients": null }, "sms_message": { "message": "", "id": 14, "message_template_id": null, "from_number": null }, "default_email_subject": "Invoice: {$invoice_identifier}", "default_email_body": "Please find attached invoice {$invoice_identifier}", "default_email_format": "T", "id": 14, "state": "A", "guid": "6bb5dabae5211e99a2089e40d3738d29", "name": "Send Invoice", "description": "", "tag": "INVOICE_SEND" }, "email_message_queue": { "id": 155, "state": "S", "message_id": 14, "attempts": 1, "scheduled_date": "2020-01-31T15:14:29+00:00", "created_date": "2020-01-31T15:14:29+00:00", "sent_date": "", "type": "E", "data": {}, "body": "Please find attached invoice ON-N88.75!\nhttp://www.google.com", "format": "T", "subject": "Invoice: ON-N88.75", "to_recipients": [], "cc_recipients": [], "bcc_recipients": [], "from_email": "", "from_name": "", "reply_email": {} }, "sms_message_queue": null, "message_queue_attachment_count": 1, "id": 155, "state": "S", "message_id": 14, "attempts": 1, "scheduled_date": "2020-01-31T15:14:29+00:00", "created_date": "2020-01-31T15:14:29+00:00", "sent_date": "", "type": "E", "data": {} },]
+      "data": [this.getMessageQueue()]
     });
   }
 
-  public loadMessageQueue = (messageQueueId) => {
+  public getMessageQueue() {
     let html: any = "<!DOCTYPE html PUBLIC \"-\/\/W3C\/\/DTD HTML 4.0 Transitional\/\/EN\" \"http:\/\/www.w3.org\/TR\/REC-html40\/loose.dtd\">\n<html>\n  <body>\n    <div class=\"body\" style=\"background: #0061AF; padding: 20px; font-family: Helvetica, Arial, Sans; border-radius: 3px; font-size: 14px; color: #333;\">\n  <img src=\"https:\/\/hhsi.s3.ca-central-1.amazonaws.com\/pub\/message\/logo.png\" class=\"logo\" style=\"width: 230px; margin: auto; margin-bottom: 20px; display: block;\"><\/img><div class=\"content\" style=\"background: #ffffff; border-radius: 3px; padding: 10px;\">\n    \t<h1>2 Pending Approvals For You<\/h1>\n\n\t\t\t<div>\n\t\t\t<span class=\"area\" style=\"font-weight: bold; color: #5a5a5a;\">\n\t\t\t\tON-200\t\t\t<\/span>\n\t\t\t\t\t\t\t\t\t\t<a href=\"https:\/\/app.hallmarkhousekeeping.com\/workorders\/137\" style=\"color: #0061AF; text-decoration: none;\">\n\t\t\t\t\t<span class=\"identifier\">R5-CB<\/span>:\n\t\t\t\t\tWork Order\n\t\t\t\t<\/a>\n\t\t\t\n\t\t<\/div>\n\t\t\t<div>\n\t\t\t<span class=\"area\" style=\"font-weight: bold; color: #5a5a5a;\">\n\t\t\t\tON-200\t\t\t<\/span>\n\t\t\t\t\t\t\t\t\t\t<a href=\"https:\/\/app.hallmarkhousekeeping.com\/workorders\/143\" style=\"color: #0061AF; text-decoration: none;\">\n\t\t\t\t\t<span class=\"identifier\">R6-CB<\/span>:\n\t\t\t\t\tWork Order\n\t\t\t\t<\/a>\n\t\t\t\n\t\t<\/div>\n\t<h1>2 Pending Approvals<\/h1>\n<div class=\"tiles\" style=\"display: flex; flex-direction: row;\">\n\t\t\t<div class=\"tile\" style=\"border-radius: 4px; padding: 8px; min-width: 100px; margin-right: 5px; background: #f4f4f4; margin: 0;\">\n\t\t\t<div class=\"label\" style=\"color: #9a9a9a; font-size: 12px;\">Ops Approval<\/div>\n\t\t\t<div class=\"content\" style=\"font-size: 20px; padding-top: 5px; background: none; border-radius: 3px; padding: 10px;\">2<\/div>\n\t\t<\/div>\n\t<\/div>\n\n\t<h2>\n\t\t2 Pending Ops Approval\t<\/h2>\n\n\t\t\t<div>\n\t\t\t<span class=\"area\" style=\"font-weight: bold; color: #5a5a5a;\">\n\t\t\t\tON-200\t\t\t<\/span>\n\t\t\t\t\t\t\t\t\t\t<a href=\"https:\/\/app.hallmarkhousekeeping.com\/workorders\/137\" style=\"color: #0061AF; text-decoration: none;\">\n\t\t\t\t\t<span class=\"identifier\">R5-CB<\/span>:\n\t\t\t\t\tWork Order\n\t\t\t\t<\/a>\n\t\t\t\n\t\t<\/div>\n\t\t\t<div>\n\t\t\t<span class=\"area\" style=\"font-weight: bold; color: #5a5a5a;\">\n\t\t\t\tON-200\t\t\t<\/span>\n\t\t\t\t\t\t\t\t\t\t<a href=\"https:\/\/app.hallmarkhousekeeping.com\/workorders\/143\" style=\"color: #0061AF; text-decoration: none;\">\n\t\t\t\t\t<span class=\"identifier\">R6-CB<\/span>:\n\t\t\t\t\tWork Order\n\t\t\t\t<\/a>\n\t\t\t\n\t\t<\/div>\n\t\n  <\/div>\n<\/div>\n  <\/body>\n<\/html>\n";
+    
+    return {
+      "message":{
+        "email_message": {
+          "subject":"Invoice: {$invoice_identifier}",
+          "reply_email":null,
+          "id":14,
+          "message_template_id":null,
+          "format":"R",
+          "body":"Please find attached invoice {$invoice_identifier}",
+          "to_recipients":null,
+          "cc_recipients":null,
+          "bcc_recipients":null
+        },
+        "sms_message":{
+          "message":"",
+          "id":14,
+          "message_template_id":null,
+          "from_number":null
+        },
+        "default_email_subject":"Invoice: {$invoice_identifier}",
+        "default_email_body":"Please find attached invoice {$invoice_identifier}",
+        "default_email_format":"T",
+        "id":14,
+        "state":"A",
+        "guid":"6bb5dabae5211e99a2089e40d3738d29",
+        "name":"Send Invoice",
+        "description":"",
+        "tag":"INVOICE_SEND"
+      },
+      "email_message_queue":{
+        "id":155,
+        "state":"S",
+        "message_id":14,
+        "attempts":1,
+        "scheduled_date":"2020-01-31T15:14:29+00:00",
+        "created_date":"2020-01-31T15:14:29+00:00",
+        "sent_date":"",
+        "type":"E",
+        "data":{},
+        "body": html,
+        "format":"H",
+        "subject":"Invoice: ON-N88.75",
+        "to_recipients":["to@email.com"],
+        "cc_recipients":["cc@email.com"],
+        "bcc_recipients":["bcc@email.com"],
+        "from_email":"bob@email.com",
+        "from_name":"Bob Smith",
+        "reply_email":['bob@reply.com']
+      },
+      "sms_message_queue":null,
+      "id":155,
+      "state":"S",
+      "message_id":14,
+      "attempts":1,
+      "scheduled_date":"2020-01-31T15:14:29+00:00",
+      "created_date":"2020-01-31T15:14:29+00:00",
+      "sent_date":"",
+      "type":"E",
+      "data":{},
+      "messageQueueRecipients": [
+        {
+            "id": 6228,
+            "messageQueueId": 5881,
+            "recipient": "to@email.com",
+            "state": "S",
+            "message": null,
+            "reference": "e505df1e1a314eb0a11ebad3cd3b56f5",
+            "createDate": "2021-09-19T11:10:42+00:00",
+            "method": "send",
+            "sentDate": "2021-09-19T11:10:42+00:00"
+        },
+        {
+          "id": 6228,
+          "messageQueueId": 5881,
+          "recipient": "cc@email.com",
+          "state": "F",
+          "message": null,
+          "reference": "e505df1e1a314eb0a11ebad3cd3b56f5",
+          "createDate": "2021-09-19T11:10:42+00:00",
+          "method": "send",
+          "sentDate": "2021-09-19T11:10:42+00:00"
+        },
+        {
+          "id": 6228,
+          "messageQueueId": 5881,
+          "recipient": "bcc@email.com",
+          "state": "E",
+          "message": null,
+          "reference": "e505df1e1a314eb0a11ebad3cd3b56f5",
+          "createDate": "2021-09-19T11:10:42+00:00",
+          "method": "send",
+          "sentDate": "2021-09-19T11:10:42+00:00"
+        }
+      ]
+    };
+  }
 
-    return of({"message":{"email_message":{"subject":"Invoice: {$invoice_identifier}","reply_email":null,"id":14,"message_template_id":null,"format":"R","body":"Please find attached invoice {$invoice_identifier}","to_recipients":null,"cc_recipients":null,"bcc_recipients":null},"sms_message":{"message":"","id":14,"message_template_id":null,"from_number":null},"default_email_subject":"Invoice: {$invoice_identifier}","default_email_body":"Please find attached invoice {$invoice_identifier}","default_email_format":"T","id":14,"state":"A","guid":"6bb5dabae5211e99a2089e40d3738d29","name":"Send Invoice","description":"","tag":"INVOICE_SEND"},"email_message_queue":{"id":155,"state":"S","message_id":14,"attempts":1,"scheduled_date":"2020-01-31T15:14:29+00:00","created_date":"2020-01-31T15:14:29+00:00","sent_date":"","type":"E","data":{},"body": html,"format":"H","subject":"Invoice: ON-N88.75","to_recipients":["to@email.com"],"cc_recipients":["cc@email.com","cc2@email.com"],"bcc_recipients":["bcc@email.com"],"from_email":"bob@email.com","from_name":"Bob Smith","reply_email":['bob@reply.com']},"sms_message_queue":null,"id":155,"state":"S","message_id":14,"attempts":1,"scheduled_date":"2020-01-31T15:14:29+00:00","created_date":"2020-01-31T15:14:29+00:00","sent_date":"","type":"E","data":{}})
+  public loadMessageQueue = (messageQueueId) => {
+    return of(this.getMessageQueue());
   }
 
   public loadLogs = (messageQueue, query) => {

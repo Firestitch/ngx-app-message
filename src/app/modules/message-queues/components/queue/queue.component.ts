@@ -47,6 +47,7 @@ export class QueueComponent implements OnInit, OnDestroy {
   public testEmail: TestEmail;
 
   public messageQueue;
+  public messageQueueRecipients;
   public emailMessageQueueFormat = EmailMessageQueueFormat;
   public messageQueueStates;
   public logConfig: FsListConfig;
@@ -103,6 +104,13 @@ export class QueueComponent implements OnInit, OnDestroy {
       if (this.messageQueue.smsMessageQueue) {
         this.messageQueue.smsMessageQueue.body = this.anchorme(this.messageQueue.smsMessageQueue.body);
       }
+
+      this.messageQueueRecipients = this.messageQueue.messageQueueRecipients
+        .reduce((accum, messageQueueRecipient) => {
+          accum[messageQueueRecipient.recipient] = messageQueueRecipient.state;
+
+          return accum;
+        }, {});
 
       this._setLogsConfig(messageQueue);
       this._setAttachmentsConfig(messageQueue);

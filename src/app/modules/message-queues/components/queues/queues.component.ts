@@ -93,7 +93,18 @@ export class QueuesComponent implements OnInit, OnDestroy {
 
         return this.loadMessageQueues(query)
           .pipe(
-            map(response => ({ data: this._adminService.input(response.data), paging: response.paging }))
+            map(response => ({ data: this._adminService.input(response.data)
+              .map((messageQueue) => {              
+                return {
+                  ...messageQueue,
+                  messageQueueRecipients: messageQueue.messageQueueRecipients
+                  .reduce((accum, messageQueueRecipient) => {
+                    accum[messageQueueRecipient.recipient] = messageQueueRecipient.state;
+
+                    return accum;
+                  }, {}),
+                };
+              }), paging: response.paging }))
           )
       }
     };

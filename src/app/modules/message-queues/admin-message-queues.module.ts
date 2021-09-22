@@ -26,6 +26,7 @@ import { QueueComponent } from './components/queue/queue.component';
 import { LinkifyPipe } from './pipes/linkify.pipe';
 import { FsAdminModule } from './../admin/admin.module';
 import { TruncatePipe } from './pipes/truncate.pipe';
+import { RecipientComponent } from './components';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { TruncatePipe } from './pipes/truncate.pipe';
     QueueComponent,
     LinkifyPipe,
     TruncatePipe,
+    RecipientComponent,
   ],
   exports: [
     QueuesComponent,

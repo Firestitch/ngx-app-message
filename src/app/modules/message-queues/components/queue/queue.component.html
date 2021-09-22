@@ -10,21 +10,33 @@
                 <fs-label>
                   To Recipients
                 </fs-label>
-                {{messageQueue.emailMessageQueue.toRecipients.join(', ')}}
+                <app-recipient 
+                  *ngFor="let recipient of messageQueue.emailMessageQueue.toRecipients"
+                  [state]="messageQueueRecipients[recipient]"
+                  [name]="recipient">
+                </app-recipient>
               </fs-label-field>
 
               <fs-label-field *ngIf="messageQueue.emailMessageQueue.ccRecipients.length">
                 <fs-label>
                   CC
                 </fs-label>
-                {{messageQueue.emailMessageQueue.ccRecipients.join(', ')}}
+                <app-recipient 
+                  *ngFor="let recipient of messageQueue.emailMessageQueue.ccRecipients"
+                  [state]="messageQueueRecipients[recipient]"
+                  [name]="recipient">
+                </app-recipient>                
               </fs-label-field>
 
               <fs-label-field *ngIf="messageQueue.emailMessageQueue.bccRecipients.length">
                 <fs-label>
                   BCC
                 </fs-label>
-                {{messageQueue.emailMessageQueue.bccRecipients.join(', ')}}
+                <app-recipient 
+                  *ngFor="let recipient of messageQueue.emailMessageQueue.bccRecipients"
+                  [state]="messageQueueRecipients[recipient]"
+                  [name]="recipient">
+                </app-recipient>                
               </fs-label-field>
 
               <fs-label-field *ngIf="messageQueue.emailMessageQueue.fromName || messageQueue.emailMessageQueue.fromEmail">
