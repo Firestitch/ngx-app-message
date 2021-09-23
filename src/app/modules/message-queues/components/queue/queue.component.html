@@ -68,7 +68,10 @@
                 <fs-label>
                   To Number
                 </fs-label>
-                {{messageQueue.smsMessageQueue.toNumber}}
+                <app-recipient 
+                  [state]="messageQueue.state"
+                  [name]="messageQueue.smsMessageQueue.toNumber">
+                </app-recipient>                 
               </fs-label-field>
 
               <fs-label-field *ngIf="messageQueue.smsMessageQueue.fromNumber">

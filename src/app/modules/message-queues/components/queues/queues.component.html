@@ -30,14 +30,20 @@
           </app-recipient>
         </div>
         <div class="small" *ngFor="let recipient of row.emailMessageQueue.bccRecipients">
-          <app-recipient 
+          <app-recipient             
             [state]="row.messageQueueRecipients[recipient]"
             [name]="recipient">
           </app-recipient>
         </div>
       </ng-container>
       <ng-container *ngIf="row.smsMessageQueue">
-        <div><a (click)="open(row)">{{row.smsMessageQueue.toNumber || 'Unspecified'}}</a></div>
+        <ng-container *ngIf="row.smsMessageQueue.toNumber; else unspecified">
+          <app-recipient 
+            class="small"
+            [state]="row.state"
+            [name]="row.smsMessageQueue.toNumber">
+          </app-recipient>
+        </ng-container>
       </ng-container>
     </ng-template>
   </fs-list-column> 
@@ -54,5 +60,9 @@
 </fs-list>
 
 <ng-template #unspecified>
-  Unspecified
+  <app-recipient 
+    class="small"
+    [state]="MessageQueueState.Failed"
+    name="Unspecified">
+  </app-recipient>
 </ng-template>

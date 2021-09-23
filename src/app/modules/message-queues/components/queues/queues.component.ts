@@ -19,6 +19,7 @@ import {
   SaveMessage,
   TestMessage,
 } from '../../../messages/types';
+import { MessageQueueState } from '../../enums/message-queue-state.enum';
 
 
 @Component({
@@ -48,6 +49,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
 
   public config: FsListConfig = null;
   public messageQueueStates = {};
+  public MessageQueueState = MessageQueueState;
 
   private _destroy$ = new Subject();
 
