@@ -190,6 +190,7 @@
                     <div
                       *ngIf="message.emailMessage.format===emailMessageFormat.RichText"
                       fsEditorRenderer
+                      name="defaultEmailBody"
                       [ngModel]="message.defaultEmailBody">
                     </div>
                     <div

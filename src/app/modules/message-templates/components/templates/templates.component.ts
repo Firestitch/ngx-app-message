@@ -1,42 +1,36 @@
-import { Component, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, Inject } from '@angular/core';
 
-import { takeUntil, map } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { FsListComponent, FsListConfig } from '@firestitch/list';
 
 import { MatDialog } from '@angular/material/dialog';
-import { map as _map } from 'lodash-es';
 import { TemplateComponent } from '../template';
-import {
-  DeleteMessageTemplate, LoadMessageTemplate,
-  LoadMessageTemplates, SaveMessageTemplate,
-} from '../../../messages/types';
+import { FS_APP_MESSAGE_CONFIG } from '../../../app-message/injectors';
+import { FsAppMessageConfig } from '../../../app-message/interfaces';
 
 
 @Component({
-  selector: 'fs-admin-message-templates',
+  selector: 'fs-app-message-templates',
   templateUrl: './templates.component.html'
 })
 export class TemplatesComponent implements OnInit, OnDestroy {
 
-  @Input() loadMessageTemplates: LoadMessageTemplates;
-  @Input() loadMessageTemplate: LoadMessageTemplate;
-  @Input() saveMessageTemplate: SaveMessageTemplate;
-  @Input() deleteMessageTemplate: DeleteMessageTemplate;
+  @ViewChild(FsListComponent, { static: true }) 
+  public list: FsListComponent = null;
 
-  @ViewChild('list', { static: true }) public list: FsListComponent = null;
   public config: FsListConfig = null;
   public messageQueueStates = [];
 
   private _destroy$ = new Subject();
 
   constructor(
+    @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,
     private _dialog: MatDialog
   ) { }
 
-  public ngOnInit() {
-
+  public ngOnInit(): void {
     this.config = {
       actions: [
         {
@@ -48,15 +42,15 @@ export class TemplatesComponent implements OnInit, OnDestroy {
       ],
       status: false,
       fetch: query => {
-        return this.loadMessageTemplates(query);
+        return this._config.loadMessageTemplates(query);
       }
     }
 
-    if (this.deleteMessageTemplate) {
+    if (this._config.deleteMessageTemplate) {
       this.config.rowActions = [
         {
           click: data => {
-            return this.deleteMessageTemplate(data);
+            return this._config.deleteMessageTemplate(data);
           },
           remove: {
             title: 'Confirm',
@@ -73,8 +67,6 @@ export class TemplatesComponent implements OnInit, OnDestroy {
     const dialogRef = this._dialog.open(TemplateComponent, {
       data: {
         messageTemplate: messageTemplate,
-        loadMessageTemplate: this.loadMessageTemplate,
-        saveMessageTemplate: this.saveMessageTemplate,
       },
       width: '85%'
     });

@@ -21,8 +21,7 @@ import { FsTextEditorModule } from '@firestitch/text-editor';
 import { TemplatesComponent } from './components/templates/templates.component';
 import { TemplateComponent } from './components/template/template.component';
 
-import { FsAdminModule } from './../admin/admin.module';
-import { FsAdminMessagePreviewModule } from '../message-preview/admin-message-preview.module';
+import { FsAppMessagePreviewModule } from '../message-preview/message-preview.module';
 
 
 @NgModule({
@@ -45,10 +44,9 @@ import { FsAdminMessagePreviewModule } from '../message-preview/admin-message-pr
     FlexLayoutModule,
     FsSkeletonModule,
     FsFormModule,
-    FsAdminModule,
     FsTextEditorModule,
 
-    FsAdminMessagePreviewModule,
+    FsAppMessagePreviewModule,
   ],
   declarations: [
     TemplatesComponent,
@@ -59,5 +57,5 @@ import { FsAdminMessagePreviewModule } from '../message-preview/admin-message-pr
     TemplateComponent,
   ],
 })
-export class FsAdminMessageTemplatesModule {
+export class FsAppMessageTemplatesModule {
 }

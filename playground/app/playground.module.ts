@@ -1,4 +1,3 @@
-import { FsAdminModule } from './../../src/app/modules/admin/admin.module';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
@@ -7,7 +6,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FsExampleModule } from '@firestitch/example';
 import { FsMessageModule } from '@firestitch/message';
-import { FsAdminMessageQueuesModule, FsAdminMessageTemplatesModule, FsAdminMessagesModule } from '@firestitch/package';
+import { 
+  FsAppMessageQueuesModule, 
+  FsAppMessageTemplatesModule, 
+  FsAppMessagesModule, FsAppMessageModule, FS_APP_MESSAGE_CONFIG 
+} from '@firestitch/package';
 import { FsLabelModule } from '@firestitch/label';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -23,6 +26,7 @@ import { FsScrollModule } from '@firestitch/scroll';
 import { FsSelectionModule } from '@firestitch/selection';
 import { FsEditorRichTextModule } from '@firestitch/editor';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
+import { fsAppMessageConfig } from './functions/fs-app-message-config';
 
 const routes: Routes = [
   { path: '', component: ExamplesComponent },
@@ -32,10 +36,10 @@ const routes: Routes = [
   bootstrap: [ AppComponent ],
   imports: [
     BrowserModule,
-    FsAdminMessageQueuesModule,
-    FsAdminMessageTemplatesModule,
-    FsAdminMessagesModule,
-    FsAdminModule.forRoot({ case: 'snake' }),
+    FsAppMessageQueuesModule,
+    FsAppMessageTemplatesModule,
+    FsAppMessagesModule,
+    FsAppMessageModule.forRoot(),
     BrowserAnimationsModule,
     AppMaterialModule,
     FormsModule,
@@ -50,15 +54,15 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     MonacoEditorModule.forRoot(),
   ],
-  entryComponents: [
-    KitchenSinkConfigureComponent
-  ],
   declarations: [
     AppComponent,
     ExamplesComponent,
     KitchenSinkComponent,
     KitchenSinkConfigureComponent
   ],
+  providers: [    
+    { provide: FS_APP_MESSAGE_CONFIG, useFactory: fsAppMessageConfig, deps: [] }
+  ]
 })
 export class PlaygroundModule {
 }

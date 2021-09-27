@@ -24,5 +24,5 @@ import { PreviewComponent } from './components/preview';
     PreviewComponent,
   ]
 })
-export class FsAdminMessagePreviewModule {
+export class FsAppMessagePreviewModule {
 }

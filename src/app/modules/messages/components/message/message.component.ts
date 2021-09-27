@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -6,13 +6,14 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FsMessage } from '@firestitch/message';
 import { FsPrompt } from '@firestitch/prompt';
 
-import { tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
 import { EmailMessageFormats } from '../../consts';
 import { EmailMessageFormat } from '../../enums';
-import { AdminService } from './../../../admin/services/admin.service';
 import { PreviewComponent } from '../../../../modules/message-preview/components';
-import { LoadMessage, LoadTemplates, SaveMessage, TestEmail, TestMessage } from '../../types/types.type';
+import { FS_APP_MESSAGE_CONFIG } from '../../../app-message/injectors';
+import { FsAppMessageConfig } from '../../../app-message/interfaces';
+import { of } from 'rxjs';
 
 
 @Component({
@@ -22,37 +23,26 @@ import { LoadMessage, LoadTemplates, SaveMessage, TestEmail, TestMessage } from 
 })
 export class MessageComponent implements OnInit {
 
-  @Input() loadTemplates: LoadTemplates;
-  @Input() loadMessage: LoadMessage;
-  @Input() saveMessage: SaveMessage;
-  @Input() testMessage: TestMessage;
-  @Input() testEmail: TestEmail;
-
   public message;
   public tab;
   public messageTemplates = [];
   public emailMessageFormats = EmailMessageFormats;
   public emailMessageFormat = EmailMessageFormat;
 
-  constructor(
+  public constructor(
+    @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,
+    @Inject(MAT_DIALOG_DATA) private _data,
     private _prompt: FsPrompt,
     private _message: FsMessage,
-    private _adminService: AdminService,
     private _dialog: MatDialog,
     private _cdRef: ChangeDetectorRef,
-    @Inject(MAT_DIALOG_DATA) private _data,
   ) {
-    this.loadTemplates = _data.loadTemplates;
-    this.loadMessage = _data.loadMessage;
-    this.saveMessage = _data.saveMessage;
-    this.testMessage = _data.testMessage;
-    this.testEmail = _data.testEmail;
   }
 
   public ngOnInit() {
-    this.loadMessage(this._data.message)
+    this._config.loadMessage(this._data.message)
     .subscribe((response) => {
-      this.message = this._adminService.input(response);
+      this.message = response;
 
       if (this.message.emailMessage && this.message.emailMessage.customize === undefined) {
         this.message.emailMessage.customize = true;
@@ -64,9 +54,9 @@ export class MessageComponent implements OnInit {
       this._cdRef.markForCheck();
     });
 
-    this.loadTemplates()
+    this._config.loadMessageTemplates()
     .subscribe((data) => {
-      this.messageTemplates = data;
+      this.messageTemplates = data.data;
       this._cdRef.markForCheck();
     });
   }
@@ -85,7 +75,7 @@ export class MessageComponent implements OnInit {
   }
 
   public save = () => {
-    return this.saveMessage(this._adminService.output(this.message))
+    return this._config.saveMessage(this.message)
     .pipe(
       tap(() => {
         this._message.success('Saved Changes');
@@ -119,18 +109,25 @@ export class MessageComponent implements OnInit {
   }
 
   public sendTest(type) {
-
-    const defaults = type === 'email' ? this.testEmail() : '';
-    const typeName = type === 'email' ? 'an email' : 'phone number';
-
-    this._prompt.input({
-      label: `Please enter ${typeName} to send test to`,
-      title: 'Send Test',
-      commitLabel: 'Send',
-      default: defaults,
-      required: true
-    }).subscribe((value: string) => {
-      this.testMessage(this._adminService.output(this.message), value, type)
+    of(true)
+    .pipe(
+      switchMap(() => {
+        return type === 'email' ? this._config.getTestEmail() : of('');
+      }),
+      switchMap((default_) => {        
+        const typeName = type === 'email' ? 'an email' : 'phone number';
+    
+        return this._prompt.input({
+          label: `Please enter ${typeName} to send test to`,
+          title: 'Send Test',
+          commitLabel: 'Send',
+          default: default_,
+          required: true
+        })
+      })
+    )
+    .subscribe((value: string) => {
+      this._config.testMessage(this.message, value, type)
         .subscribe(() => {
           this._message.success('Test Sent');
         });

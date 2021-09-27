@@ -1,12 +1,16 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+
 import { tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+
 import { FsMessage } from '@firestitch/message';
 import { FsTextEditorConfig } from '@firestitch/text-editor';
-import { PreviewComponent } from '../../../../modules/message-preview/components';
-import { LoadMessageTemplate, SaveMessageTemplate } from '../../../messages/types';
 import { SubmitEvent } from '@firestitch/form';
+
+import { PreviewComponent } from '../../../../modules/message-preview/components';
+import { FS_APP_MESSAGE_CONFIG } from '../../../app-message/injectors';
+import { FsAppMessageConfig } from '../../../app-message/interfaces';
 
 
 @Component({
@@ -14,9 +18,6 @@ import { SubmitEvent } from '@firestitch/form';
   styleUrls: ['./template.component.scss']
 })
 export class TemplateComponent implements OnInit {
-
-  @Input() loadMessageTemplate: LoadMessageTemplate;
-  @Input() saveMessageTemplate: SaveMessageTemplate;
 
   public messageTemplate;
   public htmlEditorconfig: FsTextEditorConfig = {
@@ -31,20 +32,18 @@ export class TemplateComponent implements OnInit {
     tabSize: 2,
   };
 
-  constructor(
+  public constructor(
+    @Inject(MAT_DIALOG_DATA) private _data,
+    @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,
     private _dialogRef: MatDialogRef<TemplateComponent>,
     private _message: FsMessage,
     private _dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) private _data,
   ) {
-    this.loadMessageTemplate = _data.loadMessageTemplate;
-    this.saveMessageTemplate = _data.saveMessageTemplate;
   }
 
-  public ngOnInit() {
-
+  public ngOnInit(): void {
     if (this._data.messageTemplate.id) {
-      this.loadMessageTemplate(this._data.messageTemplate)
+      this._config.loadMessageTemplate(this._data.messageTemplate)
       .subscribe(messageTemplate => {
         this.messageTemplate = messageTemplate;
       });
@@ -64,7 +63,7 @@ export class TemplateComponent implements OnInit {
   }
 
   public save = (event: SubmitEvent) => {
-    return this.saveMessageTemplate(this.messageTemplate)
+    return this._config.saveMessageTemplate(this.messageTemplate)
     .pipe(
       tap(messageTemplate => {
         this._message.success('Saved Changes');

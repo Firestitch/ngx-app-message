@@ -20,11 +20,10 @@ import { FsIFrameModule } from '@firestitch/iframe';
 import { FsSkeletonModule } from '@firestitch/skeleton';
 import { FsPromptInputModule } from '@firestitch/prompt';
 
-import { FsAdminMessagesModule } from '../messages/admin-messages.module';
+import { FsAppMessagesModule } from '../messages/messages.module';
 import { QueuesComponent } from './components/queues/queues.component';
 import { QueueComponent } from './components/queue/queue.component';
 import { LinkifyPipe } from './pipes/linkify.pipe';
-import { FsAdminModule } from './../admin/admin.module';
 import { TruncatePipe } from './pipes/truncate.pipe';
 import { RecipientComponent } from './components';
 
@@ -48,10 +47,9 @@ import { RecipientComponent } from './components';
     FsLabelModule,
     FsDateModule,
     FsSkeletonModule,
-    FsAdminMessagesModule,
+    FsAppMessagesModule,
     FsFormModule,
     FsPromptInputModule,
-    FsAdminModule,
     FsIFrameModule,
   ],
   declarations: [
@@ -66,4 +64,4 @@ import { RecipientComponent } from './components';
     QueueComponent,
   ]
 })
-export class FsAdminMessageQueuesModule {}
+export class FsAppMessageQueuesModule {}

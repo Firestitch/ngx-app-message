@@ -1,36 +1,8 @@
 <h2>Message Queue</h2>
-
-<fs-admin-message-queues
-  [loadMessageQueues]="loadMessageQueues"
-  [loadMessageQueue]="loadMessageQueue"
-  [loadMessage]="loadMessage"
-  [testMessage]="testMessage"
-  [saveMessage]="saveMessage"
-  [loadLogs]="loadLogs"
-  [loadAttachments]="loadAttachments"
-  [downloadAttachment]="downloadAttachment"
-  [resendMessageQueue]="resendMessageQueue"
-  [forwardMessageQueue]="forwardMessageQueue"
-  [loadMessages]="loadMessages"
-  [testEmail]="testEmail"
-  [loadTemplates]="loadTemplates"
-  [cancelMessageQueues]="cancelMessageQueues">
-</fs-admin-message-queues>
+<fs-app-message-queues></fs-app-message-queues>
 
 <h2>Messages</h2>
-<fs-admin-messages
-  [loadMessages]="loadMessages"
-  [loadMessage]="loadMessage"
-  [saveMessage]="saveMessage"
-  [testMessage]="testMessage"
-  [testEmail]="testEmail"
-  [loadTemplates]="loadTemplateSelect">
-</fs-admin-messages>
+<fs-app-messages></fs-app-messages>
 
 <h2>Message Templates</h2>
-<fs-admin-message-templates
-  [loadMessageTemplates]="loadMessageTemplates"
-  [saveMessageTemplate]="saveMessageTemplate"
-  [loadMessageTemplate]="loadMessageTemplate"
-  [deleteMessageTemplate]="deleteMessageTemplate">
-</fs-admin-message-templates>
+<fs-app-message-templates></fs-app-message-templates>

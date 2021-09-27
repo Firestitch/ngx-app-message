@@ -1,29 +1,24 @@
-import { AdminService } from './../../../admin/services/admin.service';
-import { Component, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+
+import { MatDialog } from '@angular/material/dialog';
 
 import { takeUntil, map, switchMap, tap } from 'rxjs/operators';
-import { Subject, Observable, of } from 'rxjs';
+import { Subject, of } from 'rxjs';
 
 import { FsListActionSelected, FsListComponent, FsListConfig } from '@firestitch/list';
 import { ItemType } from '@firestitch/filter';
+import { SelectionActionType } from '@firestitch/selection';
 
-import { MatDialog } from '@angular/material/dialog';
 import { QueueComponent } from '../queue';
 import { MessageQueueStates } from '../../consts';
 import { indexNameValue } from '../../../../helpers';
-import { SelectionActionType } from '@firestitch/selection';
-import {
-  DownloadAttachment, ForwardMessageQueue, LoadAttachments, LoadLogs,
-  LoadMessage,
-  LoadMessageQueue, LoadMessageQueues, LoadMessages, LoadTemplates, ResendMessageQueue,
-  SaveMessage,
-  TestMessage,
-} from '../../../messages/types';
 import { MessageQueueState } from '../../enums/message-queue-state.enum';
+import { FS_APP_MESSAGE_CONFIG } from '../../../app-message/injectors';
+import { FsAppMessageConfig } from '../../../app-message/interfaces';
 
 
 @Component({
-  selector: 'fs-admin-message-queues',
+  selector: 'fs-app-message-queues',
   styleUrls: ['./queues.component.scss'],
   templateUrl: './queues.component.html'
 })
@@ -32,20 +27,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
   @ViewChild(FsListComponent, { static: true })
   public list: FsListComponent = null;
 
-  @Input() public loadMessages: LoadMessages;
-  @Input() public loadMessageQueues: LoadMessageQueues;
-  @Input() public loadMessageQueue: LoadMessageQueue;
-  @Input() public loadLogs: LoadLogs;
-  @Input() public loadAttachments: LoadAttachments;
-  @Input() public downloadAttachment: DownloadAttachment;
-  @Input() public resendMessageQueue: ResendMessageQueue;
-  @Input() public forwardMessageQueue: ForwardMessageQueue;
-  @Input() public loadMessage: LoadMessage;
-  @Input() public saveMessage: SaveMessage;
-  @Input() public testMessage: TestMessage;
-  @Input() public loadTemplates: LoadTemplates;
-  @Input() public testEmail: () => Observable<string>;
-  @Input() public cancelMessageQueues: (event: FsListActionSelected) => Observable<any>;
+  @Input() public query = {};
 
   public config: FsListConfig = null;
   public messageQueueStates = {};
@@ -54,12 +36,11 @@ export class QueuesComponent implements OnInit, OnDestroy {
   private _destroy$ = new Subject();
 
   constructor(
+    @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,    
     private _dialog: MatDialog,
-    private _adminService: AdminService
   ) { }
 
   public ngOnInit() {
-
     this.messageQueueStates = indexNameValue(MessageQueueStates);
 
     this.config = {
@@ -87,15 +68,16 @@ export class QueuesComponent implements OnInit, OnDestroy {
       fetch: query => {
         query = {
           ...query,
+          ...this.query,
           messageQueueAttachmentCounts: true,
           emailMessageQueues: true,
           emailMessageQueueBodies: false,
           smsMessageQueues: true,
         };
 
-        return this.loadMessageQueues(query)
+        return this._config.loadMessageQueues(query)
           .pipe(
-            map(response => ({ data: this._adminService.input(response.data)
+            map(response => ({ data: response.data
               .map((messageQueue) => {              
                 return {
                   ...messageQueue,
@@ -112,7 +94,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
     };
 
     // if any bulk actions add the selection object to config.
-    if (this.cancelMessageQueues) {
+    if (this._config.cancelMessageQueues) {
       this.config.selection = {
         selectAll: false,
         actions: [
@@ -122,10 +104,9 @@ export class QueuesComponent implements OnInit, OnDestroy {
             .pipe(
               switchMap(() => {
                 if (action.action.name === 'cancel') {
-                  return this.cancelMessageQueues(action);
-                // } else if (action.value === 'otherthing') {
-                //   return this.otherMessageQueues(action);
+                  return this._config.cancelMessageQueues(action);
                 }
+
                 return of(true);
               }),
               tap(() => {
@@ -137,7 +118,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
     }
 
     // add each individual bulk action to select actions
-    if (this.cancelMessageQueues) {
+    if (this._config.cancelMessageQueues) {
       this.config.selection.actions.push({
         type: SelectionActionType.Action,
         name: 'cancel',
@@ -145,43 +126,29 @@ export class QueuesComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (this.loadMessages) {
-      this.config.filters.push({
-        name: 'message_id',
-        type: ItemType.Select,
-        label: 'Message Type',
-        values: (query) => {
-          return this.loadMessages(query)
-            .pipe(
-              map((items: any) => {
-                return items.map((item) => ({ name: item.name, value: item.id }));
-              })
-            )
-        }
-      });
-    }
+    this.config.filters.push({
+      name: 'message_id',
+      type: ItemType.Select,
+      label: 'Message Type',
+      values: (query) => {
+        return this._config.loadMessages(query)
+          .pipe(
+            map((items: any) => {
+              return items.map((item) => ({ name: item.name, value: item.id }));
+            })
+          )
+      }
+    });
   }
 
   public open(messageQueue) {
-    const dialogRef = this._dialog.open(QueueComponent, {
+    this._dialog.open(QueueComponent, {
       data: {
         messageQueue: messageQueue,
-        loadMessageQueue: this.loadMessageQueue,
-        loadLogs: this.loadLogs,
-        loadAttachments: this.loadAttachments,
-        downloadAttachment: this.downloadAttachment,
-        resendMessageQueue: this.resendMessageQueue,
-        forwardMessageQueue: this.forwardMessageQueue,
-        loadMessage: this.loadMessage,
-        saveMessage: this.saveMessage,
-        testMessage: this.testMessage,
-        loadTemplates: this.loadTemplates,
-        testEmail: this.testEmail
       },
       width: '85%'
-    });
-
-    dialogRef.afterClosed()
+    })
+      .afterClosed()
       .pipe(
         takeUntil(this._destroy$)
       )

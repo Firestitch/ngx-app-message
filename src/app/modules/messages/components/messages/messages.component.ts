@@ -1,5 +1,6 @@
-import { AdminService } from './../../../admin/services/admin.service';
-import { Component, OnDestroy, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+
+import { MatDialog } from '@angular/material/dialog';
 
 import { takeUntil, map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -7,27 +8,19 @@ import { Subject } from 'rxjs';
 import { FsListComponent, FsListConfig } from '@firestitch/list';
 import { ItemType } from '@firestitch/filter';
 
-import { MatDialog } from '@angular/material/dialog';
 import { MessageComponent } from '../message';
 import { EmailMessageFormats } from '../../consts';
 import { indexNameValue } from '../../../../helpers';
-import { LoadMessage, LoadMessages, LoadTemplates, SaveMessage, TestEmail, TestMessage } from '../../types';
-
+import { FS_APP_MESSAGE_CONFIG } from '../../../app-message/injectors';
+import { FsAppMessageConfig } from '../../../app-message/interfaces';
 
 @Component({
-  selector: 'fs-admin-messages',
+  selector: 'fs-app-messages',
   templateUrl: './messages.component.html'
 })
 export class MessagesComponent implements OnInit, OnDestroy {
 
-  @Input() loadMessages: LoadMessages;
-  @Input() loadTemplates: LoadTemplates;
-  @Input() loadMessage: LoadMessage;
-  @Input() saveMessage: SaveMessage;
-  @Input() testMessage: TestMessage;
-  @Input() testEmail: TestEmail;
-
-  @ViewChild('list', { static: true })
+  @ViewChild(FsListComponent, { static: true })
   public list: FsListComponent = null;
 
   public config: FsListConfig = null;
@@ -36,12 +29,11 @@ export class MessagesComponent implements OnInit, OnDestroy {
   private _destroy$ = new Subject();
 
   constructor(
+    @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,
     private _dialog: MatDialog,
-    private _adminService: AdminService
   ) { }
 
-  public ngOnInit() {
-
+  public ngOnInit(): void {
     this.emailMessageFormats = indexNameValue(EmailMessageFormats);
 
     this.config = {
@@ -54,10 +46,10 @@ export class MessagesComponent implements OnInit, OnDestroy {
       ],
 
       fetch: query => {
-        return this.loadMessages(query)
+        return this._config.loadMessages(query)
         .pipe(
           map(response => {
-            return ({ data: this._adminService.input(response.data), paging: response.paging })
+            return ({ data: response.data, paging: response.paging })
           })
         );
       }
@@ -68,11 +60,6 @@ export class MessagesComponent implements OnInit, OnDestroy {
     const dialogRef = this._dialog.open(MessageComponent, {
       data: {
         message: message,
-        loadTemplates: this.loadTemplates,
-        loadMessage: this.loadMessage,
-        saveMessage: this.saveMessage,
-        testMessage: this.testMessage,
-        testEmail: this.testEmail
       },
       width: '85%'
     });
