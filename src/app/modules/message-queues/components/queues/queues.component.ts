@@ -131,10 +131,18 @@ export class QueuesComponent implements OnInit, OnDestroy {
       type: ItemType.Select,
       label: 'Message Type',
       values: (query) => {
+        query = { 
+          ...query,
+          limit: 50,
+        };
+
         return this._config.loadMessages(query)
           .pipe(
-            map((items: any) => {
-              return items.map((item) => ({ name: item.name, value: item.id }));
+            map((response) => {
+              return [
+                { value: null, name: 'All', },
+                ...response.data.map((item) => ({ name: item.name, value: item.id })),
+              ];
             })
           )
       }
