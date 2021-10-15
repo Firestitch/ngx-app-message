@@ -27,6 +27,7 @@ import { FsSelectionModule } from '@firestitch/selection';
 import { FsEditorRichTextModule } from '@firestitch/editor';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { fsAppMessageConfig } from './functions/fs-app-message-config';
+import { FsAppMessageWebhooksModule } from 'src/app/modules/webhooks/webhooks.module';
 
 const routes: Routes = [
   { path: '', component: ExamplesComponent },
@@ -39,6 +40,7 @@ const routes: Routes = [
     FsAppMessageQueuesModule,
     FsAppMessageTemplatesModule,
     FsAppMessagesModule,
+    FsAppMessageWebhooksModule,
     FsAppMessageModule.forRoot(),
     BrowserAnimationsModule,
     AppMaterialModule,

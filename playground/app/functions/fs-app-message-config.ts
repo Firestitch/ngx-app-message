@@ -173,7 +173,18 @@ export function fsAppMessageConfig(): FsAppMessageConfig {
     },
     downloadMessageQueueAttachment: (messageQueueAttachment: any, messageQueue: any) => {
       return of(true);
-    }
+    },
+    deleteWebhook: (webhook) => {
+      return of(webhook);
+    },
+    createWebhook: () => {
+      return of(true);
+    },
+    loadWebhooks: () => {
+      return of([
+        { url: 'https://www.com/webhook', createDate: '2021-10-14T10:39:24+00:00' },
+      ]);
+    },
   };
 
   return config;

@@ -5,7 +5,7 @@ import {
   DownloadMessageQueueAttachment, ForwardMessageQueue, LoadMessageQueueAttachments, LoadLogs, LoadMessage, 
   LoadMessageQueue, LoadMessageQueues, LoadMessages, LoadMessageTemplate, LoadMessageTemplates, 
   ResendMessageQueue, SaveMessage, 
-  SaveMessageTemplate, TestMessage 
+  SaveMessageTemplate, TestMessage, DeleteWebhook, CreateWebhook, LoadWebhooks 
 } from "../types";
 
 export interface FsAppMessageConfig {
@@ -26,4 +26,7 @@ export interface FsAppMessageConfig {
   deleteMessageTemplate: DeleteMessageTemplate;
   cancelMessageQueues: (event: FsListActionSelected) => Observable<any>;
   getTestEmail: () => Observable<string>;
+  deleteWebhook: DeleteWebhook;
+  createWebhook: CreateWebhook;
+  loadWebhooks: LoadWebhooks;
 }

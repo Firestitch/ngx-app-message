@@ -1,0 +1,12 @@
+<fs-list [config]="listConfig">
+  <fs-list-column title="URL">
+    <ng-template fs-list-cell let-row="row">
+      {{row.url}}
+    </ng-template>
+  </fs-list-column>
+  <fs-list-column title="Created">
+    <ng-template fs-list-cell let-row="row">
+      {{row.createDate | fsDate}}
+    </ng-template>
+  </fs-list-column>
+</fs-list>

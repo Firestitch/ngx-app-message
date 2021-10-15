@@ -14,6 +14,9 @@ export type DownloadMessageQueueAttachment = (messageQueueAttachment: any, messa
 export type ResendMessageQueue = (messageQueue: any) => Observable<any>;
 export type ForwardMessageQueue = (messageQueue: number, email: string) => Observable<any>;
 export type LoadMessageTemplates = (query?: any) => Observable<{ data: any[], paging: any }>;
-export type LoadMessageTemplate = (messageTemplate) => Observable<any[]>;
-export type SaveMessageTemplate = (messageTemplate) => Observable<any>;
-export type DeleteMessageTemplate = (messageTemplate) => Observable<any>;
+export type LoadMessageTemplate = (messageTemplate: any) => Observable<any[]>;
+export type SaveMessageTemplate = (messageTemplate: any) => Observable<any>;
+export type DeleteMessageTemplate = (messageTemplate: any) => Observable<any>;
+export type DeleteWebhook = (webhook: any) => Observable<any>;
+export type CreateWebhook = () => Observable<any>;
+export type LoadWebhooks = () => Observable<any>;
