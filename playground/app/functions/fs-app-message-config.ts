@@ -21,7 +21,6 @@ export function fsAppMessageConfig(): FsAppMessageConfig {
       "data": [],
       "emailMessageQueue": {
           "id": 2115,
-          "state": "S",
           "messageId": 7,
           "attempts": 1,
           "scheduledDate": "2021-09-08T16:45:04+00:00",

@@ -17,7 +17,7 @@ export class RecipientComponent implements OnInit {
   public icon;
 
   public ngOnInit(): void {
-
+    
     const icons = {
       'S': { name: 'check_circle', tooltip: 'Sent' },
       'E': { name: 'offline_bolt', tooltip: 'Sending' },

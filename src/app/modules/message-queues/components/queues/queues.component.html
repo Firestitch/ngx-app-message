@@ -18,20 +18,20 @@
         <ng-container *ngIf="row.emailMessageQueue.toRecipients.length; else unspecified">
           <div class="small" *ngFor="let recipient of row.emailMessageQueue.toRecipients">
             <app-recipient 
-              [state]="row.messageQueueRecipients[recipient]"
+              [state]="row.messageQueueRecipients[recipient] || row.state"
               [name]="recipient">
             </app-recipient>
           </div>
         </ng-container>
         <div class="small" *ngFor="let recipient of row.emailMessageQueue.ccRecipients">
           <app-recipient 
-            [state]="row.messageQueueRecipients[recipient]"
+            [state]="row.messageQueueRecipients[recipient] || row.state"
             [name]="recipient">
           </app-recipient>
         </div>
         <div class="small" *ngFor="let recipient of row.emailMessageQueue.bccRecipients">
           <app-recipient             
-            [state]="row.messageQueueRecipients[recipient]"
+            [state]="row.messageQueueRecipients[recipient] || row.state"
             [name]="recipient">
           </app-recipient>
         </div>
@@ -54,7 +54,7 @@
   </fs-list-column> 
   <fs-list-column title="Date" name="created_date" sortable="true">
     <ng-template fs-list-cell let-row="row">
-      <fs-date-ago [date]="row.createdDate"></fs-date-ago>
+      {{ row.createdDate | fsDateFormat: 'date-time-yeardiff' }}
     </ng-template>
   </fs-list-column>
 </fs-list>
