@@ -16,4 +16,6 @@ export { TemplatesComponent } from './app/modules/message-templates/components/t
 
 export { FsAppMessageConfig } from './app/modules/app-message/interfaces';
 
+export { FsMessageQueueService } from './app/modules/message-queues/services/message-queue.service';
+
 export { FS_APP_MESSAGE_CONFIG } from './app/modules/app-message/injectors/app-message-config.injector';

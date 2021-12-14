@@ -23,9 +23,10 @@ import { FsPromptInputModule } from '@firestitch/prompt';
 import { FsAppMessagesModule } from '../messages/messages.module';
 import { QueuesComponent } from './components/queues/queues.component';
 import { QueueComponent } from './components/queue/queue.component';
+import { RecipientComponent } from './components/recipient/recipient.component';
 import { LinkifyPipe } from './pipes/linkify.pipe';
 import { TruncatePipe } from './pipes/truncate.pipe';
-import { RecipientComponent } from './components';
+import { FsMessageQueueService } from './services/message-queue.service';
 
 
 @NgModule({
@@ -62,6 +63,9 @@ import { RecipientComponent } from './components';
   exports: [
     QueuesComponent,
     QueueComponent,
+  ],
+  providers: [
+    FsMessageQueueService
   ]
 })
 export class FsAppMessageQueuesModule {}

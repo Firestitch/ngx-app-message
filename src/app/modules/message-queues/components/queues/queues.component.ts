@@ -9,12 +9,12 @@ import { FsListActionSelected, FsListComponent, FsListConfig } from '@firestitch
 import { ItemType } from '@firestitch/filter';
 import { SelectionActionType } from '@firestitch/selection';
 
-import { QueueComponent } from '../queue';
 import { MessageQueueStates } from '../../consts';
 import { indexNameValue } from '../../../../helpers';
 import { MessageQueueState } from '../../enums/message-queue-state.enum';
 import { FS_APP_MESSAGE_CONFIG } from '../../../app-message/injectors';
 import { FsAppMessageConfig } from '../../../app-message/interfaces';
+import { FsMessageQueueService } from '../../services/message-queue.service';
 
 
 @Component({
@@ -38,6 +38,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,    
     private _dialog: MatDialog,
+    private _messageQueueService: FsMessageQueueService,
   ) { }
 
   public ngOnInit() {
@@ -150,13 +151,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
   }
 
   public open(messageQueue) {
-    this._dialog.open(QueueComponent, {
-      data: {
-        messageQueue: messageQueue,
-      },
-      width: '85%'
-    })
-      .afterClosed()
+    this._messageQueueService.openMessageQueue(messageQueue.id)
       .pipe(
         takeUntil(this._destroy$)
       )

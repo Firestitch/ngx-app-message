@@ -58,7 +58,7 @@ export class QueueComponent implements OnInit, OnDestroy {
     this.resendMessageQueue = this._config.resendMessageQueue;
     this.forwardMessageQueue = this._config.forwardMessageQueue;
 
-    this._config.loadMessageQueue(this._data.messageQueue.id)
+    this._config.loadMessageQueue(this._data.messageQueueId)
     .subscribe((messageQueue) => {
       this.messageQueue = messageQueue;
 
