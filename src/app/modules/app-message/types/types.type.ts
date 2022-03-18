@@ -7,6 +7,7 @@ export type SaveMessage = (message: any) => Observable<any>;
 export type LoadTemplates = () => Observable<any[]>;
 export type TestEmail = () => string;
 export type LoadMessageQueues = (query: any) => Observable<{ data: any[], paging: any }>;
+export type LoadMessageQueueEvents = (messageQueue: any, query: any) => Observable<{ data: any[], paging: any }>;
 export type LoadMessageQueue = (messageQueue: any) => Observable<any>;
 export type LoadLogs = (messageQueue: any, query: any) => Observable<{ data: any[], paging: any }>;
 export type LoadMessageQueueAttachments = (messageQueue: any, query: any) => Observable<{ data: any[], paging: any }>;

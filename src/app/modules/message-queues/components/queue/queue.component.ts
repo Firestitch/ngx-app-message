@@ -13,7 +13,7 @@ import { Subject } from 'rxjs';
 
 import anchorme from 'anchorme';
 
-import { EmailMessageQueueFormat } from '../../enums';
+import { EmailMessageQueueFormat, MessageQueueEventType } from '../../enums';
 import { MessageQueueStates } from '../../consts';
 import { indexNameValue } from '../../../../helpers';
 import { MessageComponent } from '../../../../modules/messages/components';
@@ -21,6 +21,7 @@ import { MessageQueueType } from '../../enums';
 import { FS_APP_MESSAGE_CONFIG } from '../../../app-message/injectors';
 import { FsAppMessageConfig } from '../../../app-message/interfaces';
 import { ResendMessageQueue, ForwardMessageQueue, LoadMessage } from '../../../app-message/types';
+import { MessageQueueEventTypes } from '../../consts/message-queue-event-type.const';
 
 
 @Component({
@@ -41,6 +42,9 @@ export class QueueComponent implements OnInit, OnDestroy {
   public messageQueueStates;
   public logConfig: FsListConfig;
   public attachmentConfig: FsListConfig;
+  public eventConfig: FsListConfig;
+  public MessageQueueEventTypes = indexNameValue(MessageQueueEventTypes);
+  public MessageQueueEventType = MessageQueueEventType;
 
   private _destroy$ = new Subject();
 
@@ -77,14 +81,14 @@ export class QueueComponent implements OnInit, OnDestroy {
           } catch (e) {
           }
         } else {
-          body = this.anchorme(body);
+          body = this.anchorMe(body);
         }
 
         this.messageQueue.emailMessageQueue.body = body;
       }
 
       if (this.messageQueue.smsMessageQueue) {
-        this.messageQueue.smsMessageQueue.body = this.anchorme(this.messageQueue.smsMessageQueue.body);
+        this.messageQueue.smsMessageQueue.body = this.anchorMe(this.messageQueue.smsMessageQueue.body);
       }
 
       this.messageQueueRecipients = this.messageQueue.messageQueueRecipients
@@ -96,10 +100,11 @@ export class QueueComponent implements OnInit, OnDestroy {
 
       this._setLogsConfig(messageQueue);
       this._setAttachmentsConfig(messageQueue);
+      this._setEventsConfig(messageQueue);
     });
   }
 
-  public anchorme(html) {
+  public anchorMe(html) {
     return anchorme(html, {
       options: {
         attributes: [
@@ -175,6 +180,16 @@ export class QueueComponent implements OnInit, OnDestroy {
       queryParam: false,
       fetch: query => {
         return this._config.loadLogs(messageQueue, query);
+      }
+    }
+  }
+
+  private _setEventsConfig(messageQueue) {
+    this.eventConfig = {
+      loadMore: true,
+      queryParam: false,
+      fetch: (query) => {
+        return this._config.loadMessageQueueEvents(messageQueue, query);
       }
     }
   }

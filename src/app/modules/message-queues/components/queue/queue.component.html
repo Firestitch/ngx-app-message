@@ -181,6 +181,30 @@
           </fs-list>
         </ng-template>
       </mat-tab>
+      <mat-tab label="Events">
+        <ng-template matTabContent>
+          <fs-list [config]="eventConfig">
+            <fs-list-column title="Recipient">
+              <ng-template fs-list-cell let-row="row">
+                {{row.messageQueueRecipient.recipient}}
+              </ng-template>
+            </fs-list-column>
+            <fs-list-column title="Event">
+              <ng-template fs-list-cell let-row="row">
+                {{MessageQueueEventTypes[row.type]}}
+                <div class="small" *ngIf="row.type === MessageQueueEventType.Click">
+                  <a [href]="row.meta?.url" target="_blank">{{row.meta?.url}}</a>
+                </div>
+              </ng-template>
+            </fs-list-column>
+            <fs-list-column title="Date">
+              <ng-template fs-list-cell let-row="row">
+                {{row.createDate | fsDateFormat: 'date-time-yearless'}}
+              </ng-template>
+            </fs-list-column>
+          </fs-list>
+        </ng-template>
+      </mat-tab>
     </mat-tab-group>
   </mat-dialog-content>
   <mat-dialog-actions>

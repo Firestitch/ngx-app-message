@@ -44,7 +44,6 @@ export class MessagesComponent implements OnInit, OnDestroy {
           label: 'Search'
         }
       ],
-
       fetch: query => {
         return this._config.loadMessages(query)
         .pipe(
@@ -68,14 +67,8 @@ export class MessagesComponent implements OnInit, OnDestroy {
     .pipe(
       takeUntil(this._destroy$)
     )
-    .subscribe((response) => {
-      if (response) {
-        this.list.updateData(
-          response,
-          (row: any) => {
-            return row.id === response.id;
-          });
-      }
+    .subscribe(() => {
+      this.list.reload();
     })
   }
 

@@ -88,6 +88,27 @@ export function fsAppMessageConfig(): FsAppMessageConfig {
     loadMessageQueueAttachments: (messageQueue, query) => {
       return of({"paging":{"limit":25,"records":1,"offset":0},"data":[{"id":89,"state":"A","filesize":67214,"filename":"ON-N88.74.pdf","guid":"e40478efad2ad820ecc17080ddb37036154","type":"A","messageQueueId":154}]});
     },
+    loadMessageQueueEvents: (messageQueue, query) => {
+      return of({
+        "paging":{"limit":25,"records":1,"offset":0},
+        "data":[
+          {
+            "id":89,
+            "type":"open",
+            "createDate": "2021-09-08T16:45:04+00:00", 
+            "meta": {},
+            "messageQueueRecipient": {"id":4904,"messageQueueId":4914,"recipient":"email@email.com","state":"S","message":null,"reference":null,"createDate":"2022-03-16T11:39:30+00:00","method":"send","sentDate":"2022-03-16T11:39:30+00:00"}
+          },
+          {
+            "id":89,
+            "type":"click",
+            "createDate": "2021-09-08T16:45:04+00:00", 
+            "meta": {"url": "https://specify.dev.firestitch.com/signin"},
+            "messageQueueRecipient": {"id":4904,"messageQueueId":4914,"recipient":"email@email.com","state":"S","message":null,"reference":null,"createDate":"2022-03-16T11:39:30+00:00","method":"send","sentDate":"2022-03-16T11:39:30+00:00"}
+          }
+        ]
+      });
+    },
     resendMessageQueue: (messageQueue) => {
       return of(messageQueue);
     },

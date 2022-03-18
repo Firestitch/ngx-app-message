@@ -19,6 +19,8 @@ import { FsFormModule } from '@firestitch/form';
 import { FsIFrameModule } from '@firestitch/iframe';
 import { FsSkeletonModule } from '@firestitch/skeleton';
 import { FsPromptInputModule } from '@firestitch/prompt';
+// import { FsDeviceModule } from '@firestitch/device';
+// import { FsIpModule } from '@firestitch/ip';
 
 import { FsAppMessagesModule } from '../messages/messages.module';
 import { QueuesComponent } from './components/queues/queues.component';
@@ -52,6 +54,8 @@ import { FsMessageQueueService } from './services/message-queue.service';
     FsFormModule,
     FsPromptInputModule,
     FsIFrameModule,
+    //FsDeviceModule,
+    //FsIpModule,
   ],
   declarations: [
     QueuesComponent,
