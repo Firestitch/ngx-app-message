@@ -3,7 +3,7 @@
     [submit]="save"
     #form="ngForm"
     *fsSkeleton="messageTemplate"
-    [dirtyConfirmTabs]="false">
+    [confirmTabs]="false">
   <fs-dialog *ngIf="messageTemplate">
     <div mat-dialog-title>Message Template</div>
     <mat-dialog-content>

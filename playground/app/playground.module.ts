@@ -6,10 +6,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FsExampleModule } from '@firestitch/example';
 import { FsMessageModule } from '@firestitch/message';
-import { 
-  FsAppMessageQueuesModule, 
-  FsAppMessageTemplatesModule, 
-  FsAppMessagesModule, FsAppMessageModule, FS_APP_MESSAGE_CONFIG 
+import {
+  FsAppMessageQueuesModule,
+  FsAppMessageTemplatesModule,
+  FsAppMessagesModule, FsAppMessageModule, FS_APP_MESSAGE_CONFIG
 } from '@firestitch/package';
 import { FsLabelModule } from '@firestitch/label';
 import { ToastrModule } from 'ngx-toastr';
@@ -50,10 +50,10 @@ const routes: Routes = [
     FsExampleModule.forRoot(),
     FsEditorRichTextModule.forRoot(),
     FsMessageModule.forRoot(),
-    FsSelectionModule.forRoot(),
+    FsSelectionModule,
     FsScrollModule.forRoot(),
     ToastrModule.forRoot({ preventDuplicates: true }),
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
     MonacoEditorModule.forRoot(),
   ],
   declarations: [
@@ -62,7 +62,7 @@ const routes: Routes = [
     KitchenSinkComponent,
     KitchenSinkConfigureComponent
   ],
-  providers: [    
+  providers: [
     { provide: FS_APP_MESSAGE_CONFIG, useFactory: fsAppMessageConfig, deps: [] }
   ]
 })

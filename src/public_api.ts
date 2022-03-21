@@ -13,6 +13,8 @@ export { MessageComponent } from './app/modules/messages/components/message/mess
 export { QueuesComponent } from './app/modules/message-queues/components/queues/queues.component';
 export { QueueComponent } from './app/modules/message-queues/components/queue/queue.component';
 export { TemplatesComponent } from './app/modules/message-templates/components/templates/templates.component';
+export { TemplateComponent } from './app/modules/message-templates/components';
+export { WebhooksComponent } from './app/modules/webhooks/components/webhooks/webhooks.component';
 
 export { FsAppMessageConfig } from './app/modules/app-message/interfaces';
 
