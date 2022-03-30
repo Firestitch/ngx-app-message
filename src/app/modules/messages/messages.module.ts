@@ -20,7 +20,7 @@ import { FsSkeletonModule } from '@firestitch/skeleton';
 import { FormsModule } from '@angular/forms';
 import { FsFormModule } from '@firestitch/form';
 import { FsTextEditorModule } from '@firestitch/text-editor';
-import { FsEditorRichTextModule } from '@firestitch/editor';
+// import { FsEditorRichTextModule } from '@firestitch/editor';
 
 import { MessagesComponent } from './components/messages/messages.component';
 import { MessageComponent } from './components/message/message.component';
@@ -49,7 +49,7 @@ import { FsAppMessagePreviewModule } from '../message-preview/message-preview.mo
     FsSkeletonModule,
     FsFormModule,
     FsTextEditorModule,
-    FsEditorRichTextModule,
+    // FsEditorRichTextModule,
 
     FsAppMessagePreviewModule,
   ],
