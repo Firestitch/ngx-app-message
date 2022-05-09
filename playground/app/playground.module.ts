@@ -24,7 +24,6 @@ import { KitchenSinkConfigureComponent } from './components/kitchen-sink-configu
 import { FsListModule } from '@firestitch/list';
 import { FsScrollModule } from '@firestitch/scroll';
 import { FsSelectionModule } from '@firestitch/selection';
-import { FsEditorRichTextModule } from '@firestitch/editor';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { fsAppMessageConfig } from './functions/fs-app-message-config';
 import { FsAppMessageWebhooksModule } from 'src/app/modules/webhooks/webhooks.module';
@@ -48,7 +47,6 @@ const routes: Routes = [
     FsLabelModule,
     FsListModule.forRoot(),
     FsExampleModule.forRoot(),
-    FsEditorRichTextModule.forRoot(),
     FsMessageModule.forRoot(),
     FsSelectionModule,
     FsScrollModule.forRoot(),

@@ -9,4 +9,24 @@
       {{emailMessageFormats[row.emailMessage.format]}}
     </ng-template>
   </fs-list-column>
+  <fs-list-column title="Email Message Template">
+    <ng-template fs-list-cell let-row="row">
+      {{row.emailMessage.messageTemplate?.name || 'None'}}
+    </ng-template>
+  </fs-list-column>
+  <fs-list-column title="Customized Message">
+    <ng-template fs-list-cell let-row="row">
+      <ng-container *ngIf="row.emailMessage?.customize || row.smsMessage?.customize; else noCustomize">
+        <ng-container *ngIf="row.emailMessage?.customize">
+          {{row.emailMessage.customize ? 'Email' : ''}}
+        </ng-container> 
+        <ng-container *ngIf="row.smsMessage?.customize">
+          {{row.smsMessage.customize ? 'SMS' : ''}}
+        </ng-container>         
+      </ng-container>
+      <ng-template #noCustomize>
+        None
+      </ng-template>
+    </ng-template>
+  </fs-list-column>
 </fs-list>

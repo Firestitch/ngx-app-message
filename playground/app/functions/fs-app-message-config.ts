@@ -143,7 +143,7 @@ export function fsAppMessageConfig(): FsAppMessageConfig {
                 "bccRecipients": [],
                 "replyEmail": null,
                 "styles": null,
-                "customize": false
+                "customize": true
             },
             "smsMessage": {
                 "id": 26,
