@@ -3,7 +3,7 @@ import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 
-export function fsAppMessageConfig(): FsAppMessageConfig {
+export function appMessageConfig(): FsAppMessageConfig {
   const templateMessage = {"id":1,"content":' <div class = "body"><div class="content"> {$content} </div></div> ',"styles": ".body { padding: 20px } .content { background: #efefef; padding: 25px; border-radius: 10px; }", "name":"Default Template"};
   
   const getMessageQueue = () => {
@@ -115,10 +115,6 @@ export function fsAppMessageConfig(): FsAppMessageConfig {
     forwardMessageQueue: (messageQueue, email) => {
       return of(messageQueue);
     },
-    cancelMessageQueues: (action) => {
-      this.message.success(`Cancelled ${action.selected.length} messages`);
-      return of(false);
-    },
     loadMessages: () => {
       return of({
         "paging": { "limit": 25, "records": 12, "offset": 0 },
@@ -205,6 +201,10 @@ export function fsAppMessageConfig(): FsAppMessageConfig {
         { url: 'https://www.com/webhook', createDate: '2021-10-14T10:39:24+00:00' },
       ]);
     },
+    bulkMessageQueues: (action: string, messageQueues: any[]) => {
+      console.log('bulkMessageQueues', action, messageQueues);
+      return of(true);
+    }
   };
 
   return config;

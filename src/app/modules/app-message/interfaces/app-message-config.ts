@@ -25,7 +25,7 @@ export interface FsAppMessageConfig {
   loadMessageTemplate: LoadMessageTemplate;
   saveMessageTemplate: SaveMessageTemplate;
   deleteMessageTemplate: DeleteMessageTemplate;
-  cancelMessageQueues: (event: FsListActionSelected) => Observable<any>;
+  bulkMessageQueues?: (action: string, messageQueues: any[]) => Observable<any>;
   getTestEmail: () => Observable<string>;
   deleteWebhook: DeleteWebhook;
   createWebhook: CreateWebhook;

@@ -94,37 +94,35 @@ export class QueuesComponent implements OnInit, OnDestroy {
       }
     };
 
-    // if any bulk actions add the selection object to config.
-    if (this._config.cancelMessageQueues) {
+    if (this._config.bulkMessageQueues) {
       this.config.selection = {
         selectAll: false,
         actions: [
+          {
+            type: SelectionActionType.Action,
+            name: 'queue',
+            label: 'Queue',
+          },
+          {
+            type: SelectionActionType.Action,
+            name: 'resend',
+            label: 'Resend',
+          },
+          {
+            type: SelectionActionType.Action,
+            name: 'cancel',
+            label: 'Cancel',
+          },
         ],
-        actionSelected: (action: FsListActionSelected) => {
-          return of(true)
+        actionSelected: (actionSelected: FsListActionSelected) => {
+          return this._config.bulkMessageQueues(actionSelected.action.name, actionSelected.selected)
             .pipe(
-              switchMap(() => {
-                if (action.action.name === 'cancel') {
-                  return this._config.cancelMessageQueues(action);
-                }
-
-                return of(true);
-              }),
               tap(() => {
                 this.list.reload();
               }),
             );
         }
       };
-    }
-
-    // add each individual bulk action to select actions
-    if (this._config.cancelMessageQueues) {
-      this.config.selection.actions.push({
-        type: SelectionActionType.Action,
-        name: 'cancel',
-        label: 'Cancel Queued',
-      });
     }
 
     this.config.filters.push({

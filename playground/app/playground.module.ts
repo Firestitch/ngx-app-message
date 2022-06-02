@@ -25,7 +25,7 @@ import { FsListModule } from '@firestitch/list';
 import { FsScrollModule } from '@firestitch/scroll';
 import { FsSelectionModule } from '@firestitch/selection';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
-import { fsAppMessageConfig } from './functions/fs-app-message-config';
+import { appMessageConfig } from './functions/app-message-config';
 import { FsAppMessageWebhooksModule } from 'src/app/modules/webhooks/webhooks.module';
 
 const routes: Routes = [
@@ -61,7 +61,7 @@ const routes: Routes = [
     KitchenSinkConfigureComponent
   ],
   providers: [
-    { provide: FS_APP_MESSAGE_CONFIG, useFactory: fsAppMessageConfig, deps: [] }
+    { provide: FS_APP_MESSAGE_CONFIG, useFactory: appMessageConfig, deps: [] }
   ]
 })
 export class PlaygroundModule {
