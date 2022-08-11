@@ -75,7 +75,6 @@
     "@firestitch/skeleton": "^12.0.0",
     "@firestitch/store": "^12.0.0",
     "@firestitch/text-editor": "^12.1.0",
-    "anchorme": "^1.1.2",
     "camelcase-keys": "^6.2.1",
     "codelyzer": "^6.0.0",
     "core-js": "^3.11.0",
@@ -111,6 +110,7 @@
     "snakecase-keys": ">=3.1.2"
   },
   "dependencies": {
+    "anchorme": "^1.1.2",
     "tslib": "^2.0.0"
   }
 }
