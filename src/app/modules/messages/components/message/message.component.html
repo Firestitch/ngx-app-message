@@ -144,11 +144,11 @@
                           [config]="{ language: 'html '}">
                         </fs-text-editor>
 
-                        <fs-editor-rich-text
+                        <fs-html-editor
                           *ngIf="message.emailMessage.format===emailMessageFormat.RichText"
                           [(ngModel)]="message.emailMessage.body"
                           name="body">
-                        </fs-editor-rich-text>
+                        </fs-html-editor>
 
                         <fs-text-editor
                             *ngIf="message.emailMessage.format===emailMessageFormat.Text"
@@ -159,7 +159,7 @@
                       </ng-template>
                     </mat-tab>
                     <mat-tab
-                        *ngIf="message.emailMessage.format===emailMessageFormat.HTML"
+                        *ngIf="message.emailMessage.format===emailMessageFormat.HTML || message.emailMessage.format===emailMessageFormat.RichText"
                         label="Styles">
                       <ng-template matTabContent>
                         <fs-text-editor
@@ -182,16 +182,11 @@
                 <div>
                   <fs-label-field>
                     <fs-label>Content</fs-label>
-                    <div
-                      class="email-body-html-default"
-                      *ngIf="message.emailMessage.format===emailMessageFormat.HTML">
-                      {{message.defaultEmailBody}}
-                    </div>
-                    <div
-                      *ngIf="message.emailMessage.format===emailMessageFormat.RichText"
-                      fsEditorRenderer
-                      name="defaultEmailBody"
-                      [ngModel]="message.defaultEmailBody">
+                    <div class="email-body-html-default">
+                      <fs-html-renderer
+                        *ngIf="message.emailMessage.format===emailMessageFormat.RichText || message.emailMessage.format===emailMessageFormat.HTML"
+                        [html]="message.defaultEmailBody">
+                      </fs-html-renderer>
                     </div>
                     <div
                       class="email-body-text-default"

@@ -2,7 +2,7 @@
   "name": "@firestitch/app-message",
   "title": "Admin",
   "description": "@firestitch/admin",
-  "version": "12.4.0",
+  "version": "12.5.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/ngx-admin"
@@ -59,8 +59,10 @@
     "@firestitch/file": "^12.0.4",
     "@firestitch/filter": "^12.0.1",
     "@firestitch/form": "^12.0.1",
+    "@firestitch/froala": "^1.0.6",
     "@firestitch/iframe": "^12.0.0",
     "@firestitch/ip": "^12.1.0",
+    "@firestitch/html-editor": "^12.2.0",
     "@firestitch/label": "^12.0.0",
     "@firestitch/list": "^12.0.0",
     "@firestitch/mask": "^12.0.0",
