@@ -50,8 +50,8 @@
       </div>
     </mat-dialog-content>
     <mat-dialog-actions>
-      <button mat-button color="primary" name="close">Save</button>
-      <button mat-button name="save-close">Save & Close</button>
+      <button mat-button type="submit" color="primary" name="close">Save</button>
+      <button mat-button type="submit" name="save-close">Save & Close</button>
       <button mat-button (click)="openPreview()" type="button">Preview</button>
       <button mat-button [mat-dialog-close]="null" type="button">Cancel</button>
     </mat-dialog-actions>

@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild, Inject } from '@angular/core';
 
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 import { FsListComponent, FsListConfig } from '@firestitch/list';
 
-import { MatDialog } from '@angular/material/dialog';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 import { TemplateComponent } from '../template';
 import { FS_APP_MESSAGE_CONFIG } from '../../../app-message/injectors';
 import { FsAppMessageConfig } from '../../../app-message/interfaces';
@@ -27,7 +28,7 @@ export class TemplatesComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
   ) { }
 
   public ngOnInit(): void {
@@ -57,41 +58,32 @@ export class TemplatesComponent implements OnInit, OnDestroy {
             template: 'Are you sure you would like to delete this template?',
           },
           menu: true,
-          label: 'Delete'
-        }
+          label: 'Delete',
+        },
       ];
     }
   }
 
-  public open(messageTemplate) {
+  public open(messageTemplate): void {
     const dialogRef = this._dialog.open(TemplateComponent, {
       data: {
-        messageTemplate: messageTemplate,
+        messageTemplate,
       },
-      width: '85%'
+      width: '85%',
     });
 
     dialogRef.afterClosed()
-    .pipe(
-      takeUntil(this._destroy$)
-    )
-    .subscribe((response) => {
-      if (response) {
-        const update = this.list.updateData(
-          response,
-          (row: any) => {
-            return row.id === response.id;
-          });
-
-        if (!update) {
-          this.list.reload();
-        }
-      }
-    })
+      .pipe(
+        takeUntil(this._destroy$),
+      )
+      .subscribe(() => {
+        this.list.reload();
+      });
   }
 
-  public ngOnDestroy() {
+  public ngOnDestroy(): void {
     this._destroy$.next();
     this._destroy$.complete();
   }
+
 }

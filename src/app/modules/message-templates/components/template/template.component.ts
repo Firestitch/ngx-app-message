@@ -2,11 +2,11 @@ import { Component, OnInit, Inject } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 
-import { tap } from 'rxjs/operators';
-
 import { FsMessage } from '@firestitch/message';
 import { FsTextEditorConfig } from '@firestitch/text-editor';
 import { SubmitEvent } from '@firestitch/form';
+
+import { tap } from 'rxjs/operators';
 
 import { PreviewComponent } from '../../../../modules/message-preview/components';
 import { FS_APP_MESSAGE_CONFIG } from '../../../app-message/injectors';
@@ -38,8 +38,7 @@ export class TemplateComponent implements OnInit {
     private _dialogRef: MatDialogRef<TemplateComponent>,
     private _message: FsMessage,
     private _dialog: MatDialog,
-  ) {
-  }
+  ) { }
 
   public ngOnInit(): void {
     if (this._data.messageTemplate.id) {
@@ -52,25 +51,25 @@ export class TemplateComponent implements OnInit {
     }
   }
 
-  public openPreview() {
+  public openPreview(): void {
     this._dialog.open(PreviewComponent, {
       data: {
         styles: this.messageTemplate.styles,
         html: this.messageTemplate.content,
       },
-      width: '95%'
+      width: '95%',
     });
   }
 
   public save = (event: SubmitEvent) => {
     return this._config.saveMessageTemplate(this.messageTemplate)
-    .pipe(
-      tap(messageTemplate => {
-        this._message.success('Saved Changes');
-        if (event.submitter === 'save-close') {
-          this._dialogRef.close(messageTemplate);
-        }
-      })
-    );
+      .pipe(
+        tap((messageTemplate) => {
+          this._message.success('Saved Changes');
+          if (event.submitter === 'save-close') {
+            this._dialogRef.close(messageTemplate);
+          }
+        })
+      );
   }
 }
