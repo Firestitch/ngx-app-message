@@ -28,6 +28,8 @@ import { MonacoEditorModule } from 'ngx-monaco-editor';
 import { appMessageConfig } from './functions/app-message-config';
 import { FsAppMessageWebhooksModule } from 'src/app/modules/webhooks/webhooks.module';
 import { FsHtmlEditorModule } from '@firestitch/html-editor';
+import { FsFileModule } from '@firestitch/file';
+import { FsTabsModule } from '@firestitch/tabs';
 
 const routes: Routes = [
   { path: '', component: ExamplesComponent },
@@ -45,6 +47,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     AppMaterialModule,
     FormsModule,
+    FsTabsModule.forRoot(),
+    FsFileModule.forRoot(),
     FsLabelModule,
     FsHtmlEditorModule.forRoot({
       activationKey: 'DUA2yE1G2E1A5B5B3pZGCTRSAPJWTLPLZHTQQe1JGZxC4B3A3C2B5A1C2E4F1A1==',

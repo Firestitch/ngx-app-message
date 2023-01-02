@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component, Input, OnInit,
 } from '@angular/core';
 
@@ -8,6 +9,7 @@ import {
   selector: 'app-recipient',
   templateUrl: './recipient.component.html',
   styleUrls: ['./recipient.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecipientComponent implements OnInit {
   

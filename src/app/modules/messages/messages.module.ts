@@ -17,6 +17,7 @@ import { FsLabelModule } from '@firestitch/label';
 import { FsDialogModule } from '@firestitch/dialog';
 import { FsListModule } from '@firestitch/list';
 import { FsSkeletonModule } from '@firestitch/skeleton';
+import { FsTabsModule } from '@firestitch/tabs';
 import { FormsModule } from '@angular/forms';
 import { FsFormModule } from '@firestitch/form';
 import { FsTextEditorModule } from '@firestitch/text-editor';
@@ -25,6 +26,9 @@ import { FsHtmlEditorModule, FsHtmlRendererModule } from '@firestitch/html-edito
 import { MessagesComponent } from './components/messages/messages.component';
 import { MessageComponent } from './components/message/message.component';
 import { FsAppMessagePreviewModule } from '../message-preview/message-preview.module';
+import { AttachmentsComponent } from './components';
+import { FsCommonModule } from '@firestitch/common';
+
 
 @NgModule({
   imports: [
@@ -51,12 +55,15 @@ import { FsAppMessagePreviewModule } from '../message-preview/message-preview.mo
     FsTextEditorModule,
     FsHtmlEditorModule,
     FsHtmlRendererModule,
+    FsCommonModule,
+    FsTabsModule,
 
     FsAppMessagePreviewModule,
   ],
   declarations: [
     MessagesComponent,
     MessageComponent,
+    AttachmentsComponent,
   ],
   exports: [
     MessagesComponent,

@@ -1,9 +1,7 @@
-import { Component, Inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { MatDialog } from '@angular/material/dialog';
-
-import { takeUntil, map, switchMap, tap } from 'rxjs/operators';
-import { Subject, of } from 'rxjs';
+import { takeUntil, map, tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { FsListActionSelected, FsListComponent, FsListConfig } from '@firestitch/list';
 import { ItemType } from '@firestitch/filter';
@@ -20,7 +18,8 @@ import { FsMessageQueueService } from '../../services/message-queue.service';
 @Component({
   selector: 'fs-app-message-queues',
   styleUrls: ['./queues.component.scss'],
-  templateUrl: './queues.component.html'
+  templateUrl: './queues.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QueuesComponent implements OnInit, OnDestroy {
 
@@ -37,7 +36,6 @@ export class QueuesComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,    
-    private _dialog: MatDialog,
     private _messageQueueService: FsMessageQueueService,
   ) { }
 
@@ -140,12 +138,13 @@ export class QueuesComponent implements OnInit, OnDestroy {
             map((response) => {
               return [
                 { value: null, name: 'All', },
-                ...response.data.map((item) => ({ name: item.name, value: item.id })),
+                ...response.data
+                  .map((item) => ({ name: item.name, value: item.id })),
               ];
             })
           )
       }
-    });
+    } as any);
   }
 
   public open(messageQueue) {

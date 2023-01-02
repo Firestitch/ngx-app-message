@@ -1,5 +1,5 @@
 import {
-  Component, OnInit, Inject, OnDestroy, ViewChild,
+  Component, OnInit, Inject, OnDestroy, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef,
 } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
@@ -27,6 +27,7 @@ import { MessageQueueEventTypes } from '../../consts/message-queue-event-type.co
 @Component({
   templateUrl: './queue.component.html',
   styleUrls: ['./queue.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QueueComponent implements OnInit, OnDestroy {
 
@@ -50,10 +51,11 @@ export class QueueComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,
+    @Inject(MAT_DIALOG_DATA) private _data,
     private _message: FsMessage,
     private _prompt: FsPrompt,
     private _dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) private _data,
+    private _cdRef: ChangeDetectorRef,
   ) {
   }
 
@@ -101,6 +103,7 @@ export class QueueComponent implements OnInit, OnDestroy {
       this._setLogsConfig(messageQueue);
       this._setAttachmentsConfig(messageQueue);
       this._setEventsConfig(messageQueue);
+      this._cdRef.markForCheck();
     });
   }
 
@@ -134,6 +137,7 @@ export class QueueComponent implements OnInit, OnDestroy {
       this.resendMessageQueue(this.messageQueue)
       .subscribe(messageQueue => {
         Object.assign(this.messageQueue, messageQueue);
+        this._cdRef.markForCheck();
         this._message.success('Successfully resent');
 
         if (this.logList) {
@@ -160,7 +164,8 @@ export class QueueComponent implements OnInit, OnDestroy {
             messageQueue,
           };
           this._message.success('Successfully forwarded');
-
+          this._cdRef.markForCheck();
+          
           if (this.logList) {
             this.logList.reload();
           }

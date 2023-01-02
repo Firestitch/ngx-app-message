@@ -7,9 +7,10 @@
   <fs-dialog *ngIf="message">
     <div mat-dialog-title>Edit Message</div>
     <mat-dialog-content>
-
-      <mat-tab-group (selectedTabChange)="tabChange($event)">
-        <mat-tab label="General">
+      <mat-tab-group 
+          fsTabs 
+          [(selectedName)]="tab">
+        <mat-tab label="General" name="general">
           <ng-template matTabContent>
             <div fxLayout="column">
               <mat-form-field>
@@ -86,7 +87,7 @@
             </div>
           </ng-template>
         </mat-tab>
-        <mat-tab label="Email Message" *ngIf="message.emailMessage">
+        <mat-tab label="Email Message" *ngIf="message.emailMessage" name="email">
           <ng-template matTabContent>
             <div fxLayout="column">
               <div fxLayout="row" fxLayoutGap="10px">
@@ -171,7 +172,6 @@
                     </mat-tab>
                   </mat-tab-group>
                 </div>
-
               </ng-container>
 
               <ng-container *ngIf="!message.emailMessage.customize">
@@ -200,37 +200,47 @@
           </ng-template>
         </mat-tab>
 
-        <mat-tab label="SMS Message" *ngIf="message.smsMessage">
+        <ng-container *ngIf="!!message.smsMessage">
+          <mat-tab label="SMS Message" name="sms">
+            <ng-template matTabContent>
+              <mat-form-field>
+                <mat-select
+                  required
+                  placeholder="Customize Message"
+                  [(ngModel)]="message.smsMessage.customize"
+                  name="customizeSms">
+                    <mat-option [value]="true">Yes</mat-option>
+                    <mat-option [value]="false">No</mat-option>
+                  </mat-select>
+              </mat-form-field>
+              <div
+                  *ngIf="message.smsMessage.customize"
+                  [@.disabled]="true">
+                <mat-tab-group [dynamicHeight]="false">
+                  <mat-tab label="Content">
+                    <ng-template matTabContent>
+                      <fs-text-editor
+                        [(ngModel)]="message.smsMessage.message"
+                        name="smsMessageMessage"
+                        [config]="{ language: 'text '}">
+                      </fs-text-editor>
+                    </ng-template>
+                  </mat-tab>
+                </mat-tab-group>
+              </div>
+              <fs-label-field *ngIf="!message.smsMessage.customize">
+                  <fs-label>Message</fs-label>
+                  {{message.defaultSmsMessage}}
+              </fs-label-field>
+            </ng-template>
+          </mat-tab>
+        </ng-container>
+
+        <mat-tab label="Attachments" *ngIf="message.emailMessage" name="attachments">
           <ng-template matTabContent>
-            <mat-form-field>
-              <mat-select
-                required
-                placeholder="Customize Message"
-                [(ngModel)]="message.smsMessage.customize"
-                name="customizeSms">
-                  <mat-option [value]="true">Yes</mat-option>
-                  <mat-option [value]="false">No</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <div
-                *ngIf="message.smsMessage.customize"
-                [@.disabled]="true">
-              <mat-tab-group [dynamicHeight]="false">
-                <mat-tab label="Content">
-                  <ng-template matTabContent>
-                    <fs-text-editor
-                      [(ngModel)]="message.smsMessage.message"
-                      name="smsMessageMessage"
-                      [config]="{ language: 'text '}">
-                    </fs-text-editor>
-                  </ng-template>
-                </mat-tab>
-              </mat-tab-group>
-            </div>
-             <fs-label-field *ngIf="!message.smsMessage.customize">
-                <fs-label>Message</fs-label>
-                {{message.defaultSmsMessage}}
-            </fs-label-field>
+            <fs-app-message-attachments 
+              [message]="message">
+            </fs-app-message-attachments>
           </ng-template>
         </mat-tab>
 
@@ -268,32 +278,52 @@
 
     </mat-dialog-content>
     <mat-dialog-actions>
-      <button mat-button color="primary">Save</button>
-      <button
-          *ngIf="tab==='email' && message.emailMessage.format===emailMessageFormat.HTML"
-          mat-button
-          type="button"
-          (click)="openPreview()"
-          type="button">
-        Preview
-      </button>
-      <button
-          *ngIf="tab==='email'"
-          mat-button
-          type="button"
-          (click)="sendTest('email')"
-          type="button">
-        Send Test Email
-      </button>
-      <button
-          *ngIf="tab==='sms'"
-          mat-button
-          type="button"
-          (click)="sendTest('sms')"
-          type="button">
-        Send Test SMS
-      </button>
-      <button mat-button [mat-dialog-close]="null" type="button">Cancel</button>
+      <ng-container *ngIf="tab==='email' || tab==='sms' || tab==='general'; else done">
+        <button 
+            mat-button 
+            color="primary">
+          Save
+        </button>     
+        <button
+            *ngIf="tab==='email' && message.emailMessage.format===emailMessageFormat.HTML"
+            mat-button
+            type="button"
+            (click)="openPreview()"
+            type="button">
+          Preview
+        </button>
+        <button
+            *ngIf="tab==='email'"
+            mat-button
+            type="button"
+            (click)="sendTest('email')"
+            type="button">
+          Send Test Email
+        </button>
+        <button
+            *ngIf="tab==='sms'"
+            mat-button
+            type="button"
+            (click)="sendTest('sms')"
+            type="button">
+          Send Test SMS
+        </button>
+        <button 
+            mat-button 
+            [mat-dialog-close]="null" 
+            type="button">
+          Cancel
+        </button>
+      </ng-container> 
+      <ng-template #done>
+        <button 
+            mat-button 
+            color="primary"
+            [mat-dialog-close]="null" 
+            type="button">
+          Close
+        </button>
+      </ng-template>
     </mat-dialog-actions>
   </fs-dialog>
 </form>

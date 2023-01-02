@@ -5,7 +5,7 @@ import {
   DownloadMessageQueueAttachment, ForwardMessageQueue, LoadMessageQueueAttachments, LoadLogs, LoadMessage, 
   LoadMessageQueue, LoadMessageQueues, LoadMessages, LoadMessageTemplate, LoadMessageTemplates, 
   ResendMessageQueue, SaveMessage, 
-  SaveMessageTemplate, TestMessage, DeleteWebhook, CreateWebhook, LoadWebhooks, LoadMessageQueueEvents 
+  SaveMessageTemplate, TestMessage, DeleteWebhook, CreateWebhook, LoadWebhooks, LoadMessageQueueEvents, LoadMessageAttachments, SaveMessageAttachment, UploadMessageAttachment, DeleteMessageAttachment, DownloadMessageAttachment 
 } from "../types";
 
 export interface FsAppMessageConfig {
@@ -30,4 +30,9 @@ export interface FsAppMessageConfig {
   deleteWebhook: DeleteWebhook;
   createWebhook: CreateWebhook;
   loadWebhooks: LoadWebhooks;
+  loadMessageAttachments: LoadMessageAttachments;
+  saveMessageAttachment: SaveMessageAttachment;
+  uploadMessageAttachment: UploadMessageAttachment;
+  deleteMessageAttachment: DeleteMessageAttachment;
+  downloadMessageAttachment: DownloadMessageAttachment;
 }

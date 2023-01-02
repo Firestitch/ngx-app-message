@@ -1,0 +1,12 @@
+<fs-list [config]="config">
+  <fs-list-column title="File Name">
+    <ng-template fs-list-cell let-row="row">
+      {{row.filename}}
+    </ng-template>
+  </fs-list-column>
+  <fs-list-column title="File Size">
+    <ng-template fs-list-cell let-row="row">
+      {{row.size | fsFormatBytes}}
+    </ng-template>
+  </fs-list-column>
+</fs-list>

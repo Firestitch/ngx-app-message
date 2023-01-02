@@ -1,6 +1,5 @@
 import { Component, OnInit, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
-import { MatTabChangeEvent } from '@angular/material/tabs';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { FsMessage } from '@firestitch/message';
@@ -24,7 +23,7 @@ import { of } from 'rxjs';
 export class MessageComponent implements OnInit {
 
   public message;
-  public tab;
+  public tab = 'general';
   public messageTemplates = [];
   public emailMessageFormats = EmailMessageFormats;
   public emailMessageFormat = EmailMessageFormat;
@@ -59,19 +58,6 @@ export class MessageComponent implements OnInit {
       this.messageTemplates = data.data;
       this._cdRef.markForCheck();
     });
-  }
-
-  public tabChange(event: MatTabChangeEvent) {
-    switch (event.tab.textLabel) {
-      case 'SMS Message':
-        this.tab = 'sms';
-        break;
-      case 'Email Message':
-        this.tab = 'email';
-        break;
-      default:
-        this.tab = null;
-    }
   }
 
   public save = () => {
