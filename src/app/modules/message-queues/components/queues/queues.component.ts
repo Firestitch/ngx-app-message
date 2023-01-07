@@ -7,6 +7,8 @@ import { FsListActionSelected, FsListComponent, FsListConfig } from '@firestitch
 import { ItemType } from '@firestitch/filter';
 import { SelectionActionType } from '@firestitch/selection';
 
+import { isAfter } from 'date-fns';
+
 import { MessageQueueStates } from '../../consts';
 import { indexNameValue } from '../../../../helpers';
 import { MessageQueueState } from '../../enums/message-queue-state.enum';
@@ -80,6 +82,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
               .map((messageQueue) => {              
                 return {
                   ...messageQueue,
+                  scheduled: messageQueue.state === MessageQueueState.Queued && isAfter(messageQueue.scheduledDate, new Date()),
                   messageQueueRecipients: messageQueue.messageQueueRecipients
                   .reduce((accum, messageQueueRecipient) => {
                     accum[messageQueueRecipient.recipient] = messageQueueRecipient.state;

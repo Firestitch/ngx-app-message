@@ -48,8 +48,16 @@
     </ng-template>
   </fs-list-column> 
   <fs-list-column title="Status" class="col-state">
-    <ng-template fs-list-cell let-row="row">
-      <span [class]="'state-' + row.state">{{messageQueueStates[row.state]}}</span>
+    <ng-template fs-list-cell let-row="row">    
+      <ng-container *ngIf="row.scheduled; else state">
+        Scheduled
+        <div class="small">
+           {{row.scheduledDate | fsDateFormat: 'date-time' }}
+        </div>
+      </ng-container>
+      <ng-template #state>
+        <span [class]="'state-' + row.state">{{messageQueueStates[row.state]}}</span>
+      </ng-template>
     </ng-template>
   </fs-list-column> 
   <fs-list-column title="Date" name="created_date" sortable="true">
