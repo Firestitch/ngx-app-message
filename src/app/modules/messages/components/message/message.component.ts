@@ -5,7 +5,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FsMessage } from '@firestitch/message';
 import { FsPrompt } from '@firestitch/prompt';
 
-import { switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 import { EmailMessageFormats } from '../../consts';
 import { EmailMessageFormat } from '../../enums';
@@ -40,8 +40,8 @@ export class MessageComponent implements OnInit {
 
   public ngOnInit() {
     this._config.loadMessage(this._data.message)
-    .subscribe((response) => {
-      this.message = response;
+    .subscribe((message) => {
+      this.message = message;
 
       if (this.message.emailMessage && this.message.emailMessage.customize === undefined) {
         this.message.emailMessage.customize = true;
@@ -49,6 +49,12 @@ export class MessageComponent implements OnInit {
       if (this.message.smsMessage && this.message.smsMessage.customize === undefined) {
         this.message.smsMessage.customize = true;
       }
+
+      this.message.reference = String(message.tag)
+        .toLocaleLowerCase()
+        .split('_')
+        .map((item: string) => item.charAt(0).toUpperCase() + item.slice(1))
+        .join('');
 
       this._cdRef.markForCheck();
     });

@@ -13,14 +13,20 @@
         <mat-tab label="General" name="general">
           <ng-template matTabContent>
             <div fxLayout="column">
-              <mat-form-field>
-                <input
-                  matInput
-                  placeholder="Name"
-                  [(ngModel)]="message.name"
-                  name="Name"
-                  required>
-              </mat-form-field>
+              <div fxLayoutGap="20px">
+                <mat-form-field fxFlex>
+                  <input
+                    matInput
+                    placeholder="Name"
+                    [(ngModel)]="message.name"
+                    name="Name"
+                    required>
+                </mat-form-field>
+                <fs-label-field>
+                  <fs-label>Reference</fs-label>
+                  {{message.reference}}
+                </fs-label-field>
+              </div>
               <mat-form-field>
                 <input
                   matInput

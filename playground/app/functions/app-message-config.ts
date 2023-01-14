@@ -1,4 +1,3 @@
-import { date } from '@firestitch/date';
 import { FsFile } from '@firestitch/file';
 import { FsAppMessageConfig } from '@firestitch/package';
 import { addMinutes } from 'date-fns';
@@ -134,7 +133,7 @@ export function appMessageConfig(): FsAppMessageConfig {
             "guid": "38ede7efce8eba0d80e52a7532906475",
             "name": "Student Schdeule Reminder",
             "description": "",
-            "tag": "\\_MESSAGE_STUDENT_SCHEDULE_REMINDER",
+            "tag": "MESSAGE_STUDENT_SCHEDULE_REMINDER",
             "emailMessage": {
                 "id": 26,
                 "messageTemplateId": 1,
