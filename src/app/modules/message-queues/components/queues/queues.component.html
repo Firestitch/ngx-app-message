@@ -1,5 +1,5 @@
 <fs-list [config]="config" #list>
-  <fs-list-column title="Message" name="subject" sortable="true">
+  <fs-list-column title="Message" name="subject" [sortable]="true">
     <ng-template fs-list-cell let-row="row">
       <ng-container *ngIf="row.emailMessageQueue">
         <div fxLayout="row" fxLayoutAlign="start center">
@@ -60,7 +60,7 @@
       </ng-template>
     </ng-template>
   </fs-list-column> 
-  <fs-list-column title="Date" name="created_date" sortable="true">
+  <fs-list-column title="Date" name="created_date" [sortable]="true">
     <ng-template fs-list-cell let-row="row">
       {{ row.createdDate | fsDateFormat: 'date-time-yeardiff' }}
     </ng-template>
