@@ -2,7 +2,7 @@
   "name": "@firestitch/app-message",
   "title": "Admin",
   "description": "@firestitch/admin",
-  "version": "12.7.1",
+  "version": "12.7.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/ngx-admin"
@@ -76,7 +76,7 @@
     "@firestitch/selection": "^12.0.0",
     "@firestitch/skeleton": "^12.0.0",
     "@firestitch/store": "^12.0.0",
-    "@firestitch/tabs": "^12.0.3",
+    "@firestitch/tabs": "^12.2.2",
     "@firestitch/text-editor": "^12.1.0",
     "camelcase-keys": "^6.2.1",
     "codelyzer": "^6.0.0",
