@@ -130,7 +130,8 @@
               </div>
               <fs-iframe
                 *ngIf="messageQueue.emailMessageQueue.format===emailMessageQueueFormat.HTML || messageQueue.emailMessageQueue.format===emailMessageQueueFormat.RichText"
-                [html]="messageQueue.emailMessageQueue.body">
+                [html]="messageQueue.emailMessageQueue.body"
+                [width]="'100%'">
               </fs-iframe>
             </fs-label-field>
           </ng-container>
