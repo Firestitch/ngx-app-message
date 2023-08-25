@@ -290,30 +290,31 @@
             color="primary">
           Save
         </button>     
-        <button
-            *ngIf="tab==='email' && message.emailMessage.format===emailMessageFormat.HTML"
-            mat-button
-            type="button"
-            (click)="openPreview()"
-            type="button">
-          Preview
-        </button>
-        <button
-            *ngIf="tab==='email'"
-            mat-button
-            type="button"
-            (click)="sendTest('email')"
-            type="button">
-          Send Test Email
-        </button>
-        <button
-            *ngIf="tab==='sms'"
-            mat-button
-            type="button"
-            (click)="sendTest('sms')"
-            type="button">
-          Send Test SMS
-        </button>
+        <ng-container *ngIf="tab==='email'">
+          <button            
+              mat-button
+              type="button"
+              (click)="openPreview()"
+              type="button">
+            Preview
+          </button>
+          <button
+              mat-button
+              type="button"
+              (click)="sendTest('email')"
+              type="button">
+            Send Test Email
+          </button>
+        </ng-container>
+        <ng-container *ngIf="tab==='sms'">
+          <button            
+              mat-button
+              type="button"
+              (click)="sendTest('sms')"
+              type="button">
+            Send Test SMS
+          </button>
+        </ng-container>
         <button 
             mat-button 
             [mat-dialog-close]="null" 
