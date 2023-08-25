@@ -99,13 +99,13 @@
               <div fxLayout="row" fxLayoutGap="10px">
                 <mat-form-field>
                   <mat-select
-                    required
-                    placeholder="Customize Message"
-                    [(ngModel)]="message.emailMessage.customize"
-                    name="customizeEmail">
-                      <mat-option [value]="true">Yes</mat-option>
-                      <mat-option [value]="false">No</mat-option>
-                    </mat-select>
+                      required
+                      placeholder="Customize Message"
+                      [(ngModel)]="message.emailMessage.customize"
+                      name="customizeEmail">
+                    <mat-option [value]="true">Yes</mat-option>
+                    <mat-option [value]="false">No</mat-option>
+                  </mat-select>
                 </mat-form-field>
                 <mat-form-field>
                   <mat-select

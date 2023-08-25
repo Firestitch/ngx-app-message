@@ -76,13 +76,14 @@ export class MessageComponent implements OnInit {
   }
 
   public openPreview(): void {
-    let html = this.message.emailMessage.body;
-    let styles = this.message.emailMessage.styles;
+    const emailMessage = this.message.emailMessage;
+    let html = emailMessage.customize ? emailMessage.body : this.message.defaultEmailBody;
+    let styles = emailMessage.styles;
 
-    if (this.message.emailMessage.messageTemplateId) {
+    if (emailMessage.messageTemplateId) {
       const messageTemplate = this.messageTemplates
         .find((item) => {
-          return this.message.emailMessage.messageTemplateId === item.id;
+          return emailMessage.messageTemplateId === item.id;
         });
 
       if (messageTemplate) {
