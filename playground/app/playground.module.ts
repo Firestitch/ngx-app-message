@@ -1,42 +1,43 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule, Routes } from '@angular/router';
 
 import { FsExampleModule } from '@firestitch/example';
+import { FsLabelModule } from '@firestitch/label';
 import { FsMessageModule } from '@firestitch/message';
 import {
+  FS_APP_MESSAGE_CONFIG,
+  FsAppMessageModule,
   FsAppMessageQueuesModule,
   FsAppMessageTemplatesModule,
-  FsAppMessagesModule, FsAppMessageModule, FS_APP_MESSAGE_CONFIG
+  FsAppMessagesModule
 } from '@firestitch/package';
-import { FsLabelModule } from '@firestitch/label';
-import { ToastrModule } from 'ngx-toastr';
 
-import { AppMaterialModule } from './material.module';
-import {
-  KitchenSinkComponent,
-  ExamplesComponent
-} from './components';
-import { AppComponent } from './app.component';
-import { KitchenSinkConfigureComponent } from './components/kitchen-sink-configure';
+import { FsFileModule } from '@firestitch/file';
+import { FsHtmlEditorModule } from '@firestitch/html-editor';
 import { FsListModule } from '@firestitch/list';
 import { FsScrollModule } from '@firestitch/scroll';
 import { FsSelectionModule } from '@firestitch/selection';
-import { MonacoEditorModule } from 'ngx-monaco-editor';
-import { appMessageConfig } from './functions/app-message-config';
-import { FsAppMessageWebhooksModule } from 'src/app/modules/webhooks/webhooks.module';
-import { FsHtmlEditorModule } from '@firestitch/html-editor';
-import { FsFileModule } from '@firestitch/file';
 import { FsTabsModule } from '@firestitch/tabs';
+import { FsTextEditorModule } from '@firestitch/text-editor';
+import { FsAppMessageWebhooksModule } from 'src/app/modules/webhooks/webhooks.module';
+import { AppComponent } from './app.component';
+import {
+  ExamplesComponent,
+  KitchenSinkComponent
+} from './components';
+import { KitchenSinkConfigureComponent } from './components/kitchen-sink-configure';
+import { appMessageConfig } from './functions/app-message-config';
+import { AppMaterialModule } from './material.module';
 
 const routes: Routes = [
   { path: '', component: ExamplesComponent },
 ];
 
 @NgModule({
-  bootstrap: [ AppComponent ],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     FsAppMessageQueuesModule,
@@ -58,9 +59,9 @@ const routes: Routes = [
     FsMessageModule.forRoot(),
     FsSelectionModule,
     FsScrollModule.forRoot(),
-    ToastrModule.forRoot({ preventDuplicates: true }),
+    FsMessageModule.forRoot(),
     RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
-    MonacoEditorModule.forRoot(),
+    FsTextEditorModule.forRoot(),
   ],
   declarations: [
     AppComponent,

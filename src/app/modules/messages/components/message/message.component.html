@@ -144,25 +144,28 @@
                   <mat-tab-group [dynamicHeight]="false">
                     <mat-tab label="Content">
                       <ng-template matTabContent>
-                        <fs-text-editor
-                          *ngIf="message.emailMessage.format===emailMessageFormat.HTML"
-                          [(ngModel)]="message.emailMessage.body"
-                          name="body"
-                          [config]="{ language: 'html '}">
-                        </fs-text-editor>
+                        <ng-container *ngIf="message.emailMessage.format===emailMessageFormat.HTML">
+                          <fs-text-editor                          
+                            [(ngModel)]="message.emailMessage.body"
+                            name="body"
+                            [config]="{ language: 'html '}">
+                          </fs-text-editor>
+                        </ng-container>
 
-                        <fs-html-editor
-                          *ngIf="message.emailMessage.format===emailMessageFormat.RichText"
-                          [(ngModel)]="message.emailMessage.body"
-                          name="body">
-                        </fs-html-editor>
+                        <ng-container *ngIf="message.emailMessage.format===emailMessageFormat.RichText">
+                          <fs-html-editor                          
+                            [(ngModel)]="message.emailMessage.body"
+                            name="body">
+                          </fs-html-editor>
+                        </ng-container>
 
-                        <fs-text-editor
-                            *ngIf="message.emailMessage.format===emailMessageFormat.Text"
-                          [(ngModel)]="message.emailMessage.body"
-                          name="emailMessageBody"
-                          [config]="{ language: 'text' }">
-                        </fs-text-editor>
+                        <ng-container *ngIf="message.emailMessage.format===emailMessageFormat.Text">
+                          <fs-text-editor                            
+                            [(ngModel)]="message.emailMessage.body"
+                            name="emailMessageBody"
+                            [config]="{ language: 'text' }">
+                          </fs-text-editor>
+                        </ng-container>
                       </ng-template>
                     </mat-tab>
                     <mat-tab

@@ -1,18 +1,18 @@
-import { Component, OnInit, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
 import { FsMessage } from '@firestitch/message';
 import { FsPrompt } from '@firestitch/prompt';
 
-import { map, switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
-import { EmailMessageFormats } from '../../consts';
-import { EmailMessageFormat } from '../../enums';
+import { of } from 'rxjs';
 import { PreviewComponent } from '../../../../modules/message-preview/components';
 import { FS_APP_MESSAGE_CONFIG } from '../../../app-message/injectors';
 import { FsAppMessageConfig } from '../../../app-message/interfaces';
-import { of } from 'rxjs';
+import { EmailMessageFormats } from '../../consts';
+import { EmailMessageFormat } from '../../enums';
 
 
 @Component({
@@ -40,45 +40,45 @@ export class MessageComponent implements OnInit {
 
   public ngOnInit() {
     this._config.loadMessage(this._data.message)
-    .subscribe((message) => {
-      this.message = message;
+      .subscribe((message) => {
+        this.message = message;
 
-      if (this.message.emailMessage && this.message.emailMessage.customize === undefined) {
-        this.message.emailMessage.customize = true;
-      }
-      if (this.message.smsMessage && this.message.smsMessage.customize === undefined) {
-        this.message.smsMessage.customize = true;
-      }
+        if (this.message.emailMessage && this.message.emailMessage.customize === undefined) {
+          this.message.emailMessage.customize = true;
+        }
+        if (this.message.smsMessage && this.message.smsMessage.customize === undefined) {
+          this.message.smsMessage.customize = true;
+        }
 
-      this.message.reference = String(message.tag)
-        .toLocaleLowerCase()
-        .split('_')
-        .map((item: string) => item.charAt(0).toUpperCase() + item.slice(1))
-        .join('');
+        this.message.reference = String(message.tag)
+          .toLocaleLowerCase()
+          .split('_')
+          .map((item: string) => item.charAt(0).toUpperCase() + item.slice(1))
+          .join('');
 
-      this._cdRef.markForCheck();
-    });
+        this._cdRef.markForCheck();
+      });
 
     this._config.loadMessageTemplates()
-    .subscribe((data) => {
-      this.messageTemplates = data.data;
-      this._cdRef.markForCheck();
-    });
+      .subscribe((data) => {
+        this.messageTemplates = data.data;
+        this._cdRef.markForCheck();
+      });
   }
 
   public save = () => {
     return this._config.saveMessage(this.message)
-    .pipe(
-      tap(() => {
-        this._message.success('Saved Changes');
-      })
-    );
+      .pipe(
+        tap(() => {
+          this._message.success('Saved Changes');
+        })
+      );
   }
 
   public openPreview(): void {
     const emailMessage = this.message.emailMessage;
     let html = emailMessage.customize ? emailMessage.body : this.message.defaultEmailBody;
-    let styles = emailMessage.styles;
+    let styles = emailMessage.styles || '';
 
     if (emailMessage.messageTemplateId) {
       const messageTemplate = this.messageTemplates
@@ -88,7 +88,7 @@ export class MessageComponent implements OnInit {
 
       if (messageTemplate) {
         html = messageTemplate.content.replace('{$content}', html);
-        styles = messageTemplate.styles.concat(styles);
+        styles = `${messageTemplate.styles || ''}\n\n${styles}`;
       }
     }
 
@@ -103,27 +103,27 @@ export class MessageComponent implements OnInit {
 
   public sendTest(type) {
     of(true)
-    .pipe(
-      switchMap(() => {
-        return type === 'email' ? this._config.getTestEmail() : of('');
-      }),
-      switchMap((default_) => {        
-        const typeName = type === 'email' ? 'an email' : 'phone number';
-    
-        return this._prompt.input({
-          label: `Please enter ${typeName} to send test to`,
-          title: 'Send Test',
-          commitLabel: 'Send',
-          default: default_,
-          required: true
+      .pipe(
+        switchMap(() => {
+          return type === 'email' ? this._config.getTestEmail() : of('');
+        }),
+        switchMap((default_) => {
+          const typeName = type === 'email' ? 'an email' : 'phone number';
+
+          return this._prompt.input({
+            label: `Please enter ${typeName} to send test to`,
+            title: 'Send Test',
+            commitLabel: 'Send',
+            default: default_,
+            required: true
+          })
         })
-      })
-    )
-    .subscribe((value: string) => {
-      this._config.testMessage(this.message, value, type)
-        .subscribe(() => {
-          this._message.success('Test Sent');
-        });
-    });
+      )
+      .subscribe((value: string) => {
+        this._config.testMessage(this.message, value, type)
+          .subscribe(() => {
+            this._message.success('Test Sent');
+          });
+      });
   }
 }
