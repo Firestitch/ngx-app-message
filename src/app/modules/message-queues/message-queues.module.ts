@@ -1,8 +1,8 @@
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 
 import { MatButtonModule } from '@angular/material/button';
@@ -11,20 +11,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { FsListModule } from '@firestitch/list';
-import { FsDialogModule } from '@firestitch/dialog';
-import { FsLabelModule } from '@firestitch/label';
 import { FsDateModule } from '@firestitch/date';
+import { FsDialogModule } from '@firestitch/dialog';
 import { FsFormModule } from '@firestitch/form';
 import { FsIFrameModule } from '@firestitch/iframe';
-import { FsSkeletonModule } from '@firestitch/skeleton';
+import { FsLabelModule } from '@firestitch/label';
+import { FsListModule } from '@firestitch/list';
 import { FsPromptInputModule } from '@firestitch/prompt';
-// import { FsDeviceModule } from '@firestitch/device';
-// import { FsIpModule } from '@firestitch/ip';
+import { FsSkeletonModule } from '@firestitch/skeleton';
 
 import { FsAppMessagesModule } from '../messages/messages.module';
-import { QueuesComponent } from './components/queues/queues.component';
 import { QueueComponent } from './components/queue/queue.component';
+import { QueuesComponent } from './components/queues/queues.component';
 import { RecipientComponent } from './components/recipient/recipient.component';
 import { LinkifyPipe } from './pipes/linkify.pipe';
 import { TruncatePipe } from './pipes/truncate.pipe';
@@ -54,8 +52,6 @@ import { FsMessageQueueService } from './services/message-queue.service';
     FsFormModule,
     FsPromptInputModule,
     FsIFrameModule,
-    //FsDeviceModule,
-    //FsIpModule,
   ],
   declarations: [
     QueuesComponent,
@@ -72,4 +68,4 @@ import { FsMessageQueueService } from './services/message-queue.service';
     FsMessageQueueService
   ]
 })
-export class FsAppMessageQueuesModule {}
+export class FsAppMessageQueuesModule { }

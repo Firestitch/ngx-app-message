@@ -1,19 +1,20 @@
 import { ChangeDetectionStrategy, Component, Inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { takeUntil, map, tap } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 
-import { FsListActionSelected, FsListComponent, FsListConfig } from '@firestitch/list';
 import { ItemType } from '@firestitch/filter';
+import { FsListActionSelected, FsListComponent, FsListConfig } from '@firestitch/list';
 import { SelectionActionType } from '@firestitch/selection';
+
+import { Subject } from 'rxjs';
+import { map, takeUntil, tap } from 'rxjs/operators';
 
 import { isAfter } from 'date-fns';
 
-import { MessageQueueStates } from '../../consts';
 import { indexNameValue } from '../../../../helpers';
-import { MessageQueueState } from '../../enums/message-queue-state.enum';
 import { FS_APP_MESSAGE_CONFIG } from '../../../app-message/injectors';
 import { FsAppMessageConfig } from '../../../app-message/interfaces';
+import { MessageQueueStates } from '../../consts';
+import { MessageQueueState } from '../../enums/message-queue-state.enum';
 import { FsMessageQueueService } from '../../services/message-queue.service';
 
 
@@ -37,7 +38,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
   private _destroy$ = new Subject();
 
   constructor(
-    @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,    
+    @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,
     private _messageQueueService: FsMessageQueueService,
   ) { }
 
@@ -49,7 +50,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
         {
           name: 'keyword',
           type: ItemType.Keyword,
-          label: 'Search'
+          label: 'Search',
         },
         {
           name: 'state',
@@ -57,7 +58,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
           label: 'Status',
           values: () => {
             return MessageQueueStates;
-          }
+          },
         },
         {
           name: 'date',
@@ -66,7 +67,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
         },
       ],
       sort: { value: 'created_date', direction: 'desc' },
-      fetch: query => {
+      fetch: (query) => {
         query = {
           ...query,
           ...this.query,
@@ -78,21 +79,23 @@ export class QueuesComponent implements OnInit, OnDestroy {
 
         return this._config.loadMessageQueues(query)
           .pipe(
-            map(response => ({ data: response.data
-              .map((messageQueue) => {              
-                return {
-                  ...messageQueue,
-                  scheduled: messageQueue.state === MessageQueueState.Queued && isAfter(messageQueue.scheduledDate, new Date()),
-                  messageQueueRecipients: messageQueue.messageQueueRecipients
-                  .reduce((accum, messageQueueRecipient) => {
-                    accum[messageQueueRecipient.recipient] = messageQueueRecipient.state;
+            map((response) => ({
+              data: response.data
+                .map((messageQueue) => {
+                  return {
+                    ...messageQueue,
+                    scheduled: messageQueue.state === MessageQueueState.Queued && isAfter(messageQueue.scheduledDate, new Date()),
+                    messageQueueRecipients: messageQueue.messageQueueRecipients
+                      .reduce((accum, messageQueueRecipient) => {
+                        accum[messageQueueRecipient.recipient] = messageQueueRecipient.state;
 
-                    return accum;
-                  }, {}),
-                };
-              }), paging: response.paging }))
-          )
-      }
+                        return accum;
+                      }, {}),
+                  };
+                }), paging: response.paging,
+            })),
+          );
+      },
     };
 
     if (this._config.bulkMessageQueues) {
@@ -122,7 +125,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
                 this.list.reload();
               }),
             );
-        }
+        },
       };
     }
 
@@ -131,7 +134,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
       type: ItemType.Select,
       label: 'Message Type',
       values: (query) => {
-        query = { 
+        query = {
           ...query,
           limit: 50,
         };
@@ -140,20 +143,20 @@ export class QueuesComponent implements OnInit, OnDestroy {
           .pipe(
             map((response) => {
               return [
-                { value: null, name: 'All', },
+                { value: null, name: 'All' },
                 ...response.data
                   .map((item) => ({ name: item.name, value: item.id })),
               ];
-            })
-          )
-      }
+            }),
+          );
+      },
     } as any);
   }
 
   public open(messageQueue) {
     this._messageQueueService.openMessageQueue(messageQueue.id)
       .pipe(
-        takeUntil(this._destroy$)
+        takeUntil(this._destroy$),
       )
       .subscribe(() => {
         this.list.reload();
