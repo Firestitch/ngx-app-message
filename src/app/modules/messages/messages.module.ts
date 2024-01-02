@@ -1,33 +1,33 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import { FsLabelModule } from '@firestitch/label';
+import { FsCommonModule } from '@firestitch/common';
 import { FsDialogModule } from '@firestitch/dialog';
+import { FsFormModule } from '@firestitch/form';
+import { FsHtmlEditorModule, FsHtmlRendererModule } from '@firestitch/html-editor';
+import { FsLabelModule } from '@firestitch/label';
 import { FsListModule } from '@firestitch/list';
 import { FsSkeletonModule } from '@firestitch/skeleton';
 import { FsTabsModule } from '@firestitch/tabs';
-import { FormsModule } from '@angular/forms';
-import { FsFormModule } from '@firestitch/form';
 import { FsTextEditorModule } from '@firestitch/text-editor';
-import { FsHtmlEditorModule, FsHtmlRendererModule } from '@firestitch/html-editor';
 
-import { MessagesComponent } from './components/messages/messages.component';
-import { MessageComponent } from './components/message/message.component';
 import { FsAppMessagePreviewModule } from '../message-preview/message-preview.module';
+
 import { AttachmentsComponent } from './components';
-import { FsCommonModule } from '@firestitch/common';
+import { MessageComponent } from './components/message/message.component';
+import { MessagesComponent } from './components/messages/messages.component';
 
 
 @NgModule({
@@ -49,7 +49,6 @@ import { FsCommonModule } from '@firestitch/common';
     FsDialogModule,
     FsListModule,
     FsLabelModule,
-    FlexLayoutModule,
     FsSkeletonModule,
     FsFormModule,
     FsTextEditorModule,

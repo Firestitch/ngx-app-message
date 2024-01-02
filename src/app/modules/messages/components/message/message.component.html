@@ -12,21 +12,19 @@
           [(selected)]="tab">
         <mat-tab label="General" name="general">
           <ng-template matTabContent>
-            <div fxLayout="column">
-              <div fxLayoutGap="20px">
-                <mat-form-field fxFlex>
-                  <input
-                    matInput
-                    placeholder="Name"
-                    [(ngModel)]="message.name"
-                    name="Name"
-                    required>
-                </mat-form-field>
-                <fs-label-field>
-                  <fs-label>Reference</fs-label>
-                  {{message.reference}}
-                </fs-label-field>
-              </div>
+            <div class="fs-column">
+              <mat-form-field>
+                <input
+                  matInput
+                  placeholder="Name"
+                  [(ngModel)]="message.name"
+                  name="Name"
+                  required>
+              </mat-form-field>
+              <fs-label-field>
+                <fs-label>Reference</fs-label>
+                {{message.reference}}
+              </fs-label-field>
               <mat-form-field>
                 <input
                   matInput
@@ -35,26 +33,22 @@
                   name="description">
               </mat-form-field>
 
-              <div
-                fxLayout="row"
-                fxLayoutGap="10px"
-                fxLayout.xs="column"
-                fxLayout.sm="column">
-                <mat-form-field fxFlex>
+              <div class="fs-row.gap-small.wrap">
+                <mat-form-field>
                   <input
                     matInput
                     placeholder="From Email"
                     [(ngModel)]="message.emailMessage.fromEmail"
                     name="from_email">
                 </mat-form-field>
-                <mat-form-field fxFlex>
+                <mat-form-field>
                   <input
                     matInput
                     placeholder="From Name"
                     [(ngModel)]="message.emailMessage.fromName"
                     name="from_name">
                 </mat-form-field>
-                <mat-form-field fxFlex>
+                <mat-form-field>
                   <input
                     matInput
                     placeholder="Reply To"
@@ -63,26 +57,22 @@
                 </mat-form-field>
               </div>
 
-              <div
-                fxLayout="row"
-                fxLayoutGap="10px"
-                fxLayout.xs="column"
-                fxLayout.sm="column">
-                <mat-form-field fxFlex>
+              <div class="fs-row.gap-small.wrap">
+                <mat-form-field>
                   <input
                     matInput
                     placeholder="To"
                     [(ngModel)]="message.emailMessage.toRecipients"
                     name="to">
                 </mat-form-field>
-                <mat-form-field fxFlex>
+                <mat-form-field>
                   <input
                     matInput
                     placeholder="CC"
                     [(ngModel)]="message.emailMessage.ccRecipients"
                     name="cc">
                 </mat-form-field>
-                <mat-form-field fxFlex>
+                <mat-form-field>
                   <input
                     matInput
                     placeholder="BCC"
@@ -95,8 +85,8 @@
         </mat-tab>
         <mat-tab label="Email Message" *ngIf="message.emailMessage" name="email">
           <ng-template matTabContent>
-            <div fxLayout="column">
-              <div fxLayout="row" fxLayoutGap="10px">
+            <div class="fs-column">
+              <div class="fs-row.gap-small">
                 <mat-form-field>
                   <mat-select
                       required
@@ -131,7 +121,7 @@
                 </mat-form-field>
               </div>
               <ng-container *ngIf="message.emailMessage.customize">
-                <mat-form-field fxFlex>
+                <mat-form-field>
                   <input
                     matInput
                     placeholder="Subject"

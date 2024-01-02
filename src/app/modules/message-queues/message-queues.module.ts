@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -21,6 +20,7 @@ import { FsPromptInputModule } from '@firestitch/prompt';
 import { FsSkeletonModule } from '@firestitch/skeleton';
 
 import { FsAppMessagesModule } from '../messages/messages.module';
+
 import { QueueComponent } from './components/queue/queue.component';
 import { QueuesComponent } from './components/queues/queues.component';
 import { RecipientComponent } from './components/recipient/recipient.component';
@@ -34,8 +34,6 @@ import { FsMessageQueueService } from './services/message-queue.service';
     RouterModule,
     FormsModule,
     CommonModule,
-
-    FlexLayoutModule,
 
     MatTooltipModule,
     MatDialogModule,
@@ -65,7 +63,7 @@ import { FsMessageQueueService } from './services/message-queue.service';
     QueueComponent,
   ],
   providers: [
-    FsMessageQueueService
-  ]
+    FsMessageQueueService,
+  ],
 })
 export class FsAppMessageQueuesModule { }

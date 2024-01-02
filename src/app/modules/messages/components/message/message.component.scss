@@ -19,6 +19,12 @@ fs-label-field {
   }
 }
 
+.fs-column {
+  .mat-form-field {
+    flex: 1;
+  }
+}
+
 .email-body-text {
   width: 100%;
 }
