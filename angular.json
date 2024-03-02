@@ -65,10 +65,6 @@
                 }
               ],
               "fileReplacements": [
-                {
-                  "replace": "playground/environments/environment.ts",
-                  "with": "playground/environments/environment.prod.ts"
-                }
               ],
               "optimization": true,
               "outputHashing": "all",
