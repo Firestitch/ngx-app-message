@@ -2,7 +2,7 @@
   "name": "@firestitch/app-message",
   "title": "Admin",
   "description": "@firestitch/admin",
-  "version": "12.8.0",
+  "version": "13.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/ngx-admin"
@@ -97,9 +97,7 @@
     "node": ">=6.0.0"
   },
   "peerDependencies": {
-    "anchorme": ">=1.1.2",
-    "camelcase-keys": ">=6.2.1",
-    "snakecase-keys": ">=3.1.2"
+    "anchorme": ">=1.1.2"
   },
   "dependencies": {
     "anchorme": ">=1.1.2",
