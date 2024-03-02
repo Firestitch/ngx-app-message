@@ -5,14 +5,14 @@ import anchorme from 'anchorme';
 
 @Pipe({name: 'linkify'})
 export class LinkifyPipe implements PipeTransform {
-  transform(value: string): string {
-    return anchorme(value, {
-      attributes: [
-        {
-          name: 'target',
-          value: '_blank'
-        },
-      ]
+  transform(input: string): string {
+    return anchorme({
+      input,
+      options: {
+        attributes: {
+          target: "_blank",
+        }
+      }
     });
   }
 }

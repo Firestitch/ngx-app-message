@@ -1,27 +1,30 @@
 import {
-  Component, OnInit, Inject, OnDestroy, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef,
+  ChangeDetectionStrategy, ChangeDetectorRef,
+  Component,
+  Inject, OnDestroy,
+  OnInit,
+  ViewChild,
 } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
+import { FsListComponent, FsListConfig } from '@firestitch/list';
 import { FsMessage } from '@firestitch/message';
 import { FsPrompt } from '@firestitch/prompt';
-import { FsListComponent, FsListConfig } from '@firestitch/list';
 
-import { map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import anchorme from 'anchorme';
 
-import { EmailMessageQueueFormat, MessageQueueEventType } from '../../enums';
-import { MessageQueueStates } from '../../consts';
 import { indexNameValue } from '../../../../helpers';
 import { MessageComponent } from '../../../../modules/messages/components';
-import { MessageQueueType } from '../../enums';
 import { FS_APP_MESSAGE_CONFIG } from '../../../app-message/injectors';
 import { FsAppMessageConfig } from '../../../app-message/interfaces';
-import { ResendMessageQueue, ForwardMessageQueue, LoadMessage } from '../../../app-message/types';
+import { ForwardMessageQueue, LoadMessage, ResendMessageQueue } from '../../../app-message/types';
+import { MessageQueueStates } from '../../consts';
 import { MessageQueueEventTypes } from '../../consts/message-queue-event-type.const';
+import { EmailMessageQueueFormat, MessageQueueEventType, MessageQueueType } from '../../enums';
 
 
 @Component({
@@ -107,16 +110,14 @@ export class QueueComponent implements OnInit, OnDestroy {
     });
   }
 
-  public anchorMe(html) {
-    return anchorme(html, {
+  public anchorMe(input) {
+    return anchorme({
+      input,
       options: {
-        attributes: [
-          {
-            name: 'target',
-            value: '_blank'
-          },
-        ],
-      },
+        attributes: {
+          target: "_blank",
+        }
+      }
     });
   }
 
