@@ -14,9 +14,9 @@
           <ng-template matTabContent>
             <div class="fs-column">
               <mat-form-field>
+                <mat-label>Name</mat-label>
                 <input
                   matInput
-                  placeholder="Name"
                   [(ngModel)]="message.name"
                   name="Name"
                   required>
@@ -26,32 +26,32 @@
                 {{message.reference}}
               </fs-label-field>
               <mat-form-field>
+                <mat-label>Description</mat-label>
                 <input
                   matInput
-                  placeholder="Description"
                   [(ngModel)]="message.description"
                   name="description">
               </mat-form-field>
 
               <div class="fs-row.gap-small.wrap">
                 <mat-form-field>
+                  <mat-label>From Email</mat-label>
                   <input
                     matInput
-                    placeholder="From Email"
                     [(ngModel)]="message.emailMessage.fromEmail"
                     name="from_email">
                 </mat-form-field>
                 <mat-form-field>
+                  <mat-label>From Name</mat-label>
                   <input
                     matInput
-                    placeholder="From Name"
                     [(ngModel)]="message.emailMessage.fromName"
                     name="from_name">
                 </mat-form-field>
                 <mat-form-field>
+                  <mat-label>Reply To</mat-label>
                   <input
                     matInput
-                    placeholder="Reply To"
                     [(ngModel)]="message.emailMessage.replyTo"
                     name="reply_to">
                 </mat-form-field>
@@ -59,23 +59,23 @@
 
               <div class="fs-row.gap-small.wrap">
                 <mat-form-field>
+                  <mat-label>To</mat-label>
                   <input
                     matInput
-                    placeholder="To"
                     [(ngModel)]="message.emailMessage.toRecipients"
                     name="to">
                 </mat-form-field>
                 <mat-form-field>
+                  <mat-label>CC</mat-label>
                   <input
                     matInput
-                    placeholder="CC"
                     [(ngModel)]="message.emailMessage.ccRecipients"
                     name="cc">
                 </mat-form-field>
                 <mat-form-field>
+                  <mat-label>BCC</mat-label>
                   <input
                     matInput
-                    placeholder="BCC"
                     [(ngModel)]="message.emailMessage.bccRecipients"
                     name="bcc">
                 </mat-form-field>
@@ -88,9 +88,9 @@
             <div class="fs-column">
               <div class="fs-row.gap-small">
                 <mat-form-field>
+                  <mat-label>Customize Message</mat-label>
                   <mat-select
                       required
-                      placeholder="Customize Message"
                       [(ngModel)]="message.emailMessage.customize"
                       name="customizeEmail">
                     <mat-option [value]="true">Yes</mat-option>
@@ -98,9 +98,9 @@
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field>
+                  <mat-label>Format</mat-label>
                   <mat-select
                     required
-                    placeholder="Format"
                     [(ngModel)]="message.emailMessage.format"
                     name="format">
                       <mat-option *ngFor="let item of emailMessageFormats" [value]="item.value">
@@ -109,8 +109,8 @@
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field>
+                  <mat-label>Template</mat-label>
                   <mat-select
-                    placeholder="Template"
                     [(ngModel)]="message.emailMessage.messageTemplateId"
                     name="template">
                       <mat-option [value]="null">None</mat-option>
@@ -122,9 +122,9 @@
               </div>
               <ng-container *ngIf="message.emailMessage.customize">
                 <mat-form-field>
+                  <mat-label>Subject</mat-label>
                   <input
                     matInput
-                    placeholder="Subject"
                     [(ngModel)]="message.emailMessage.subject"
                     name="name"
                     required>
@@ -203,9 +203,9 @@
           <mat-tab label="SMS Message" name="sms">
             <ng-template matTabContent>
               <mat-form-field>
+                <mat-label>Customize Message</mat-label>
                 <mat-select
                   required
-                  placeholder="Customize Message"
                   [(ngModel)]="message.smsMessage.customize"
                   name="customizeSms">
                     <mat-option [value]="true">Yes</mat-option>
