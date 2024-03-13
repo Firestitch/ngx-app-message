@@ -130,7 +130,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
     }
 
     this.config.filters.push({
-      name: 'messageIid',
+      name: 'messageId',
       type: ItemType.Select,
       label: 'Message Type',
       values: (query) => {
