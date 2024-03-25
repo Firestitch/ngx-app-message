@@ -1,5 +1,11 @@
-<h2>Message Queue</h2>
+<h2>Combined Message Queue</h2>
 <fs-app-message-queues></fs-app-message-queues>
+
+<h2>Email Message Queue</h2>
+<fs-app-message-queues [type]="MessageQueueType.Email"></fs-app-message-queues>
+
+<h2>SMS Message Queue</h2>
+<fs-app-message-queues [type]="MessageQueueType.Sms"></fs-app-message-queues>
 
 <h2>Messages</h2>
 <fs-app-messages></fs-app-messages>

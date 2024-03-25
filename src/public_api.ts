@@ -1,3 +1,4 @@
+
 export { FsAppMessageModule } from './app/modules/app-message/app-message.module';
 export { FsAppMessageQueuesModule } from './app/modules/message-queues/message-queues.module';
 export { FsAppMessageTemplatesModule } from './app/modules/message-templates/message-templates.module';
@@ -13,6 +14,8 @@ export { MessagesComponent } from './app/modules/messages/components/messages/me
 export { WebhooksComponent } from './app/modules/webhooks/components/webhooks/webhooks.component';
 
 export { FsAppMessageConfig } from './app/modules/app-message/interfaces';
+
+export { MessageQueueType } from './app/modules/message-queues/enums/message-queue-type.enum';
 
 export { FsMessageQueueService } from './app/modules/message-queues/services/message-queue.service';
 

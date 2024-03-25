@@ -14,6 +14,7 @@ import { indexNameValue } from '../../../../helpers';
 import { FS_APP_MESSAGE_CONFIG } from '../../../app-message/injectors';
 import { FsAppMessageConfig } from '../../../app-message/interfaces';
 import { MessageQueueStates } from '../../consts';
+import { MessageQueueType } from '../../enums';
 import { MessageQueueState } from '../../enums/message-queue-state.enum';
 import { FsMessageQueueService } from '../../services/message-queue.service';
 
@@ -30,6 +31,8 @@ export class QueuesComponent implements OnInit, OnDestroy {
   public list: FsListComponent = null;
 
   @Input() public query = {};
+
+  @Input() public type: MessageQueueType = null;
 
   public config: FsListConfig = null;
   public messageQueueStates = {};
@@ -71,6 +74,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
         query = {
           ...query,
           ...this.query,
+          type: this.type,
           messageQueueAttachmentCounts: true,
           emailMessageQueues: true,
           emailMessageQueueBodies: false,
