@@ -2,10 +2,14 @@
   <fs-list-column title="Message" name="subject" [sortable]="true">
     <ng-template fs-list-cell let-row="row">
       <ng-container *ngIf="row.emailMessageQueue">
-        <div class="fs-row.gap-tiny">
-          <a (click)="open(row)">{{row.emailMessageQueue.subject|truncate:100}}</a>
-          <mat-icon *ngIf="row.messageQueueAttachmentCount" [matTooltip]="row.messageQueueAttachmentCount + ' Attachment(s)'">attach_file</mat-icon>
-        </div>
+        <a (click)="open(row)">{{row.emailMessageQueue.subject|truncate:100}}</a>
+        <ng-container *ngIf="row.messageQueueAttachmentCount">
+          <mat-icon               
+              class="attachment-icon"
+              [matTooltip]="row.messageQueueAttachmentCount + ' Attachment(s)'">
+            attach_file
+          </mat-icon>
+        </ng-container>
       </ng-container>
       <ng-container *ngIf="row.smsMessageQueue">
         <a (click)="open(row)">{{row.smsMessageQueue.body|truncate:100}}</a>
