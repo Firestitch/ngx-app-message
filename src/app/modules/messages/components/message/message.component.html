@@ -228,8 +228,8 @@
                 </mat-tab-group>
               </div>
               <fs-label-field *ngIf="!message.smsMessage.customize">
-                  <fs-label>Message</fs-label>
-                  {{message.defaultSmsMessage}}
+                <fs-label>Message</fs-label>
+                <div class="content">{{message.defaultSmsMessage}}</div>                
               </fs-label-field>
             </ng-template>
           </mat-tab>
