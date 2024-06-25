@@ -3,24 +3,10 @@
   margin-top: 15px;
 }
 
-.body {
-  .format-text {
-    white-space: pre-wrap;
-  }
-
-  .body-frame {
-    border: 0;
-  }
-
-  ::ng-deep .field-label {
-    margin-bottom: 10px;
-  }
+.format-text {
+  white-space: pre-wrap;
 }
 
 app-recipient {
   display: block;
-}
-
-[hidden] {
-  display: none !important;
 }
