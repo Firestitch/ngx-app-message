@@ -1,12 +1,13 @@
-import { ChangeDetectionStrategy, Component, Inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 
 import { ItemType } from '@firestitch/filter';
 import { FsListActionSelected, FsListComponent, FsListConfig } from '@firestitch/list';
 import { SelectionActionType } from '@firestitch/selection';
+import { FsStore } from '@firestitch/store';
 
 import { Subject } from 'rxjs';
-import { map, takeUntil, tap } from 'rxjs/operators';
+import { filter, map, takeUntil, tap } from 'rxjs/operators';
 
 import { isAfter } from 'date-fns';
 
@@ -37,17 +38,57 @@ export class QueuesComponent implements OnInit, OnDestroy {
   public config: FsListConfig = null;
   public messageQueueStates = {};
   public MessageQueueState = MessageQueueState;
+  public webHookEnabled;
 
   private _destroy$ = new Subject();
 
   constructor(
     @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,
     private _messageQueueService: FsMessageQueueService,
+    private _cdRef: ChangeDetectorRef,
+    private _store: FsStore,
   ) { }
 
   public ngOnInit() {
     this.messageQueueStates = indexNameValue(MessageQueueStates);
+    this.initList();
+    this.initWebhook();
+  }
 
+  public enableWebhook() {
+    this._config.createWebhook()
+      .subscribe(() => {
+        this.initWebhook();
+      });
+  }
+
+  public initWebhook() {
+    const domain = document.location.hostname;
+
+    if(domain === 'localhost' || domain === '[::1]') {
+      return;
+    }
+
+    this._config.loadWebhooks({ domain })
+      .pipe(
+        filter(() => {
+          return !this._store.get('messagesWebhookEnabled');
+        }),
+      )
+      .subscribe((webhooks) => {
+        this._cdRef.markForCheck();
+        this.webHookEnabled = webhooks
+          .some((webhook) => {
+            const url = new URL(webhook.url);
+
+            return url.host === domain;
+          });
+
+        this._store.set('messagesWebhookEnabled', this.webHookEnabled);
+      });
+  }
+
+  public initList() {
     this.config = {
       filters: [
         {

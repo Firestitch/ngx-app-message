@@ -16,6 +16,7 @@ import { FsFormModule } from '@firestitch/form';
 import { FsIFrameModule } from '@firestitch/iframe';
 import { FsLabelModule } from '@firestitch/label';
 import { FsListModule } from '@firestitch/list';
+import { FsMessageModule } from '@firestitch/message';
 import { FsPromptInputModule } from '@firestitch/prompt';
 import { FsSkeletonModule } from '@firestitch/skeleton';
 
@@ -50,6 +51,7 @@ import { FsMessageQueueService } from './services/message-queue.service';
     FsFormModule,
     FsPromptInputModule,
     FsIFrameModule,
+    FsMessageModule,
   ],
   declarations: [
     QueuesComponent,

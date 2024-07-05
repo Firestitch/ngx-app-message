@@ -1,3 +1,17 @@
+<ng-container *ngIf="webHookEnabled === false">
+  <fs-message-info>
+    <div class="fs-row">
+      <span class="fs-flex">The webhook which provides email delivery confirmations is not enabled.</span>
+      <a  
+          (click)="enableWebhook()"
+          mat-raised-button>
+        Enable
+      </a>
+    </div>
+
+  </fs-message-info>
+</ng-container>
+
 <fs-list [config]="config" #list>
   <fs-list-column title="Message" name="subject" [sortable]="true">
     <ng-template fs-list-cell let-row="row">

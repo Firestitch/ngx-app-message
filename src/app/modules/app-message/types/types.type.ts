@@ -1,4 +1,5 @@
 import { FsFile } from '@firestitch/file';
+
 import { Observable } from 'rxjs';
 
 export type TestMessage = (message: any, recipient: string, type: 'sms' | 'email') => Observable<any>;
@@ -28,4 +29,4 @@ export type LoadMessageAttachments = (message, query?: any) => Observable<{ data
 
 export type DeleteWebhook = (webhook: any) => Observable<any>;
 export type CreateWebhook = () => Observable<any>;
-export type LoadWebhooks = () => Observable<any>;
+export type LoadWebhooks = (query?: any) => Observable<any>;
