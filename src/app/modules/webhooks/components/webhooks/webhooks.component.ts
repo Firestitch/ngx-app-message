@@ -54,7 +54,9 @@ export class WebhooksComponent implements OnInit {
         },
       ],
       fetch: () => {
-        return this._config.loadWebhooks()
+        return this._config.loadWebhooks({
+          domain: window.location.hostname,
+        })
           .pipe(
             map((webhooks) => ({ data: webhooks })),
           );
