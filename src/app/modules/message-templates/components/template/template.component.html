@@ -12,8 +12,8 @@
         <input
           matInput
           [(ngModel)]="messageTemplate.name"
-          name="name"
-          >
+          required
+          name="name">
       </mat-form-field>
       <div [@.disabled]="true">
         <mat-tab-group
