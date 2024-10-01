@@ -22,10 +22,10 @@
             "assets": [
               "playground/favicon.ico",
               "playground/assets",
-              { 
-                "glob": "**/*", 
-                "input": "node_modules/monaco-editor", 
-                "output": "assets/monaco-editor/" 
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor",
+                "output": "assets/monaco-editor/"
               },
               {
                 "glob": "**/*",
@@ -46,7 +46,7 @@
                 "glob": "**/*",
                 "input": "./node_modules/@firestitch/device/assets",
                 "output": "./assets/@firestitch/device"
-              }                
+              }
             ],
             "styles": [
               "playground/styles.scss"
@@ -54,7 +54,12 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "highlight.js"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules/"
+              ]
+            }
           },
           "configurations": {
             "production": {
@@ -64,8 +69,7 @@
                   "maximumWarning": "6kb"
                 }
               ],
-              "fileReplacements": [
-              ],
+              "fileReplacements": [],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -155,8 +159,8 @@
           "options": {
             "tsConfig": "src/tsconfig.lib.json",
             "project": "src/ng-package.json"
-          }
-        ,          "configurations": {
+          },
+          "configurations": {
             "production": {
               "tsConfig": "src/tsconfig.lib.prod.json"
             }
@@ -172,6 +176,5 @@
         }
       }
     }
-  },
-  "defaultProject": "fs-package-app"
+  }
 }
