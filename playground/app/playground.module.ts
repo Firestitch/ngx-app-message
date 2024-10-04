@@ -60,7 +60,7 @@ const routes: Routes = [
     FsSelectionModule,
     FsScrollModule.forRoot(),
     FsMessageModule.forRoot(),
-    RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
+    RouterModule.forRoot(routes, {}),
     FsTextEditorModule.forRoot(),
   ],
   declarations: [
