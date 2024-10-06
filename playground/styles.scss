@@ -8,10 +8,10 @@
 @import "@firestitch/file/styles";
 @import '../src/app/styles.scss';
 
-@include fs-drawer(mat.$blue-palette);
-@include fs-selection(mat.$blue-palette);
+@include fs-drawer(mat.$m2-blue-palette);
+@include fs-selection(mat.$m2-blue-palette);
 @include fs-form($app-theme);
-@include fs-file(mat.$blue-palette);
+@include fs-file(mat.$m2-blue-palette);
 // TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
 //  The following line adds:
 //    1. Default typography styles for all components
