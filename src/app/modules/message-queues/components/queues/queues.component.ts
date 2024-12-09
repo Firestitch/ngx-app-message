@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, O
 
 
 import { ItemType } from '@firestitch/filter';
-import { FsListActionSelected, FsListComponent, FsListConfig } from '@firestitch/list';
+import { FsListActionSelected, FsListComponent, FsListConfig, PaginationStrategy } from '@firestitch/list';
 import { SelectionActionType } from '@firestitch/selection';
 import { FsStore } from '@firestitch/store';
 
@@ -110,6 +110,9 @@ export class QueuesComponent implements OnInit, OnDestroy {
           label: ['From Date', 'To Date'],
         },
       ],
+      paging: {
+        strategy: PaginationStrategy.Many,
+      },
       sort: { value: 'created_date', direction: 'desc' },
       fetch: (query) => {
         query = {
