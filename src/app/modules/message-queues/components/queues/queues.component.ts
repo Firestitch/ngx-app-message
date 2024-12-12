@@ -113,7 +113,16 @@ export class QueuesComponent implements OnInit, OnDestroy {
       paging: {
         strategy: PaginationStrategy.Many,
       },
-      sort: { value: 'created_date', direction: 'desc' },
+      sorts: [
+        {
+          value: 'relavance',
+          name: 'Relavance',
+        },
+      ],
+      sort: { 
+        value: 'created_date', 
+        direction: 'desc',
+      },
       fetch: (query) => {
         query = {
           ...query,
