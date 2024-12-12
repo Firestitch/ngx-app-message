@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
 
-import { ItemType } from '@firestitch/filter';
+import { ItemType, TextItem } from '@firestitch/filter';
 import { FsListActionSelected, FsListComponent, FsListConfig, PaginationStrategy } from '@firestitch/list';
 import { SelectionActionType } from '@firestitch/selection';
 import { FsStore } from '@firestitch/store';
@@ -95,6 +95,20 @@ export class QueuesComponent implements OnInit, OnDestroy {
           name: 'keyword',
           type: ItemType.Keyword,
           label: 'Search',
+          change: (item: TextItem) => {
+            if(String(item.value ?? '').length) {
+              this.list.filterRef
+                .updateSort({ 
+                  sortBy: 'relavance',
+                });
+            } else {
+              this.list.filterRef
+                .updateSort({ 
+                  sortBy: 'created_date',
+                  sortDirection: 'desc',
+                });
+            }
+          },
         },
         {
           name: 'state',
@@ -117,6 +131,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
         {
           value: 'relavance',
           name: 'Relavance',
+          direction: 'desc',
         },
       ],
       sort: { 
