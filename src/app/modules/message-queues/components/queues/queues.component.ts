@@ -123,6 +123,23 @@ export class QueuesComponent implements OnInit, OnDestroy {
           type: ItemType.DateRange,
           label: ['From Date', 'To Date'],
         },
+        {
+          name: 'direction',
+          type: ItemType.Chips,
+          label: 'Direction',
+          default: [
+            {
+              value: 'sent',
+              name: 'Sent',
+            },
+          ],
+          values: () => {
+            return [
+              { name: 'Sent', value: 'sent' },
+              { name: 'Received', value: 'received' },
+            ];
+          },
+        },
       ],
       paging: {
         strategy: PaginationStrategy.Many,
