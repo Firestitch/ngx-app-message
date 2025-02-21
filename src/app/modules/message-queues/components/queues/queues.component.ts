@@ -146,8 +146,8 @@ export class QueuesComponent implements OnInit, OnDestroy {
       },
       sorts: [
         {
-          value: 'relavance',
-          name: 'Relavance',
+          value: 'relevance',
+          name: 'Relevance',
           direction: 'desc',
         },
       ],
