@@ -99,7 +99,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
             if(String(item.value ?? '').length) {
               this.list.filterRef
                 .updateSort({ 
-                  sortBy: 'relavance',
+                  sortBy: 'relevance',
                 });
             } else {
               this.list.filterRef
