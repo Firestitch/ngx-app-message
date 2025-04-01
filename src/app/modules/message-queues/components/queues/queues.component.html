@@ -1,24 +1,33 @@
 <ng-container *ngIf="webHookEnabled === false">
   <fs-message-info>
     <div class="fs-row">
-      <span class="fs-flex">The webhook which provides email delivery confirmations is not enabled.</span>
-      <a  
+      <span class="fs-flex">
+        The webhook which provides email delivery confirmations is not enabled.
+      </span>
+      <a
           (click)="enableWebhook()"
           mat-raised-button>
         Enable
       </a>
     </div>
-
   </fs-message-info>
 </ng-container>
-
-<fs-list [config]="config" #list>
-  <fs-list-column title="Message" name="subject" [sortable]="true">
-    <ng-template fs-list-cell let-row="row">
+<fs-list
+    [config]="config"
+    #list>
+  <fs-list-column
+      title="Message"
+      name="subject"
+      [sortable]="true">
+    <ng-template
+        fs-list-cell
+        let-row="row">
       <ng-container *ngIf="row.emailMessageQueue">
-        <a (click)="open(row)">{{row.emailMessageQueue.subject|truncate:100}}</a>
+        <a (click)="open(row)">
+          {{ row.emailMessageQueue.subject|truncate:100 }}
+        </a>
         <ng-container *ngIf="row.messageQueueAttachmentCount">
-          <mat-icon               
+          <mat-icon
               class="attachment-icon"
               [matTooltip]="row.messageQueueAttachmentCount + ' Attachment(s)'">
             attach_file
@@ -26,29 +35,41 @@
         </ng-container>
       </ng-container>
       <ng-container *ngIf="row.smsMessageQueue">
-        <a (click)="open(row)">{{row.smsMessageQueue.body|truncate:100}}</a>
+        <a (click)="open(row)">
+          {{ row.smsMessageQueue.body|truncate:100 }}
+        </a>
       </ng-container>
     </ng-template>
   </fs-list-column>
-  <fs-list-column title="Recipients" class="col-recipients">
-    <ng-template fs-list-cell let-row="row">
+  <fs-list-column
+      title="Recipients"
+      class="col-recipients">
+    <ng-template
+        fs-list-cell
+        let-row="row">
       <ng-container *ngIf="row.emailMessageQueue">
         <ng-container *ngIf="row.emailMessageQueue.toRecipients.length; else unspecified">
-          <div class="small" *ngFor="let recipient of row.emailMessageQueue.toRecipients">
-            <app-recipient 
+          <div
+              class="small"
+              *ngFor="let recipient of row.emailMessageQueue.toRecipients">
+            <app-recipient
               [state]="row.messageQueueRecipients[recipient] || row.state"
               [name]="recipient">
             </app-recipient>
           </div>
         </ng-container>
-        <div class="small" *ngFor="let recipient of row.emailMessageQueue.ccRecipients">
-          <app-recipient 
+        <div
+            class="small"
+            *ngFor="let recipient of row.emailMessageQueue.ccRecipients">
+          <app-recipient
             [state]="row.messageQueueRecipients[recipient] || row.state"
             [name]="recipient">
           </app-recipient>
         </div>
-        <div class="small" *ngFor="let recipient of row.emailMessageQueue.bccRecipients">
-          <app-recipient             
+        <div
+            class="small"
+            *ngFor="let recipient of row.emailMessageQueue.bccRecipients">
+          <app-recipient
             [state]="row.messageQueueRecipients[recipient] || row.state"
             [name]="recipient">
           </app-recipient>
@@ -56,7 +77,7 @@
       </ng-container>
       <ng-container *ngIf="row.smsMessageQueue">
         <ng-container *ngIf="row.smsMessageQueue.toNumber; else unspecified">
-          <app-recipient 
+          <app-recipient
             class="small"
             [state]="row.state"
             [name]="row.smsMessageQueue.toNumber">
@@ -64,29 +85,39 @@
         </ng-container>
       </ng-container>
     </ng-template>
-  </fs-list-column> 
-  <fs-list-column title="Status" class="col-state">
-    <ng-template fs-list-cell let-row="row">    
+  </fs-list-column>
+  <fs-list-column
+      title="Status"
+      class="col-state">
+    <ng-template
+        fs-list-cell
+        let-row="row">
       <ng-container *ngIf="row.scheduled; else state">
         Scheduled
         <div class="small">
-           {{row.scheduledDate | fsDateFormat: 'date-time' }}
+          {{ row.scheduledDate | fsDateFormat: 'date-time' }}
         </div>
       </ng-container>
       <ng-template #state>
-        <span [class]="'state-' + row.state">{{messageQueueStates[row.state]}}</span>
+        <span [class]="'state-' + row.state">
+          {{ messageQueueStates[row.state] }}
+        </span>
       </ng-template>
     </ng-template>
-  </fs-list-column> 
-  <fs-list-column title="Date" name="created_date" [sortable]="true">
-    <ng-template fs-list-cell let-row="row">
+  </fs-list-column>
+  <fs-list-column
+      title="Date"
+      name="created_date"
+      [sortable]="true">
+    <ng-template
+        fs-list-cell
+        let-row="row">
       {{ row.createdDate | fsDateFormat: 'date-time-yeardiff' }}
     </ng-template>
   </fs-list-column>
 </fs-list>
-
 <ng-template #unspecified>
-  <app-recipient 
+  <app-recipient
     class="small"
     [state]="MessageQueueState.Failed"
     name="Unspecified">
