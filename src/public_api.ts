@@ -20,3 +20,5 @@ export { MessageQueueType } from './app/modules/message-queues/enums/message-que
 export { FsMessageQueueService } from './app/modules/message-queues/services/message-queue.service';
 
 export { FS_APP_MESSAGE_CONFIG } from './app/modules/app-message/injectors/app-message-config.injector';
+
+export { MessageQueuesConfig } from './app/interfaces/message-queues-config';

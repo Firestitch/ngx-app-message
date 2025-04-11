@@ -12,6 +12,7 @@ import { filter, map, takeUntil, tap } from 'rxjs/operators';
 import { isAfter } from 'date-fns';
 
 import { indexNameValue } from '../../../../helpers';
+import { MessageQueuesConfig } from '../../../../interfaces';
 import { FS_APP_MESSAGE_CONFIG } from '../../../app-message/injectors';
 import { FsAppMessageConfig } from '../../../app-message/interfaces';
 import { MessageQueueStates } from '../../consts';
@@ -33,9 +34,10 @@ export class QueuesComponent implements OnInit, OnDestroy {
 
   @Input() public query = {};
 
-  @Input() public type: MessageQueueType = null;
+  @Input() public type: MessageQueueType;
+  @Input() public config: MessageQueuesConfig;
 
-  public config: FsListConfig = null;
+  public listConfig: FsListConfig = null;
   public messageQueueStates = {};
   public MessageQueueState = MessageQueueState;
   public webHookEnabled;
@@ -89,7 +91,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
   }
 
   public initList() {
-    this.config = {
+    this.listConfig = {
       filters: [
         {
           name: 'keyword',
@@ -123,23 +125,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
           type: ItemType.DateRange,
           label: ['From Date', 'To Date'],
         },
-        {
-          name: 'direction',
-          type: ItemType.Chips,
-          label: 'Direction',
-          default: [
-            {
-              value: 'sent',
-              name: 'Sent',
-            },
-          ],
-          values: () => {
-            return [
-              { name: 'Sent', value: 'sent' },
-              { name: 'Received', value: 'received' },
-            ];
-          },
-        },
+        ...(this.config?.filters || []),
       ],
       paging: {
         strategy: PaginationStrategy.Many,
@@ -188,7 +174,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
     };
 
     if (this._config.bulkMessageQueues) {
-      this.config.selection = {
+      this.listConfig.selection = {
         selectAll: false,
         actions: [
           {
