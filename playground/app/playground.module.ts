@@ -1,32 +1,34 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 
+import { FsDatePickerModule } from '@firestitch/datepicker';
 import { FsExampleModule } from '@firestitch/example';
+import { FsFileModule } from '@firestitch/file';
+import { FsHtmlEditorModule } from '@firestitch/html-editor';
 import { FsLabelModule } from '@firestitch/label';
+import { FsListModule } from '@firestitch/list';
 import { FsMessageModule } from '@firestitch/message';
 import {
   FS_APP_MESSAGE_CONFIG,
   FsAppMessageModule,
   FsAppMessageQueuesModule,
   FsAppMessageTemplatesModule,
-  FsAppMessagesModule
+  FsAppMessagesModule,
 } from '@firestitch/package';
-
-import { FsFileModule } from '@firestitch/file';
-import { FsHtmlEditorModule } from '@firestitch/html-editor';
-import { FsListModule } from '@firestitch/list';
 import { FsScrollModule } from '@firestitch/scroll';
 import { FsSelectionModule } from '@firestitch/selection';
 import { FsTabsModule } from '@firestitch/tabs';
 import { FsTextEditorModule } from '@firestitch/text-editor';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FsAppMessageWebhooksModule } from 'src/app/modules/webhooks/webhooks.module';
+
 import { AppComponent } from './app.component';
 import {
   ExamplesComponent,
-  KitchenSinkComponent
+  KitchenSinkComponent,
 } from './components';
 import { KitchenSinkConfigureComponent } from './components/kitchen-sink-configure';
 import { appMessageConfig } from './functions/app-message-config';
@@ -50,6 +52,7 @@ const routes: Routes = [
     FormsModule,
     FsTabsModule.forRoot(),
     FsFileModule.forRoot(),
+    FsDatePickerModule.forRoot(),
     FsLabelModule,
     FsHtmlEditorModule.forRoot({
       activationKey: 'DUA2yE1G2E1A5B5B3pZGCTRSAPJWTLPLZHTQQe1JGZxC4B3A3C2B5A1C2E4F1A1==',
@@ -67,11 +70,11 @@ const routes: Routes = [
     AppComponent,
     ExamplesComponent,
     KitchenSinkComponent,
-    KitchenSinkConfigureComponent
+    KitchenSinkConfigureComponent,
   ],
   providers: [
-    { provide: FS_APP_MESSAGE_CONFIG, useFactory: appMessageConfig, deps: [] }
-  ]
+    { provide: FS_APP_MESSAGE_CONFIG, useFactory: appMessageConfig, deps: [] },
+  ],
 })
 export class PlaygroundModule {
 }

@@ -53,6 +53,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
 
   public ngOnInit() {
     this.messageQueueStates = indexNameValue(MessageQueueStates);
+    this._initConfig();
     this.initList();
     this.initWebhook();
   }
@@ -241,5 +242,12 @@ export class QueuesComponent implements OnInit, OnDestroy {
   public ngOnDestroy() {
     this._destroy$.next(null);
     this._destroy$.complete();
+  }
+
+  private _initConfig() {
+    this.config = {
+      filters: [],
+      ...this.config,
+    };
   }
 }
