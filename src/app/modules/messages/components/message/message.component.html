@@ -5,16 +5,22 @@
     *fsSkeleton="message"
     [confirmTabs]="false">
   <fs-dialog *ngIf="message">
-    <div mat-dialog-title>Edit Message</div>
+    <div mat-dialog-title>
+      Edit Message
+    </div>
     <mat-dialog-content>
       <mat-tab-group
           fsTabs
           [(selected)]="tab">
-        <mat-tab label="General" name="general">
+        <mat-tab
+            label="General"
+            name="general">
           <ng-template matTabContent>
             <div class="fs-column">
               <mat-form-field>
-                <mat-label>Name</mat-label>
+                <mat-label>
+                  Name
+                </mat-label>
                 <input
                   matInput
                   [(ngModel)]="message.name"
@@ -22,58 +28,72 @@
                   required>
               </mat-form-field>
               <fs-label-field>
-                <fs-label>Reference</fs-label>
-                {{message.reference}}
+                <fs-label>
+                  Reference
+                </fs-label>
+                {{ message.reference }}
               </fs-label-field>
               <mat-form-field>
-                <mat-label>Description</mat-label>
+                <mat-label>
+                  Description
+                </mat-label>
                 <input
                   matInput
                   [(ngModel)]="message.description"
                   name="description">
               </mat-form-field>
-
-              <div class="fs-row.gap-small.wrap">
+              <div class="fs-row.gap-sm.wrap">
                 <mat-form-field>
-                  <mat-label>From Email</mat-label>
+                  <mat-label>
+                    From Email
+                  </mat-label>
                   <input
                     matInput
                     [(ngModel)]="message.emailMessage.fromEmail"
                     name="from_email">
                 </mat-form-field>
                 <mat-form-field>
-                  <mat-label>From Name</mat-label>
+                  <mat-label>
+                    From Name
+                  </mat-label>
                   <input
                     matInput
                     [(ngModel)]="message.emailMessage.fromName"
                     name="from_name">
                 </mat-form-field>
                 <mat-form-field>
-                  <mat-label>Reply To</mat-label>
+                  <mat-label>
+                    Reply To
+                  </mat-label>
                   <input
                     matInput
                     [(ngModel)]="message.emailMessage.replyEmail"
                     name="reply_to">
                 </mat-form-field>
               </div>
-
-              <div class="fs-row.gap-small.wrap">
+              <div class="fs-row.gap-sm.wrap">
                 <mat-form-field>
-                  <mat-label>To</mat-label>
+                  <mat-label>
+                    To
+                  </mat-label>
                   <input
                     matInput
                     [(ngModel)]="message.emailMessage.toRecipients"
                     name="to">
                 </mat-form-field>
                 <mat-form-field>
-                  <mat-label>CC</mat-label>
+                  <mat-label>
+                    CC
+                  </mat-label>
                   <input
                     matInput
                     [(ngModel)]="message.emailMessage.ccRecipients"
                     name="cc">
                 </mat-form-field>
                 <mat-form-field>
-                  <mat-label>BCC</mat-label>
+                  <mat-label>
+                    BCC
+                  </mat-label>
                   <input
                     matInput
                     [(ngModel)]="message.emailMessage.bccRecipients"
@@ -83,53 +103,73 @@
             </div>
           </ng-template>
         </mat-tab>
-        <mat-tab label="Email Message" *ngIf="message.emailMessage" name="email">
+        <mat-tab
+            label="Email Message"
+            *ngIf="message.emailMessage"
+            name="email">
           <ng-template matTabContent>
             <div class="fs-column">
-              <div class="fs-row.gap-small">
+              <div class="fs-row.gap-sm">
                 <mat-form-field>
-                  <mat-label>Customize Message</mat-label>
+                  <mat-label>
+                    Customize Message
+                  </mat-label>
                   <mat-select
                       required
                       [(ngModel)]="message.emailMessage.customize"
                       name="customizeEmail">
-                    <mat-option [value]="true">Yes</mat-option>
-                    <mat-option [value]="false">No</mat-option>
+                    <mat-option [value]="true">
+                      Yes
+                    </mat-option>
+                    <mat-option [value]="false">
+                      No
+                    </mat-option>
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field>
-                  <mat-label>Format</mat-label>
+                  <mat-label>
+                    Format
+                  </mat-label>
                   <mat-select
-                    required
-                    [(ngModel)]="message.emailMessage.format"
-                    name="format">
-                      <mat-option *ngFor="let item of emailMessageFormats" [value]="item.value">
-                        {{item.name}}
-                      </mat-option>
-                    </mat-select>
+                      required
+                      [(ngModel)]="message.emailMessage.format"
+                      name="format">
+                    <mat-option
+                        *ngFor="let item of emailMessageFormats"
+                        [value]="item.value">
+                      {{ item.name }}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
                 <mat-form-field>
-                  <mat-label>Template</mat-label>
+                  <mat-label>
+                    Template
+                  </mat-label>
                   <mat-select
-                    [(ngModel)]="message.emailMessage.messageTemplateId"
-                    name="template">
-                      <mat-option [value]="null">None</mat-option>
-                      <mat-option *ngFor="let item of messageTemplates" [value]="item.id">
-                        {{item.name}}
-                      </mat-option>
-                    </mat-select>
+                      [(ngModel)]="message.emailMessage.messageTemplateId"
+                      name="template">
+                    <mat-option [value]="null">
+                      None
+                    </mat-option>
+                    <mat-option
+                        *ngFor="let item of messageTemplates"
+                        [value]="item.id">
+                      {{ item.name }}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
               </div>
               <ng-container *ngIf="message.emailMessage.customize">
                 <mat-form-field>
-                  <mat-label>Subject</mat-label>
+                  <mat-label>
+                    Subject
+                  </mat-label>
                   <input
                     matInput
                     [(ngModel)]="message.emailMessage.subject"
                     name="name"
                     required>
                 </mat-form-field>
-
                 <div [@.disabled]="true">
                   <mat-tab-group [dynamicHeight]="false">
                     <mat-tab label="Content">
@@ -141,14 +181,12 @@
                             [config]="{ language: 'html '}">
                           </fs-text-editor>
                         </ng-container>
-
                         <ng-container *ngIf="message.emailMessage.format===emailMessageFormat.RichText">
                           <fs-html-editor
                             [(ngModel)]="message.emailMessage.body"
                             name="body">
                           </fs-html-editor>
                         </ng-container>
-
                         <ng-container *ngIf="message.emailMessage.format===emailMessageFormat.Text">
                           <fs-text-editor
                             [(ngModel)]="message.emailMessage.body"
@@ -172,15 +210,18 @@
                   </mat-tab-group>
                 </div>
               </ng-container>
-
               <ng-container *ngIf="!message.emailMessage.customize">
                 <fs-label-field>
-                  <fs-label>Subject</fs-label>
-                  {{message.defaultEmailSubject}}
+                  <fs-label>
+                    Subject
+                  </fs-label>
+                  {{ message.defaultEmailSubject }}
                 </fs-label-field>
                 <div>
                   <fs-label-field>
-                    <fs-label>Content</fs-label>
+                    <fs-label>
+                      Content
+                    </fs-label>
                     <div class="email-body-html-default">
                       <fs-html-renderer
                         *ngIf="message.emailMessage.format===emailMessageFormat.RichText || message.emailMessage.format===emailMessageFormat.HTML"
@@ -188,9 +229,9 @@
                       </fs-html-renderer>
                     </div>
                     <div
-                      class="email-body-text-default"
-                      *ngIf="message.emailMessage.format===emailMessageFormat.Text">
-                      {{message.defaultEmailBody}}
+                        class="email-body-text-default"
+                        *ngIf="message.emailMessage.format===emailMessageFormat.Text">
+                      {{ message.defaultEmailBody }}
                     </div>
                   </fs-label-field>
                 </div>
@@ -198,19 +239,26 @@
             </div>
           </ng-template>
         </mat-tab>
-
         <ng-container *ngIf="!!message.smsMessage">
-          <mat-tab label="SMS Message" name="sms">
+          <mat-tab
+              label="SMS Message"
+              name="sms">
             <ng-template matTabContent>
               <mat-form-field>
-                <mat-label>Customize Message</mat-label>
+                <mat-label>
+                  Customize Message
+                </mat-label>
                 <mat-select
-                  required
-                  [(ngModel)]="message.smsMessage.customize"
-                  name="customizeSms">
-                    <mat-option [value]="true">Yes</mat-option>
-                    <mat-option [value]="false">No</mat-option>
-                  </mat-select>
+                    required
+                    [(ngModel)]="message.smsMessage.customize"
+                    name="customizeSms">
+                  <mat-option [value]="true">
+                    Yes
+                  </mat-option>
+                  <mat-option [value]="false">
+                    No
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
               <div
                   *ngIf="message.smsMessage.customize"
@@ -228,53 +276,74 @@
                 </mat-tab-group>
               </div>
               <fs-label-field *ngIf="!message.smsMessage.customize">
-                <fs-label>Message</fs-label>
-                <div class="content">{{message.defaultSmsMessage}}</div>                
+                <fs-label>
+                  Message
+                </fs-label>
+                <div class="content">
+                  {{ message.defaultSmsMessage }}
+                </div>
               </fs-label-field>
             </ng-template>
           </mat-tab>
         </ng-container>
-
-        <mat-tab label="Attachments" *ngIf="message.emailMessage" name="attachments">
+        <mat-tab
+            label="Attachments"
+            *ngIf="message.emailMessage"
+            name="attachments">
           <ng-template matTabContent>
-            <fs-app-message-attachments
-              [message]="message">
-            </fs-app-message-attachments>
+            <fs-app-message-attachments [message]="message"></fs-app-message-attachments>
           </ng-template>
         </mat-tab>
-
-        <mat-tab label="Variables" *ngIf="message.variables">
+        <mat-tab
+            label="Variables"
+            *ngIf="message.variables">
           <ng-template matTabContent>
-            <div *ngFor="let variable of message.variables" class="variable">
-              {{variable.name}}
+            <div
+                *ngFor="let variable of message.variables"
+                class="variable">
+              {{ variable.name }}
             </div>
           </ng-template>
         </mat-tab>
-
         <mat-tab label="Defaults">
           <ng-template matTabContent>
             <ng-container *ngIf="message.emailMessage">
-              <h2 *ngIf="message.emailMessage && message.smsMessage">Email</h2>
+              <h2 *ngIf="message.emailMessage && message.smsMessage">
+                Email
+              </h2>
               <fs-label-field>
-                <fs-label>Subject</fs-label>
-                <div class="content">{{message.defaultEmailSubject}}</div>
+                <fs-label>
+                  Subject
+                </fs-label>
+                <div class="content">
+                  {{ message.defaultEmailSubject }}
+                </div>
               </fs-label-field>
               <fs-label-field>
-                <fs-label>Content</fs-label>
-                <div class="content">{{message.defaultEmailBody}}</div>
+                <fs-label>
+                  Content
+                </fs-label>
+                <div class="content">
+                  {{ message.defaultEmailBody }}
+                </div>
               </fs-label-field>
             </ng-container>
             <ng-container *ngIf="message.smsMessage">
-              <h2 *ngIf="message.emailMessage && message.smsMessage">SMS</h2>
+              <h2 *ngIf="message.emailMessage && message.smsMessage">
+                SMS
+              </h2>
               <fs-label-field>
-                <fs-label>Content</fs-label>
-                <div class="content">{{message.defaultSmsMessage}}</div>
+                <fs-label>
+                  Content
+                </fs-label>
+                <div class="content">
+                  {{ message.defaultSmsMessage }}
+                </div>
               </fs-label-field>
             </ng-container>
           </ng-template>
         </mat-tab>
       </mat-tab-group>
-
     </mat-dialog-content>
     <mat-dialog-actions>
       <ng-container *ngIf="tab==='email' || tab==='sms' || tab==='general'; else done">
