@@ -126,6 +126,20 @@ export class QueuesComponent implements OnInit, OnDestroy {
           type: ItemType.DateRange,
           label: ['From Date', 'To Date'],
         },
+        {
+          name: 'messageId',
+          type: ItemType.AutoCompleteChips,
+          label: 'Message type',
+          values: (query) => {
+            return this._config
+              .loadMessages(query)
+              .pipe(
+                map((response) => {
+                  return response.data.map((item) => ({ name: item.name, value: item.id }));
+                }),
+              );
+          },
+        },
         ...(this.config?.filters || []),
       ],
       paging: {
