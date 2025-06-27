@@ -101,12 +101,12 @@ export class QueuesComponent implements OnInit, OnDestroy {
           change: (item: TextItem) => {
             if(String(item.value ?? '').length) {
               this.list.filterRef
-                .updateSort({ 
+                .updateSort({
                   sortBy: 'relevance',
                 });
             } else {
               this.list.filterRef
-                .updateSort({ 
+                .updateSort({
                   sortBy: 'created_date',
                   sortDirection: 'desc',
                 });
@@ -132,7 +132,7 @@ export class QueuesComponent implements OnInit, OnDestroy {
           label: 'Message type',
           values: (query) => {
             return this._config
-              .loadMessages(query)
+              .loadMessages({ keyword: query, limit: 50 })
               .pipe(
                 map((response) => {
                   return response.data.map((item) => ({ name: item.name, value: item.id }));
@@ -152,8 +152,8 @@ export class QueuesComponent implements OnInit, OnDestroy {
           direction: 'desc',
         },
       ],
-      sort: { 
-        value: 'created_date', 
+      sort: {
+        value: 'created_date',
         direction: 'desc',
       },
       fetch: (query) => {
