@@ -1,7 +1,10 @@
 <fs-dialog *fsSkeleton="messageQueue">
-  <div mat-dialog-title>
-    Message Queue
-  </div>
+  <fs-dialog-title>
+    Message queue
+    <ng-template fsDialogSubtitle>
+      ID: {{ messageQueue.id }}
+    </ng-template>
+  </fs-dialog-title>
   <mat-dialog-content>
     <mat-tab-group>
       <mat-tab label="Overview">
