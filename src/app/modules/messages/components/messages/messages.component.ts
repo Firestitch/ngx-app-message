@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 
@@ -21,6 +21,9 @@ import { FsAppMessageConfig } from '../../../app-message/interfaces';
     imports: [FsListModule]
 })
 export class MessagesComponent implements OnInit, OnDestroy {
+  private _config = inject<FsAppMessageConfig>(FS_APP_MESSAGE_CONFIG);
+  private _dialog = inject(MatDialog);
+
 
   @ViewChild(FsListComponent, { static: true })
   public list: FsListComponent = null;
@@ -29,11 +32,6 @@ export class MessagesComponent implements OnInit, OnDestroy {
   public emailMessageFormats = {};
 
   private _destroy$ = new Subject();
-
-  constructor(
-    @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,
-    private _dialog: MatDialog,
-  ) { }
 
   public ngOnInit(): void {
     this.emailMessageFormats = indexNameValue(EmailMessageFormats);

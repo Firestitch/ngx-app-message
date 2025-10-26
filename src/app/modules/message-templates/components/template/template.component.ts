@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 
@@ -29,6 +29,12 @@ import { MatButton } from '@angular/material/button';
     imports: [FsSkeletonModule, FormsModule, FsFormModule, FsDialogModule, MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatLabel, MatInput, MatTabGroup, MatTab, MatTabContent, FsLabelModule, FsTextEditorModule, MatDialogActions, MatButton, MatDialogClose]
 })
 export class TemplateComponent implements OnInit {
+  private _data = inject(MAT_DIALOG_DATA);
+  private _config = inject<FsAppMessageConfig>(FS_APP_MESSAGE_CONFIG);
+  private _dialogRef = inject<MatDialogRef<TemplateComponent>>(MatDialogRef);
+  private _message = inject(FsMessage);
+  private _dialog = inject(MatDialog);
+
 
   public messageTemplate;
   public htmlEditorconfig: FsTextEditorConfig = {
@@ -42,14 +48,6 @@ export class TemplateComponent implements OnInit {
     insertSpaces: true,
     tabSize: 2,
   };
-
-  public constructor(
-    @Inject(MAT_DIALOG_DATA) private _data,
-    @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,
-    private _dialogRef: MatDialogRef<TemplateComponent>,
-    private _message: FsMessage,
-    private _dialog: MatDialog,
-  ) { }
 
   public ngOnInit(): void {
     if (this._data.messageTemplate.id) {

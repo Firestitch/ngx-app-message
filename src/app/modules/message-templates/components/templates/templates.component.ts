@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 
@@ -19,6 +19,9 @@ import { FsAppMessageConfig } from '../../../app-message/interfaces';
     imports: [FsListModule]
 })
 export class TemplatesComponent implements OnInit, OnDestroy {
+  private _config = inject<FsAppMessageConfig>(FS_APP_MESSAGE_CONFIG);
+  private _dialog = inject(MatDialog);
+
 
   @ViewChild(FsListComponent, { static: true }) 
   public list: FsListComponent = null;
@@ -27,11 +30,6 @@ export class TemplatesComponent implements OnInit, OnDestroy {
   public messageQueueStates = [];
 
   private _destroy$ = new Subject();
-
-  constructor(
-    @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,
-    private _dialog: MatDialog,
-  ) { }
 
   public ngOnInit(): void {
     this.config = {

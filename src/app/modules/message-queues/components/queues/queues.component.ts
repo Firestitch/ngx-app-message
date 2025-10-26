@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 
 
 import { ItemType, TextItem } from '@firestitch/filter';
@@ -48,6 +48,11 @@ import { TruncatePipe } from '../../pipes/truncate.pipe';
     ],
 })
 export class QueuesComponent implements OnInit, OnDestroy {
+  private _config = inject<FsAppMessageConfig>(FS_APP_MESSAGE_CONFIG);
+  private _messageQueueService = inject(FsMessageQueueService);
+  private _cdRef = inject(ChangeDetectorRef);
+  private _store = inject(FsStore);
+
 
   @ViewChild(FsListComponent, { static: true })
   public list: FsListComponent = null;
@@ -63,13 +68,6 @@ export class QueuesComponent implements OnInit, OnDestroy {
   public webHookEnabled;
 
   private _destroy$ = new Subject();
-
-  constructor(
-    @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,
-    private _messageQueueService: FsMessageQueueService,
-    private _cdRef: ChangeDetectorRef,
-    private _store: FsStore,
-  ) { }
 
   public ngOnInit() {
     this.messageQueueStates = indexNameValue(MessageQueueStates);

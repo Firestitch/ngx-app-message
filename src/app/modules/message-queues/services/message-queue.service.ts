@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 
@@ -12,10 +12,8 @@ import { QueueComponent } from '../components/queue/queue.component';
   providedIn: 'root',
 })
 export class FsMessageQueueService {
+  private _dialog = inject(MatDialog);
 
-  constructor(
-    private _dialog: MatDialog,
-  ) { }
 
   public openMessageQueue(messageQueueId: number, options: any = {}): Observable<any> {
     return this._dialog.open(QueueComponent, {

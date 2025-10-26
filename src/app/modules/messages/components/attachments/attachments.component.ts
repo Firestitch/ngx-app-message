@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, Inject, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectionStrategy, Input, inject } from '@angular/core';
 
 import { FsFile } from '@firestitch/file';
 
@@ -21,6 +21,9 @@ import { FsCommonModule } from '@firestitch/common';
     imports: [FsListModule, FsCommonModule],
 })
 export class AttachmentsComponent implements OnInit, OnDestroy {
+  private _config = inject<FsAppMessageConfig>(FS_APP_MESSAGE_CONFIG);
+  private _message = inject(FsMessage);
+
 
   @ViewChild(FsListComponent, { static: true }) 
   public list: FsListComponent = null;
@@ -30,11 +33,6 @@ export class AttachmentsComponent implements OnInit, OnDestroy {
   public config: FsListConfig = null;
 
   private _destroy$ = new Subject();
-
-  constructor(
-    @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,
-    private _message: FsMessage,
-  ) { }
 
   public ngOnInit(): void {
     this.config = {

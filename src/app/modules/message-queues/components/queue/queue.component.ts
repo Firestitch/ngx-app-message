@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy, ChangeDetectorRef,
-  Component,
-  Inject, OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialog, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 
@@ -62,6 +56,13 @@ import { FsFormModule } from '@firestitch/form';
     ],
 })
 export class QueueComponent implements OnInit, OnDestroy {
+  private _config = inject<FsAppMessageConfig>(FS_APP_MESSAGE_CONFIG);
+  private _data = inject(MAT_DIALOG_DATA);
+  private _message = inject(FsMessage);
+  private _prompt = inject(FsPrompt);
+  private _dialog = inject(MatDialog);
+  private _cdRef = inject(ChangeDetectorRef);
+
 
   @ViewChild('logList')
   public logList: FsListComponent;
@@ -80,16 +81,6 @@ export class QueueComponent implements OnInit, OnDestroy {
   public MessageQueueEventType = MessageQueueEventType;
 
   private _destroy$ = new Subject();
-
-  constructor(
-    @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,
-    @Inject(MAT_DIALOG_DATA) private _data,
-    private _message: FsMessage,
-    private _prompt: FsPrompt,
-    private _dialog: MatDialog,
-    private _cdRef: ChangeDetectorRef,
-  ) {
-  }
 
   public ngOnInit() {
     this.messageQueueStates = indexNameValue(MessageQueueStates);

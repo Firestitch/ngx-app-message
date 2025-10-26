@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 
 import { MAT_DIALOG_DATA, MatDialog, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 
@@ -64,22 +64,19 @@ import { MatButton } from '@angular/material/button';
     ],
 })
 export class MessageComponent implements OnInit {
+  private _config = inject<FsAppMessageConfig>(FS_APP_MESSAGE_CONFIG);
+  private _data = inject(MAT_DIALOG_DATA);
+  private _prompt = inject(FsPrompt);
+  private _message = inject(FsMessage);
+  private _dialog = inject(MatDialog);
+  private _cdRef = inject(ChangeDetectorRef);
+
 
   public message;
   public tab = 'general';
   public messageTemplates = [];
   public emailMessageFormats = EmailMessageFormats;
   public emailMessageFormat = EmailMessageFormat;
-
-  public constructor(
-    @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,
-    @Inject(MAT_DIALOG_DATA) private _data,
-    private _prompt: FsPrompt,
-    private _message: FsMessage,
-    private _dialog: MatDialog,
-    private _cdRef: ChangeDetectorRef,
-  ) {
-  }
 
   public ngOnInit() {
     this._config.loadMessage(this._data.message)

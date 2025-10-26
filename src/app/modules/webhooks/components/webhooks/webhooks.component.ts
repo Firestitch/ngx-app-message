@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 
 import { FsListComponent, FsListConfig, FsListModule } from '@firestitch/list';
 import { FsMessage } from '@firestitch/message';
@@ -18,16 +18,14 @@ import { FsDateModule } from '@firestitch/date';
     imports: [FsListModule, FsDateModule],
 })
 export class WebhooksComponent implements OnInit {
+  private _config = inject<FsAppMessageConfig>(FS_APP_MESSAGE_CONFIG);
+  private _message = inject(FsMessage);
+
 
   @ViewChild(FsListComponent)
   public list: FsListComponent;
 
   public listConfig: FsListConfig;
-
-  constructor(
-    @Inject(FS_APP_MESSAGE_CONFIG) private _config: FsAppMessageConfig,
-    private _message: FsMessage,
-  ) {}
 
   public ngOnInit(): void {
     this.listConfig = {
