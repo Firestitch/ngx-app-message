@@ -2,14 +2,18 @@ import {
   ChangeDetectionStrategy,
   Component, Input, OnInit,
 } from '@angular/core';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
 
 
 
 @Component({
-  selector: 'app-recipient',
-  templateUrl: './recipient.component.html',
-  styleUrls: ['./recipient.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-recipient',
+    templateUrl: './recipient.component.html',
+    styleUrls: ['./recipient.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [MatIcon, MatTooltip],
 })
 export class RecipientComponent implements OnInit {
   

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild, Inject, ChangeDetectionStrateg
 
 import { FsFile } from '@firestitch/file';
 
-import { FsListComponent, FsListConfig } from '@firestitch/list';
+import { FsListComponent, FsListConfig, FsListModule } from '@firestitch/list';
 import { ActionMode } from '@firestitch/filter';
 
 import { Subject } from 'rxjs';
@@ -10,12 +10,15 @@ import { Subject } from 'rxjs';
 import { FS_APP_MESSAGE_CONFIG } from '../../../app-message/injectors';
 import { FsAppMessageConfig } from '../../../app-message/interfaces';
 import { FsMessage } from '@firestitch/message';
+import { FsCommonModule } from '@firestitch/common';
 
 
 @Component({
-  selector: 'fs-app-message-attachments',
-  templateUrl: './attachments.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-app-message-attachments',
+    templateUrl: './attachments.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [FsListModule, FsCommonModule],
 })
 export class AttachmentsComponent implements OnInit, OnDestroy {
 

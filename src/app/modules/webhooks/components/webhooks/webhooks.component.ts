@@ -1,18 +1,21 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit, ViewChild } from '@angular/core';
 
-import { FsListComponent, FsListConfig } from '@firestitch/list';
+import { FsListComponent, FsListConfig, FsListModule } from '@firestitch/list';
 import { FsMessage } from '@firestitch/message';
 
 import { map } from 'rxjs/operators';
 
 import { FS_APP_MESSAGE_CONFIG } from '../../../app-message/injectors';
 import { FsAppMessageConfig } from '../../../app-message/interfaces';
+import { FsDateModule } from '@firestitch/date';
 
 
 @Component({
-  selector: 'fs-app-message-webhooks',
-  templateUrl: './webhooks.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-app-message-webhooks',
+    templateUrl: './webhooks.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [FsListModule, FsDateModule],
 })
 export class WebhooksComponent implements OnInit {
 

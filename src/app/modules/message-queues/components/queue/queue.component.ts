@@ -6,9 +6,9 @@ import {
   ViewChild,
 } from '@angular/core';
 
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 
-import { FsListComponent, FsListConfig } from '@firestitch/list';
+import { FsListComponent, FsListConfig, FsListModule } from '@firestitch/list';
 import { FsMessage } from '@firestitch/message';
 import { FsPrompt } from '@firestitch/prompt';
 
@@ -25,12 +25,41 @@ import { ForwardMessageQueue, LoadMessage, ResendMessageQueue } from '../../../a
 import { MessageQueueStates } from '../../consts';
 import { MessageQueueEventTypes } from '../../consts/message-queue-event-type.const';
 import { EmailMessageQueueFormat, MessageQueueEventType, MessageQueueType } from '../../enums';
+import { FsSkeletonModule } from '@firestitch/skeleton';
+import { FsDialogModule } from '@firestitch/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatTabGroup, MatTab, MatTabContent } from '@angular/material/tabs';
+import { FsLabelModule } from '@firestitch/label';
+import { RecipientComponent } from '../recipient/recipient.component';
+import { FsIFrameModule } from '@firestitch/iframe';
+import { FsDateModule } from '@firestitch/date';
+import { MatButton } from '@angular/material/button';
+import { FsFormModule } from '@firestitch/form';
 
 
 @Component({
-  templateUrl: './queue.component.html',
-  styleUrls: ['./queue.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './queue.component.html',
+    styleUrls: ['./queue.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        FsSkeletonModule,
+        FsDialogModule,
+        CdkScrollable,
+        MatDialogContent,
+        MatTabGroup,
+        MatTab,
+        MatTabContent,
+        FsLabelModule,
+        RecipientComponent,
+        FsIFrameModule,
+        FsListModule,
+        FsDateModule,
+        MatDialogActions,
+        MatButton,
+        FsFormModule,
+        MatDialogClose,
+    ],
 })
 export class QueueComponent implements OnInit, OnDestroy {
 

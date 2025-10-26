@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, O
 
 
 import { ItemType, TextItem } from '@firestitch/filter';
-import { FsListActionSelected, FsListComponent, FsListConfig, PaginationStrategy } from '@firestitch/list';
+import { FsListActionSelected, FsListComponent, FsListConfig, PaginationStrategy, FsListModule } from '@firestitch/list';
 import { SelectionActionType } from '@firestitch/selection';
 import { FsStore } from '@firestitch/store';
 
@@ -19,13 +19,33 @@ import { MessageQueueStates } from '../../consts';
 import { MessageQueueType } from '../../enums';
 import { MessageQueueState } from '../../enums/message-queue-state.enum';
 import { FsMessageQueueService } from '../../services/message-queue.service';
+import { FsMessageModule } from '@firestitch/message';
+import { MatAnchor } from '@angular/material/button';
+import { FsFormModule } from '@firestitch/form';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { RecipientComponent } from '../recipient/recipient.component';
+import { FsDateModule } from '@firestitch/date';
+import { TruncatePipe } from '../../pipes/truncate.pipe';
 
 
 @Component({
-  selector: 'fs-app-message-queues',
-  styleUrls: ['./queues.component.scss'],
-  templateUrl: './queues.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-app-message-queues',
+    styleUrls: ['./queues.component.scss'],
+    templateUrl: './queues.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        FsMessageModule,
+        MatAnchor,
+        FsFormModule,
+        FsListModule,
+        MatIcon,
+        MatTooltip,
+        RecipientComponent,
+        FsDateModule,
+        TruncatePipe,
+    ],
 })
 export class QueuesComponent implements OnInit, OnDestroy {
 

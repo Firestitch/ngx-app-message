@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 
 import { FsMessage } from '@firestitch/message';
 import { FsPrompt } from '@firestitch/prompt';
@@ -13,12 +13,55 @@ import { FS_APP_MESSAGE_CONFIG } from '../../../app-message/injectors';
 import { FsAppMessageConfig } from '../../../app-message/interfaces';
 import { EmailMessageFormats } from '../../consts';
 import { EmailMessageFormat } from '../../enums';
+import { FsSkeletonModule } from '@firestitch/skeleton';
+import { FormsModule } from '@angular/forms';
+import { FsFormModule } from '@firestitch/form';
+import { FsDialogModule } from '@firestitch/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatTabGroup, MatTab, MatTabContent } from '@angular/material/tabs';
+import { FsTabsModule } from '@firestitch/tabs';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { FsLabelModule } from '@firestitch/label';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
+import { FsTextEditorModule } from '@firestitch/text-editor';
+import { FsHtmlEditorModule, FsHtmlRendererModule } from '@firestitch/html-editor';
+import { AttachmentsComponent } from '../attachments/attachments.component';
+import { MatButton } from '@angular/material/button';
 
 
 @Component({
-  templateUrl: './message.component.html',
-  styleUrls: ['./message.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './message.component.html',
+    styleUrls: ['./message.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        FsSkeletonModule,
+        FormsModule,
+        FsFormModule,
+        FsDialogModule,
+        MatDialogTitle,
+        CdkScrollable,
+        MatDialogContent,
+        MatTabGroup,
+        FsTabsModule,
+        MatTab,
+        MatTabContent,
+        MatFormField,
+        MatLabel,
+        MatInput,
+        FsLabelModule,
+        MatSelect,
+        MatOption,
+        FsTextEditorModule,
+        FsHtmlEditorModule,
+        FsHtmlRendererModule,
+        AttachmentsComponent,
+        MatDialogActions,
+        MatButton,
+        MatDialogClose,
+    ],
 })
 export class MessageComponent implements OnInit {
 

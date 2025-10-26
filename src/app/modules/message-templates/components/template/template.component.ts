@@ -1,21 +1,32 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 
 import { FsMessage } from '@firestitch/message';
-import { FsTextEditorConfig } from '@firestitch/text-editor';
-import { SubmitEvent } from '@firestitch/form';
+import { FsTextEditorConfig, FsTextEditorModule } from '@firestitch/text-editor';
+import { SubmitEvent, FsFormModule } from '@firestitch/form';
 
 import { tap } from 'rxjs/operators';
 
 import { PreviewComponent } from '../../../../modules/message-preview/components';
 import { FS_APP_MESSAGE_CONFIG } from '../../../app-message/injectors';
 import { FsAppMessageConfig } from '../../../app-message/interfaces';
+import { FsSkeletonModule } from '@firestitch/skeleton';
+import { FormsModule } from '@angular/forms';
+import { FsDialogModule } from '@firestitch/dialog';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatTabGroup, MatTab, MatTabContent } from '@angular/material/tabs';
+import { FsLabelModule } from '@firestitch/label';
+import { MatButton } from '@angular/material/button';
 
 
 @Component({
-  templateUrl: './template.component.html',
-  styleUrls: ['./template.component.scss']
+    templateUrl: './template.component.html',
+    styleUrls: ['./template.component.scss'],
+    standalone: true,
+    imports: [FsSkeletonModule, FormsModule, FsFormModule, FsDialogModule, MatDialogTitle, CdkScrollable, MatDialogContent, MatFormField, MatLabel, MatInput, MatTabGroup, MatTab, MatTabContent, FsLabelModule, FsTextEditorModule, MatDialogActions, MatButton, MatDialogClose]
 })
 export class TemplateComponent implements OnInit {
 

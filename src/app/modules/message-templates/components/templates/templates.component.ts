@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild, Inject } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { FsListComponent, FsListConfig } from '@firestitch/list';
+import { FsListComponent, FsListConfig, FsListModule } from '@firestitch/list';
 
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -13,8 +13,10 @@ import { FsAppMessageConfig } from '../../../app-message/interfaces';
 
 
 @Component({
-  selector: 'fs-app-message-templates',
-  templateUrl: './templates.component.html'
+    selector: 'fs-app-message-templates',
+    templateUrl: './templates.component.html',
+    standalone: true,
+    imports: [FsListModule]
 })
 export class TemplatesComponent implements OnInit, OnDestroy {
 

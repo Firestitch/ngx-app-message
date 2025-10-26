@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { takeUntil, map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-import { FsListComponent, FsListConfig } from '@firestitch/list';
+import { FsListComponent, FsListConfig, FsListModule } from '@firestitch/list';
 import { ItemType } from '@firestitch/filter';
 
 import { MessageComponent } from '../message';
@@ -15,8 +15,10 @@ import { FS_APP_MESSAGE_CONFIG } from '../../../app-message/injectors';
 import { FsAppMessageConfig } from '../../../app-message/interfaces';
 
 @Component({
-  selector: 'fs-app-messages',
-  templateUrl: './messages.component.html'
+    selector: 'fs-app-messages',
+    templateUrl: './messages.component.html',
+    standalone: true,
+    imports: [FsListModule]
 })
 export class MessagesComponent implements OnInit, OnDestroy {
 
