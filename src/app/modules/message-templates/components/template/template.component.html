@@ -1,61 +1,63 @@
 <form
-    fsForm
-    [submit]="save"
-    #form="ngForm"
-    *fsSkeleton="messageTemplate"
-    [confirmTabs]="false">
-  <fs-dialog *ngIf="messageTemplate">
-    <div mat-dialog-title>Message Template</div>
-    <mat-dialog-content>
-      <div class="fs-column">
-        <mat-form-field class="name">
-          <mat-label>Name</mat-label>
-          <input
-            matInput
-            [(ngModel)]="messageTemplate.name"
-            required
-            name="name">
-        </mat-form-field>
-        <div [@.disabled]="true">
-          <mat-tab-group
+  fsForm
+  [submit]="save"
+  #form="ngForm"
+  *fsSkeleton="messageTemplate"
+  [confirmTabs]="false">
+  @if (messageTemplate) {
+    <fs-dialog>
+      <div mat-dialog-title>Message Template</div>
+      <mat-dialog-content>
+        <div class="fs-column">
+          <mat-form-field class="name">
+            <mat-label>Name</mat-label>
+            <input
+              matInput
+              [(ngModel)]="messageTemplate.name"
+              required
+              name="name">
+          </mat-form-field>
+          <div [@.disabled]="true">
+            <mat-tab-group
               mat-align-tabs="start"
               [dynamicHeight]="false">
-            <mat-tab label="Content">
-              <ng-template matTabContent>
-                <div class="content">
-                  <fs-label-field>
+              <mat-tab label="Content">
+                <ng-template matTabContent>
+                  <div class="content">
+                    <fs-label-field>
+                      <fs-text-editor
+                        [(ngModel)]="messageTemplate.content"
+                        name="body"
+                        [config]="htmlEditorconfig">
+                      </fs-text-editor>
+                      <fs-label-message>
+                        &#123;$content&#125; will be replaced with the message content.
+                      </fs-label-message>
+                    </fs-label-field>
+                  </div>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="Styles">
+                <ng-template matTabContent>
+                  <div class="styles">
                     <fs-text-editor
-                      [(ngModel)]="messageTemplate.content"
-                      name="body"
-                      [config]="htmlEditorconfig">
+                      [(ngModel)]="messageTemplate.styles"
+                      name="styles"
+                      [config]="cssEditorconfig">
                     </fs-text-editor>
-                    <fs-label-message>
-                      &#123;$content&#125; will be replaced with the message content.
-                    </fs-label-message>
-                  </fs-label-field>
-                </div>
-              </ng-template>
-            </mat-tab>
-            <mat-tab label="Styles">
-              <ng-template matTabContent>
-                <div class="styles">
-                  <fs-text-editor
-                    [(ngModel)]="messageTemplate.styles"
-                    name="styles"
-                    [config]="cssEditorconfig">
-                  </fs-text-editor>
-                </div>
-              </ng-template>
-            </mat-tab>
-          </mat-tab-group>
+                  </div>
+                </ng-template>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
         </div>
-      </div>
-    </mat-dialog-content>
-    <mat-dialog-actions>
-      <button mat-button type="submit" color="primary" name="close">Save</button>
-      <button mat-button type="submit" name="save-close">Save & Close</button>
-      <button mat-button (click)="openPreview()" type="button">Preview</button>
-      <button mat-button [mat-dialog-close]="null" type="button">Cancel</button>
-    </mat-dialog-actions>
-  </fs-dialog>
+      </mat-dialog-content>
+      <mat-dialog-actions>
+        <button mat-button type="submit" color="primary" name="close">Save</button>
+        <button mat-button type="submit" name="save-close">Save & Close</button>
+        <button mat-button (click)="openPreview()" type="button">Preview</button>
+        <button mat-button [mat-dialog-close]="null" type="button">Cancel</button>
+      </mat-dialog-actions>
+    </fs-dialog>
+  }
 </form>

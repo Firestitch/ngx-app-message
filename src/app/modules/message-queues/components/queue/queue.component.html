@@ -10,59 +10,69 @@
       <mat-tab label="Overview">
         <ng-template matTabContent>
           <div class="fs-row.gap-lg.wrap">
-            <ng-container *ngIf="messageQueue.emailMessageQueue">
+            @if (messageQueue.emailMessageQueue) {
               <fs-label-field>
                 <fs-label>
                   To Recipients
                 </fs-label>
-                <app-recipient
-                  *ngFor="let recipient of messageQueue.emailMessageQueue.toRecipients"
-                  [state]="messageQueueRecipients[recipient]"
-                  [name]="recipient">
-                </app-recipient>
+                @for (recipient of messageQueue.emailMessageQueue.toRecipients; track recipient) {
+                  <app-recipient
+                    [state]="messageQueueRecipients[recipient]"
+                    [name]="recipient">
+                  </app-recipient>
+                }
               </fs-label-field>
-              <fs-label-field *ngIf="messageQueue.emailMessageQueue.ccRecipients.length">
-                <fs-label>
-                  CC
-                </fs-label>
-                <app-recipient
-                  *ngFor="let recipient of messageQueue.emailMessageQueue.ccRecipients"
-                  [state]="messageQueueRecipients[recipient]"
-                  [name]="recipient">
-                </app-recipient>
-              </fs-label-field>
-              <fs-label-field *ngIf="messageQueue.emailMessageQueue.bccRecipients.length">
-                <fs-label>
-                  BCC
-                </fs-label>
-                <app-recipient
-                  *ngFor="let recipient of messageQueue.emailMessageQueue.bccRecipients"
-                  [state]="messageQueueRecipients[recipient]"
-                  [name]="recipient">
-                </app-recipient>
-              </fs-label-field>
-              <fs-label-field *ngIf="messageQueue.emailMessageQueue.fromName || messageQueue.emailMessageQueue.fromEmail">
-                <fs-label>
-                  From
-                </fs-label>
-                <ng-container *ngIf="messageQueue.emailMessageQueue.fromName === messageQueue.emailMessageQueue.fromEmail; else fromEmailName">
-                  {{ messageQueue.emailMessageQueue.fromName }}
-                </ng-container>
-                <ng-template #fromEmailName>
-                  {{ messageQueue.emailMessageQueue.fromName }}
-                  <ng-container *ngIf="messageQueue.emailMessageQueue.fromEmail">
-                    ({{ messageQueue.emailMessageQueue.fromEmail }})
-                  </ng-container>
-                </ng-template>
-              </fs-label-field>
-              <fs-label-field *ngIf="messageQueue.emailMessageQueue.replyEmail && messageQueue.emailMessageQueue.replyEmail.length">
-                <fs-label>
-                  Reply To
-                </fs-label>
-                {{ messageQueue.emailMessageQueue.replyEmail.join(', ') }}
-              </fs-label-field>
-            </ng-container>
-            <ng-container *ngIf="messageQueue.smsMessageQueue">
+              @if (messageQueue.emailMessageQueue.ccRecipients.length) {
+                <fs-label-field>
+                  <fs-label>
+                    CC
+                  </fs-label>
+                  @for (recipient of messageQueue.emailMessageQueue.ccRecipients; track recipient) {
+                    <app-recipient
+                      [state]="messageQueueRecipients[recipient]"
+                      [name]="recipient">
+                    </app-recipient>
+                  }
+                </fs-label-field>
+              }
+              @if (messageQueue.emailMessageQueue.bccRecipients.length) {
+                <fs-label-field>
+                  <fs-label>
+                    BCC
+                  </fs-label>
+                  @for (recipient of messageQueue.emailMessageQueue.bccRecipients; track recipient) {
+                    <app-recipient
+                      [state]="messageQueueRecipients[recipient]"
+                      [name]="recipient">
+                    </app-recipient>
+                  }
+                </fs-label-field>
+              }
+              @if (messageQueue.emailMessageQueue.fromName || messageQueue.emailMessageQueue.fromEmail) {
+                <fs-label-field>
+                  <fs-label>
+                    From
+                  </fs-label>
+                  @if (messageQueue.emailMessageQueue.fromName === messageQueue.emailMessageQueue.fromEmail) {
+                    {{ messageQueue.emailMessageQueue.fromName }}
+                  } @else {
+                    {{ messageQueue.emailMessageQueue.fromName }}
+                    @if (messageQueue.emailMessageQueue.fromEmail) {
+                      ({{ messageQueue.emailMessageQueue.fromEmail }})
+                    }
+                  }
+                </fs-label-field>
+              }
+              @if (messageQueue.emailMessageQueue.replyEmail && messageQueue.emailMessageQueue.replyEmail.length) {
+                <fs-label-field>
+                  <fs-label>
+                    Reply To
+                  </fs-label>
+                  {{ messageQueue.emailMessageQueue.replyEmail.join(', ') }}
+                </fs-label-field>
+              }
+            }
+            @if (messageQueue.smsMessageQueue) {
               <fs-label-field>
                 <fs-label>
                   To Number
@@ -72,13 +82,15 @@
                   [name]="messageQueue.smsMessageQueue.toNumber">
                 </app-recipient>
               </fs-label-field>
-              <fs-label-field *ngIf="messageQueue.smsMessageQueue.fromNumber">
-                <fs-label>
-                  From Number
-                </fs-label>
-                {{ messageQueue.smsMessageQueue.fromNumber }}
-              </fs-label-field>
-            </ng-container>
+              @if (messageQueue.smsMessageQueue.fromNumber) {
+                <fs-label-field>
+                  <fs-label>
+                    From Number
+                  </fs-label>
+                  {{ messageQueue.smsMessageQueue.fromNumber }}
+                </fs-label-field>
+              }
+            }
             <fs-label-field>
               <fs-label>
                 Date
@@ -91,21 +103,24 @@
               </fs-label>
               {{ messageQueueStates[messageQueue.state] }}
             </fs-label-field>
-            <fs-label-field *ngIf="messageQueue.message">
-              <fs-label>
-                Message Type
-              </fs-label>
-              <a
-                  (click)="openMessage(messageQueue.message)"
-                  *ngIf="loadMessage; else elseMessage">
-                {{ messageQueue.message.name }}
-              </a>
-              <ng-template #elseMessage>
-                {{ messageQueue.message.name }}
-              </ng-template>
-            </fs-label-field>
+            @if (messageQueue.message) {
+              <fs-label-field>
+                <fs-label>
+                  Message Type
+                </fs-label>
+                @if (loadMessage) {
+                  <a
+                    (click)="openMessage(messageQueue.message)"
+                    >
+                    {{ messageQueue.message.name }}
+                  </a>
+                } @else {
+                  {{ messageQueue.message.name }}
+                }
+              </fs-label-field>
+            }
           </div>
-          <ng-container *ngIf="messageQueue.emailMessageQueue">
+          @if (messageQueue.emailMessageQueue) {
             <fs-label-field class="subject">
               <fs-label>
                 Subject
@@ -116,19 +131,21 @@
               <fs-label>
                 Body
               </fs-label>
-              <div
-                *ngIf="messageQueue.emailMessageQueue.format===emailMessageQueueFormat.Text"
-                class="format-text"
-                [innerHTML]="messageQueue.emailMessageQueue.body">
-              </div>
-              <fs-iframe
-                *ngIf="messageQueue.emailMessageQueue.format===emailMessageQueueFormat.HTML || messageQueue.emailMessageQueue.format===emailMessageQueueFormat.RichText"
-                [html]="messageQueue.emailMessageQueue.body"
-                [width]="'100%'">
-              </fs-iframe>
+              @if (messageQueue.emailMessageQueue.format===emailMessageQueueFormat.Text) {
+                <div
+                  class="format-text"
+                  [innerHTML]="messageQueue.emailMessageQueue.body">
+                </div>
+              }
+              @if (messageQueue.emailMessageQueue.format===emailMessageQueueFormat.HTML || messageQueue.emailMessageQueue.format===emailMessageQueueFormat.RichText) {
+                <fs-iframe
+                  [html]="messageQueue.emailMessageQueue.body"
+                  [width]="'100%'">
+                </fs-iframe>
+              }
             </fs-label-field>
-          </ng-container>
-          <ng-container *ngIf="messageQueue.smsMessageQueue">
+          }
+          @if (messageQueue.smsMessageQueue) {
             <fs-label-field>
               <fs-label>
                 Message
@@ -138,25 +155,25 @@
                 [innerHTML]="messageQueue.smsMessageQueue.body">
               </div>
             </fs-label-field>
-          </ng-container>
+          }
         </ng-template>
       </mat-tab>
       <mat-tab label="Logs">
         <ng-template matTabContent>
           <fs-list
-              [config]="logConfig"
-              #logList>
+            [config]="logConfig"
+            #logList>
             <fs-list-column title="Message">
               <ng-template
-                  fs-list-cell
-                  let-row="row">
+                fs-list-cell
+                let-row="row">
                 {{ row.message }}
               </ng-template>
             </fs-list-column>
             <fs-list-column title="Date">
               <ng-template
-                  fs-list-cell
-                  let-row="row">
+                fs-list-cell
+                let-row="row">
                 <fs-date-ago [date]="row.createdDate"></fs-date-ago>
               </ng-template>
             </fs-list-column>
@@ -168,15 +185,15 @@
           <fs-list [config]="attachmentConfig">
             <fs-list-column title="File Name">
               <ng-template
-                  fs-list-cell
-                  let-row="row">
+                fs-list-cell
+                let-row="row">
                 {{ row.filename }}
               </ng-template>
             </fs-list-column>
             <fs-list-column title="File Size">
               <ng-template
-                  fs-list-cell
-                  let-row="row">
+                fs-list-cell
+                let-row="row">
                 {{ row.prettyFilesize }}
               </ng-template>
             </fs-list-column>
@@ -188,31 +205,33 @@
           <fs-list [config]="eventConfig">
             <fs-list-column title="Recipient">
               <ng-template
-                  fs-list-cell
-                  let-row="row">
+                fs-list-cell
+                let-row="row">
                 {{ row.messageQueueRecipient.recipient }}
               </ng-template>
             </fs-list-column>
             <fs-list-column title="Event">
               <ng-template
-                  fs-list-cell
-                  let-row="row">
+                fs-list-cell
+                let-row="row">
                 {{ MessageQueueEventTypes[row.type] }}
-                <div
+                @if (row.type === MessageQueueEventType.Click) {
+                  <div
                     class="small"
-                    *ngIf="row.type === MessageQueueEventType.Click">
-                  <a
+                    >
+                    <a
                       [href]="row.meta?.url"
                       target="_blank">
-                    {{ row.meta?.url }}
-                  </a>
-                </div>
+                      {{ row.meta?.url }}
+                    </a>
+                  </div>
+                }
               </ng-template>
             </fs-list-column>
             <fs-list-column title="Date">
               <ng-template
-                  fs-list-cell
-                  let-row="row">
+                fs-list-cell
+                let-row="row">
                 {{ row.createDate | fsDateFormat: 'date-time-yearless' }}
               </ng-template>
             </fs-list-column>
@@ -223,26 +242,28 @@
   </mat-dialog-content>
   <mat-dialog-actions>
     <button
-        mat-button
-        [mat-dialog-close]="null"
-        color="primary">
+      mat-button
+      [mat-dialog-close]="null"
+      color="primary">
       Done
     </button>
-    <button
+    @if (resendMessageQueue) {
+      <button
         mat-button
-        *ngIf="resendMessageQueue"
         type="button"
         (click)="resend()"
         type="button">
-      Resend
-    </button>
-    <button
+        Resend
+      </button>
+    }
+    @if (forwardMessageQueue) {
+      <button
         mat-button
-        *ngIf="forwardMessageQueue"
         type="button"
         (click)="forward()"
         type="button">
-      Forward
-    </button>
+        Forward
+      </button>
+    }
   </mat-dialog-actions>
 </fs-dialog>
