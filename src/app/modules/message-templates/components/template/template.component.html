@@ -1,16 +1,20 @@
 <form
-  fsForm
-  [submit]="save"
-  #form="ngForm"
-  *fsSkeleton="messageTemplate"
-  [confirmTabs]="false">
+    fsForm
+    [submit]="save"
+    #form="ngForm"
+    *fsSkeleton="messageTemplate"
+    [confirmTabs]="false">
   @if (messageTemplate) {
     <fs-dialog>
-      <div mat-dialog-title>Message Template</div>
+      <div mat-dialog-title>
+        Message Template
+      </div>
       <mat-dialog-content>
         <div class="fs-column">
           <mat-form-field class="name">
-            <mat-label>Name</mat-label>
+            <mat-label>
+              Name
+            </mat-label>
             <input
               matInput
               [(ngModel)]="messageTemplate.name"
@@ -19,8 +23,8 @@
           </mat-form-field>
           <div [@.disabled]="true">
             <mat-tab-group
-              mat-align-tabs="start"
-              [dynamicHeight]="false">
+                mat-align-tabs="start"
+                [dynamicHeight]="false">
               <mat-tab label="Content">
                 <ng-template matTabContent>
                   <div class="content">
@@ -53,10 +57,31 @@
         </div>
       </mat-dialog-content>
       <mat-dialog-actions>
-        <button mat-button type="submit" color="primary" name="close">Save</button>
-        <button mat-button type="submit" name="save-close">Save & Close</button>
-        <button mat-button (click)="openPreview()" type="button">Preview</button>
-        <button mat-button [mat-dialog-close]="null" type="button">Cancel</button>
+        <button
+            mat-button
+            type="submit"
+            color="primary"
+            name="close">
+          Save
+        </button>
+        <button
+            mat-button
+            type="submit"
+            name="save-close">
+          Save & Close
+        </button>
+        <button
+            mat-button
+            (click)="openPreview()"
+            type="button">
+          Preview
+        </button>
+        <button
+            mat-button
+            [mat-dialog-close]="null"
+            type="button">
+          Cancel
+        </button>
       </mat-dialog-actions>
     </fs-dialog>
   }
