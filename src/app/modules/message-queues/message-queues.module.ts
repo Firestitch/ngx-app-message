@@ -20,7 +20,6 @@ import { FsMessageModule } from '@firestitch/message';
 import { FsSkeletonModule } from '@firestitch/skeleton';
 
 
-
 import { QueueComponent } from './components/queue/queue.component';
 import { QueuesComponent } from './components/queues/queues.component';
 import { RecipientComponent } from './components/recipient/recipient.component';
@@ -30,7 +29,7 @@ import { FsMessageQueueService } from './services/message-queue.service';
 
 
 @NgModule({
-    imports: [
+  imports: [
     RouterModule,
     FormsModule,
     CommonModule,
@@ -52,13 +51,13 @@ import { FsMessageQueueService } from './services/message-queue.service';
     LinkifyPipe,
     TruncatePipe,
     RecipientComponent,
-],
-    exports: [
-        QueuesComponent,
-        QueueComponent,
-    ],
-    providers: [
-        FsMessageQueueService,
-    ],
+  ],
+  exports: [
+    QueuesComponent,
+    QueueComponent,
+  ],
+  providers: [
+    FsMessageQueueService,
+  ],
 })
 export class FsAppMessageQueuesModule { }
