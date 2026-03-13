@@ -110,6 +110,10 @@ export class QueueComponent implements OnInit, OnDestroy {
         }
 
         this.messageQueue.emailMessageQueue.body = body;
+
+        this.messageQueue.emailMessageQueue.replyEmail =
+          (this.messageQueue.emailMessageQueue.replyEmail || [])
+            .map((item) => typeof item === 'object' && item !== null ? item.email : item);
       }
 
       if (this.messageQueue.smsMessageQueue) {
