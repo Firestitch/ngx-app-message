@@ -43,64 +43,66 @@
                     [(ngModel)]="message.description"
                     name="description">
                 </mat-form-field>
-                <div class="fs-row.gap-sm.wrap">
-                  <mat-form-field>
-                    <mat-label>
-                      From Email
-                    </mat-label>
-                    <input
-                      matInput
-                      [(ngModel)]="message.emailMessage.fromEmail"
-                      name="from_email">
-                  </mat-form-field>
-                  <mat-form-field>
-                    <mat-label>
-                      From Name
-                    </mat-label>
-                    <input
-                      matInput
-                      [(ngModel)]="message.emailMessage.fromName"
-                      name="from_name">
-                  </mat-form-field>
-                  <mat-form-field>
-                    <mat-label>
-                      Reply To
-                    </mat-label>
-                    <input
-                      matInput
-                      [(ngModel)]="message.emailMessage.replyEmail"
-                      name="reply_to">
-                  </mat-form-field>
-                </div>
-                <div class="fs-row.gap-sm.wrap">
-                  <mat-form-field>
-                    <mat-label>
-                      To
-                    </mat-label>
-                    <input
-                      matInput
-                      [(ngModel)]="message.emailMessage.toRecipients"
-                      name="to">
-                  </mat-form-field>
-                  <mat-form-field>
-                    <mat-label>
-                      CC
-                    </mat-label>
-                    <input
-                      matInput
-                      [(ngModel)]="message.emailMessage.ccRecipients"
-                      name="cc">
-                  </mat-form-field>
-                  <mat-form-field>
-                    <mat-label>
-                      BCC
-                    </mat-label>
-                    <input
-                      matInput
-                      [(ngModel)]="message.emailMessage.bccRecipients"
-                      name="bcc">
-                  </mat-form-field>
-                </div>
+                @if (message.emailMessage) {
+                  <div class="fs-row.gap-sm.wrap">
+                    <mat-form-field>
+                      <mat-label>
+                        From Email
+                      </mat-label>
+                      <input
+                        matInput
+                        [(ngModel)]="message.emailMessage.fromEmail"
+                        name="from_email">
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>
+                        From Name
+                      </mat-label>
+                      <input
+                        matInput
+                        [(ngModel)]="message.emailMessage.fromName"
+                        name="from_name">
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>
+                        Reply To
+                      </mat-label>
+                      <input
+                        matInput
+                        [(ngModel)]="message.emailMessage.replyEmail"
+                        name="reply_to">
+                    </mat-form-field>
+                  </div>
+                  <div class="fs-row.gap-sm.wrap">
+                    <mat-form-field>
+                      <mat-label>
+                        To
+                      </mat-label>
+                      <input
+                        matInput
+                        [(ngModel)]="message.emailMessage.toRecipients"
+                        name="to">
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>
+                        CC
+                      </mat-label>
+                      <input
+                        matInput
+                        [(ngModel)]="message.emailMessage.ccRecipients"
+                        name="cc">
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>
+                        BCC
+                      </mat-label>
+                      <input
+                        matInput
+                        [(ngModel)]="message.emailMessage.bccRecipients"
+                        name="bcc">
+                    </mat-form-field>
+                  </div>
+                }
               </div>
             </ng-template>
           </mat-tab>

@@ -15,14 +15,18 @@
     <ng-template
       fs-list-cell
       let-row="row">
-      {{ emailMessageFormats[row.emailMessage.format] }}
+      @if (row.emailMessage) {
+        {{ emailMessageFormats[row.emailMessage.format] }}
+      }
     </ng-template>
   </fs-list-column>
   <fs-list-column title="Email message template">
     <ng-template
       fs-list-cell
       let-row="row">
-      {{ row.emailMessage.messageTemplate?.name || 'None' }}
+      @if (row.emailMessage) {
+        {{ row.emailMessage.messageTemplate?.name || 'None' }}
+      }
     </ng-template>
   </fs-list-column>
   <fs-list-column title="Channels">
