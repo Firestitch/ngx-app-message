@@ -239,26 +239,18 @@ export class QueuesComponent implements OnInit, OnDestroy {
 
     this.config.filters.push({
       name: 'messageId',
-      type: ItemType.Select,
+      type: ItemType.AutoCompleteChips,
       label: 'Message Type',
-      values: (query) => {
-        query = {
-          ...query,
-          limit: 50,
-        };
-
-        return this._config.loadMessages(query)
+      values: (keyword) => {
+        return this._config
+          .loadMessages({ keyword, limit: 50 })
           .pipe(
             map((response) => {
-              return [
-                { value: null, name: 'All' },
-                ...response.data
-                  .map((item) => ({ name: item.name, value: item.id })),
-              ];
+              return response.data.map((item) => ({ name: item.name, value: item.id }));
             }),
           );
       },
-    } as any);
+    });
   }
 
   public open(messageQueue) {
