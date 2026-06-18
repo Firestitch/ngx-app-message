@@ -72,7 +72,7 @@ export class MessageComponent implements OnInit {
   private _cdRef = inject(ChangeDetectorRef);
 
 
-  public message;
+  public message = null;
   public tab = 'general';
   public messageTemplates = [];
   public emailMessageFormats = EmailMessageFormats;

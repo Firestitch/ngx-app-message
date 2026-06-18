@@ -30,7 +30,7 @@ import { FsAppMessageConfig } from '../../../app-message/interfaces';
 })
 export class TemplateComponent implements OnInit {
 
-  public messageTemplate;    
+  public messageTemplate = null;
   public htmlEditorconfig: FsTextEditorConfig = {
     language: 'html',
     insertSpaces: true,
@@ -50,7 +50,7 @@ export class TemplateComponent implements OnInit {
 
 
   public ngOnInit(): void {
-    if (this._data.messageTemplate.id) {
+    if (this._data.messageTemplate?.id) {
       this._config.loadMessageTemplate(this._data.messageTemplate)
         .subscribe((messageTemplate) => {
           this.messageTemplate = messageTemplate;
