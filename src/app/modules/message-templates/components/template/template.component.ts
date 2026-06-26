@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { CdkScrollable } from '@angular/cdk/scrolling';
@@ -47,13 +47,14 @@ export class TemplateComponent implements OnInit {
   private _dialogRef = inject<MatDialogRef<TemplateComponent>>(MatDialogRef);
   private _message = inject(FsMessage);
   private _dialog = inject(MatDialog);
-
+  private _cdRef = inject(ChangeDetectorRef);
 
   public ngOnInit(): void {
     if (this._data.messageTemplate?.id) {
       this._config.loadMessageTemplate(this._data.messageTemplate)
         .subscribe((messageTemplate) => {
           this.messageTemplate = messageTemplate;
+          this._cdRef.markForCheck();
         });
     } else {
       this.messageTemplate = {};
