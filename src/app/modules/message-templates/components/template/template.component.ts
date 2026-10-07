@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { CdkScrollable } from '@angular/cdk/scrolling';
@@ -30,7 +30,7 @@ import { FsAppMessageConfig } from '../../../app-message/interfaces';
 })
 export class TemplateComponent implements OnInit {
 
-  public messageTemplate = null;
+  public messageTemplate = signal<any>(null);
   public htmlEditorconfig: FsTextEditorConfig = {
     language: 'html',
     insertSpaces: true,
@@ -47,34 +47,34 @@ export class TemplateComponent implements OnInit {
   private _dialogRef = inject<MatDialogRef<TemplateComponent>>(MatDialogRef);
   private _message = inject(FsMessage);
   private _dialog = inject(MatDialog);
-  private _cdRef = inject(ChangeDetectorRef);
 
   public ngOnInit(): void {
     if (this._data.messageTemplate?.id) {
       this._config.loadMessageTemplate(this._data.messageTemplate)
         .subscribe((messageTemplate) => {
-          this.messageTemplate = messageTemplate;
-          this._cdRef.markForCheck();
+          this.messageTemplate.set(messageTemplate);
         });
     } else {
-      this.messageTemplate = {};
+      this.messageTemplate.set({});
     }
   }
 
   public openPreview(): void {
     this._dialog.open(PreviewComponent, {
       data: {
-        styles: this.messageTemplate.styles,
-        html: this.messageTemplate.content,
+        styles: this.messageTemplate().styles,
+        html: this.messageTemplate().content,
       },
       width: '95%',
     });
   }
 
   public save = (event: SubmitEvent) => {
-    return this._config.saveMessageTemplate(this.messageTemplate)
+    return this._config.saveMessageTemplate(this.messageTemplate())
       .pipe(
         tap((messageTemplate) => {
+          // Keep the saved id so the next Save updates this template instead of creating another
+          this.messageTemplate.update((current) => ({ ...current, ...messageTemplate }));
           this._message.success('Saved Changes');
           if (event.submitter === 'save-close') {
             this._dialogRef.close(messageTemplate);

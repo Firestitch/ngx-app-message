@@ -2,9 +2,9 @@
     fsForm
     [submit]="save"
     #form="ngForm"
-    *fsSkeleton="messageTemplate"
+    *fsSkeleton="messageTemplate()"
     [confirmTabs]="false">
-  @if (messageTemplate) {
+  @if (messageTemplate()) {
     <fs-dialog>
       <div mat-dialog-title>
         Message Template
@@ -17,7 +17,7 @@
             </mat-label>
             <input
               matInput
-              [(ngModel)]="messageTemplate.name"
+              [(ngModel)]="messageTemplate().name"
               required
               name="name">
           </mat-form-field>
@@ -30,7 +30,7 @@
                   <div class="content">
                     <fs-label-field>
                       <fs-text-editor
-                        [(ngModel)]="messageTemplate.content"
+                        [(ngModel)]="messageTemplate().content"
                         name="body"
                         [config]="htmlEditorconfig">
                       </fs-text-editor>
@@ -45,7 +45,7 @@
                 <ng-template matTabContent>
                   <div class="styles">
                     <fs-text-editor
-                      [(ngModel)]="messageTemplate.styles"
+                      [(ngModel)]="messageTemplate().styles"
                       name="styles"
                       [config]="cssEditorconfig">
                     </fs-text-editor>
