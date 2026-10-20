@@ -79,6 +79,7 @@ export class QueueComponent implements OnInit, OnDestroy {
   public eventConfig: FsListConfig;
   public MessageQueueEventTypes = indexNameValue(MessageQueueEventTypes);
   public MessageQueueEventType = MessageQueueEventType;
+  public MessageQueueType = MessageQueueType;
 
   private _destroy$ = new Subject();
 

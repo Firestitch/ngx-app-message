@@ -32,3 +32,17 @@ fs-label-field {
 .variable {
   margin-bottom: 4px;
 }
+.push-preview {
+  max-width: 360px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  background: #f1f5f9;
+
+  .push-preview-title {
+    font-weight: bold;
+  }
+
+  .push-preview-body {
+    white-space: pre-line;
+  }
+}

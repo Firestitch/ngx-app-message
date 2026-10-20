@@ -39,6 +39,11 @@
           {{ row.smsMessageQueue.body|truncate:100 }}
         </a>
       }
+      @if (row.pushMessageQueue) {
+        <a (click)="open(row)">
+          {{ row.pushMessageQueue.title }} — {{ row.pushMessageQueue.body|truncate:100 }}
+        </a>
+      }
     </ng-template>
   </fs-list-column>
   <fs-list-column
@@ -101,6 +106,17 @@
             name="Unspecified">
           </app-recipient>
         }
+      }
+      @if (row.pushMessageQueue) {
+        <div class="fs-row.gap-xs small">
+          <mat-icon>
+            notifications
+          </mat-icon>
+          <app-recipient
+            [state]="row.state"
+            [name]="'Account #' + row.pushMessageQueue.accountId">
+          </app-recipient>
+        </div>
       }
     </ng-template>
   </fs-list-column>

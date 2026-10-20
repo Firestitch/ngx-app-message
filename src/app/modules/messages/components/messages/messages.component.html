@@ -11,7 +11,7 @@
       </a>
     </ng-template>
   </fs-list-column>
-  <fs-list-column title="Email format">
+  <fs-list-column title="Format">
     <ng-template
       fs-list-cell
       let-row="row">
@@ -20,7 +20,7 @@
       }
     </ng-template>
   </fs-list-column>
-  <fs-list-column title="Email message template">
+  <fs-list-column title="Template">
     <ng-template
       fs-list-cell
       let-row="row">
@@ -44,6 +44,11 @@
             SMS
           </span>
         }
+        @if (row.pushMessage) {
+          <span>
+            Push
+          </span>
+        }
       </div>
     </ng-template>
   </fs-list-column>
@@ -51,12 +56,15 @@
     <ng-template
       fs-list-cell
       let-row="row">
-      @if (row.emailMessage?.customize || row.smsMessage?.customize) {
+      @if (row.emailMessage?.customize || row.smsMessage?.customize || row.pushMessage?.customize) {
         @if (row.emailMessage?.customize) {
           {{ row.emailMessage.customize ? 'Email' : '' }}
         }
         @if (row.smsMessage?.customize) {
           {{ row.smsMessage.customize ? 'SMS' : '' }}
+        }
+        @if (row.pushMessage?.customize) {
+          {{ row.pushMessage.customize ? 'Push' : '' }}
         }
       } @else {
         None

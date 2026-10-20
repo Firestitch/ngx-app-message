@@ -1,4 +1,5 @@
 export enum MessageQueueType {
   Sms = 'S',
-  Email = 'E'
+  Email = 'E',
+  Push = 'P',
 }

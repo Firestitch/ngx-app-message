@@ -299,6 +299,113 @@
               </ng-template>
             </mat-tab>
           }
+          @if (!!message.pushMessage) {
+            <mat-tab
+              label="Push Message"
+              name="push">
+              <ng-template matTabContent>
+                <mat-form-field>
+                  <mat-label>
+                    Customize Message
+                  </mat-label>
+                  <mat-select
+                    required
+                    [(ngModel)]="message.pushMessage.customize"
+                    name="customizePush">
+                    <mat-option [value]="true">
+                      Yes
+                    </mat-option>
+                    <mat-option [value]="false">
+                      No
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                @if (message.pushMessage.customize) {
+                  <div class="fs-column">
+                    <mat-form-field>
+                      <mat-label>
+                        Title
+                      </mat-label>
+                      <input
+                        matInput
+                        [(ngModel)]="message.pushMessage.title"
+                        name="pushMessageTitle"
+                        required
+                        [fsFormMaxLength]="100">
+                      <mat-hint align="end">
+                        {{ message.pushMessage.title?.length || 0 }}/100
+                      </mat-hint>
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>
+                        Body
+                      </mat-label>
+                      <textarea
+                        matInput
+                        [(ngModel)]="message.pushMessage.body"
+                        name="pushMessageBody"
+                        required
+                        [fsFormMaxLength]="500"
+                        cdkTextareaAutosize
+                        [cdkAutosizeMinRows]="3"></textarea>
+                      <mat-hint>
+                        Lock screens show about 170 characters. Never include anything private.
+                      </mat-hint>
+                      <mat-hint align="end">
+                        {{ message.pushMessage.body?.length || 0 }}/500
+                      </mat-hint>
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>
+                        Link
+                      </mat-label>
+                      <input
+                        matInput
+                        [(ngModel)]="message.pushMessage.link"
+                        name="pushMessageLink">
+                      <mat-hint>
+                        App path a tap opens, e.g. /appointments
+                      </mat-hint>
+                    </mat-form-field>
+                  </div>
+                }
+                @if (!message.pushMessage.customize) {
+                  <fs-label-field>
+                    <fs-label>
+                      Title
+                    </fs-label>
+                    <div class="content">
+                      {{ message.defaultPushTitle }}
+                    </div>
+                  </fs-label-field>
+                  <fs-label-field>
+                    <fs-label>
+                      Body
+                    </fs-label>
+                    <div class="content">
+                      {{ message.defaultPushBody }}
+                    </div>
+                  </fs-label-field>
+                }
+                <fs-label-field>
+                  <fs-label>
+                    Preview
+                  </fs-label>
+                  <div class="push-preview">
+                    <div class="small">
+                      App
+                    </div>
+                    <div class="push-preview-title">
+                      {{ message.pushMessage.customize ? message.pushMessage.title : message.defaultPushTitle }}
+                    </div>
+                    <div class="push-preview-body">
+                      {{ message.pushMessage.customize ? message.pushMessage.body : message.defaultPushBody }}
+                    </div>
+                  </div>
+                </fs-label-field>
+              </ng-template>
+            </mat-tab>
+          }
           @if (message.emailMessage) {
             <mat-tab
               label="Attachments"
@@ -324,8 +431,9 @@
           }
           <mat-tab label="Defaults">
             <ng-template matTabContent>
+              @let multipleChannels = (message.emailMessage ? 1 : 0) + (message.smsMessage ? 1 : 0) + (message.pushMessage ? 1 : 0) > 1;
               @if (message.emailMessage) {
-                @if (message.emailMessage && message.smsMessage) {
+                @if (multipleChannels) {
                   <h2>
                     Email
                   </h2>
@@ -348,7 +456,7 @@
                 </fs-label-field>
               }
               @if (message.smsMessage) {
-                @if (message.emailMessage && message.smsMessage) {
+                @if (multipleChannels) {
                   <h2>
                     SMS
                   </h2>
@@ -362,12 +470,35 @@
                   </div>
                 </fs-label-field>
               }
+              @if (message.pushMessage) {
+                @if (multipleChannels) {
+                  <h2>
+                    Push
+                  </h2>
+                }
+                <fs-label-field>
+                  <fs-label>
+                    Title
+                  </fs-label>
+                  <div class="content">
+                    {{ message.defaultPushTitle }}
+                  </div>
+                </fs-label-field>
+                <fs-label-field>
+                  <fs-label>
+                    Body
+                  </fs-label>
+                  <div class="content">
+                    {{ message.defaultPushBody }}
+                  </div>
+                </fs-label-field>
+              }
             </ng-template>
           </mat-tab>
         </mat-tab-group>
       </mat-dialog-content>
       <mat-dialog-actions>
-        @if (tab==='email' || tab==='sms' || tab==='general') {
+        @if (tab==='email' || tab==='sms' || tab==='push' || tab==='general') {
           <button
             mat-button
             color="primary">
@@ -396,6 +527,15 @@
               (click)="sendTest('sms')"
               type="button">
               Send Test SMS
+            </button>
+          }
+          @if (tab==='push') {
+            <button
+              mat-button
+              type="button"
+              (click)="sendTest('push')"
+              type="button">
+              Send Test Push
             </button>
           }
           <button

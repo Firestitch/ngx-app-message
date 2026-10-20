@@ -18,9 +18,10 @@ import { FormsModule } from '@angular/forms';
 import { FsFormModule } from '@firestitch/form';
 import { FsDialogModule } from '@firestitch/dialog';
 import { CdkScrollable } from '@angular/cdk/scrolling';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatTabGroup, MatTab, MatTabContent } from '@angular/material/tabs';
 import { FsTabsModule } from '@firestitch/tabs';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatFormField, MatHint, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { FsLabelModule } from '@firestitch/label';
 import { MatSelect } from '@angular/material/select';
@@ -50,7 +51,9 @@ import { MatButton } from '@angular/material/button';
         MatTabContent,
         MatFormField,
         MatLabel,
+        MatHint,
         MatInput,
+        CdkTextareaAutosize,
         FsLabelModule,
         MatSelect,
         MatOption,
@@ -88,6 +91,9 @@ export class MessageComponent implements OnInit {
         }
         if (this.message.smsMessage && this.message.smsMessage.customize === undefined) {
           this.message.smsMessage.customize = true;
+        }
+        if (this.message.pushMessage && this.message.pushMessage.customize === undefined) {
+          this.message.pushMessage.customize = true;
         }
 
         this.message.reference = String(message.tag)
@@ -141,21 +147,26 @@ export class MessageComponent implements OnInit {
     });
   }
 
-  public sendTest(type) {
+  public sendTest(type: 'sms' | 'email' | 'push') {
     of(true)
       .pipe(
         switchMap(() => {
-          return type === 'email' ? this._config.getTestEmail() : of('');
+          return type === 'sms' ? of('') : this._config.getTestEmail();
         }),
         switchMap((default_) => {
-          const typeName = type === 'email' ? 'an email' : 'phone number';
+          // A push goes to the devices of the account the email names; blank is the sender's own
+          const label = {
+            email: 'Please enter an email to send test to',
+            sms: 'Please enter phone number to send test to',
+            push: 'Email of the account whose phones get the push (blank for your own)',
+          }[type];
 
           return this._prompt.input({
-            label: `Please enter ${typeName} to send test to`,
-            title: 'Send Test',
+            label,
+            title: type === 'push' ? 'Send Test Push' : 'Send Test',
             commitLabel: 'Send',
             default: default_,
-            required: true
+            required: type !== 'push',
           })
         })
       )

@@ -91,6 +91,17 @@
                 </fs-label-field>
               }
             }
+            @if (messageQueue.pushMessageQueue) {
+              <fs-label-field>
+                <fs-label>
+                  To
+                </fs-label>
+                <app-recipient
+                  [state]="messageQueue.state"
+                  [name]="'Account #' + messageQueue.pushMessageQueue.accountId">
+                </app-recipient>
+              </fs-label-field>
+            }
             <fs-label-field>
               <fs-label>
                 Date
@@ -154,6 +165,61 @@
                 class="format-text"
                 [innerHTML]="messageQueue.smsMessageQueue.body">
               </div>
+            </fs-label-field>
+          }
+          @if (messageQueue.pushMessageQueue) {
+            <fs-label-field>
+              <fs-label>
+                Title
+              </fs-label>
+              <b>
+                {{ messageQueue.pushMessageQueue.title }}
+              </b>
+            </fs-label-field>
+            <fs-label-field>
+              <fs-label>
+                Body
+              </fs-label>
+              <div class="format-text">
+                {{ messageQueue.pushMessageQueue.body }}
+              </div>
+            </fs-label-field>
+            @if (messageQueue.pushMessageQueue.link) {
+              <fs-label-field>
+                <fs-label>
+                  Link
+                </fs-label>
+                {{ messageQueue.pushMessageQueue.link }}
+              </fs-label-field>
+            }
+            <fs-label-field>
+              <fs-label>
+                Devices
+              </fs-label>
+              @for (messageQueueRecipient of messageQueue.messageQueueRecipients; track messageQueueRecipient) {
+                <div>
+                  <app-recipient
+                    [state]="messageQueueRecipient.state"
+                    [name]="messageQueueRecipient.recipient">
+                  </app-recipient>
+                  <div class="small">
+                    {{ messageQueueStates[messageQueueRecipient.state] }}
+                    @if (messageQueueRecipient.sentDate) {
+                      · {{ messageQueueRecipient.sentDate | fsDateFormat: 'date-time' }}
+                    }
+                    @if (messageQueueRecipient.reference) {
+                      · {{ messageQueueRecipient.reference }}
+                    }
+                  </div>
+                  @if (messageQueueRecipient.message) {
+                    <div class="small">
+                      {{ messageQueueRecipient.message }}
+                    </div>
+                  }
+                </div>
+              } @empty {
+                None
+              }
             </fs-label-field>
           }
         </ng-template>
@@ -256,7 +322,7 @@
         Resend
       </button>
     }
-    @if (forwardMessageQueue) {
+    @if (forwardMessageQueue && messageQueue.type !== MessageQueueType.Push) {
       <button
         mat-button
         type="button"

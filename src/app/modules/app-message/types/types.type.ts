@@ -2,7 +2,7 @@ import { FsFile } from '@firestitch/file';
 
 import { Observable } from 'rxjs';
 
-export type TestMessage = (message: any, recipient: string, type: 'sms' | 'email') => Observable<any>;
+export type TestMessage = (message: any, recipient: string, type: 'sms' | 'email' | 'push') => Observable<any>;
 export type LoadMessage = (message: any) => Observable<any>;
 export type LoadMessages = (query: any) => Observable<{ data: any[], paging: any }>;
 export type SaveMessage = (message: any) => Observable<any>;
