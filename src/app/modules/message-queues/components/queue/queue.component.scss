@@ -10,3 +10,8 @@
 app-recipient {
   display: block;
 }
+
+// A push goes to every device the account registered: one line, comma separated
+.push-recipients app-recipient {
+  display: inline;
+}

@@ -94,12 +94,18 @@
             @if (messageQueue.pushMessageQueue) {
               <fs-label-field>
                 <fs-label>
-                  To
+                  To Devices
                 </fs-label>
-                <app-recipient
-                  [state]="messageQueue.state"
-                  [name]="'Account #' + messageQueue.pushMessageQueue.accountId">
-                </app-recipient>
+                <div class="push-recipients">
+                  @for (messageQueueRecipient of messageQueue.messageQueueRecipients; track messageQueueRecipient; let last = $last) {
+                    <app-recipient
+                      [state]="messageQueueRecipient.state"
+                      [name]="'Device ' + messageQueueRecipient.recipient + (messageQueueRecipient.reference ? ' · ' + messageQueueRecipient.reference : '')">
+                    </app-recipient>@if (!last) {, }
+                  } @empty {
+                    None
+                  }
+                </div>
               </fs-label-field>
             }
             <fs-label-field>
@@ -172,9 +178,7 @@
               <fs-label>
                 Title
               </fs-label>
-              <b>
-                {{ messageQueue.pushMessageQueue.title }}
-              </b>
+              {{ messageQueue.pushMessageQueue.title }}
             </fs-label-field>
             <fs-label-field>
               <fs-label>
@@ -192,35 +196,6 @@
                 {{ messageQueue.pushMessageQueue.link }}
               </fs-label-field>
             }
-            <fs-label-field>
-              <fs-label>
-                Devices
-              </fs-label>
-              @for (messageQueueRecipient of messageQueue.messageQueueRecipients; track messageQueueRecipient) {
-                <div>
-                  <app-recipient
-                    [state]="messageQueueRecipient.state"
-                    [name]="messageQueueRecipient.recipient">
-                  </app-recipient>
-                  <div class="small">
-                    {{ messageQueueStates[messageQueueRecipient.state] }}
-                    @if (messageQueueRecipient.sentDate) {
-                      · {{ messageQueueRecipient.sentDate | fsDateFormat: 'date-time' }}
-                    }
-                    @if (messageQueueRecipient.reference) {
-                      · {{ messageQueueRecipient.reference }}
-                    }
-                  </div>
-                  @if (messageQueueRecipient.message) {
-                    <div class="small">
-                      {{ messageQueueRecipient.message }}
-                    </div>
-                  }
-                </div>
-              } @empty {
-                None
-              }
-            </fs-label-field>
           }
         </ng-template>
       </mat-tab>
@@ -229,6 +204,19 @@
           <fs-list
             [config]="logConfig"
             #logList>
+            <fs-list-column title="Recipient">
+              <ng-template
+                fs-list-cell
+                let-row="row">
+                @if (row.messageQueueRecipient) {
+                  @if (messageQueue.type === MessageQueueType.Push) {
+                    Device {{ row.messageQueueRecipient.recipient }}
+                  } @else {
+                    {{ row.messageQueueRecipient.recipient }}
+                  }
+                }
+              </ng-template>
+            </fs-list-column>
             <fs-list-column title="Message">
               <ng-template
                 fs-list-cell
